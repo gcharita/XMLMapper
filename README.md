@@ -22,7 +22,7 @@ pod 'XMLMapper'
 
 ## Author
 
-gcharita, gcharita@arx.gr
+gcharita, chgiorgos13@gmail.com
 
 ## License
 
