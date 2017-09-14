@@ -6,25 +6,34 @@
 //
 //
 
-enum XMLMappingType {
+public enum XMLMappingType {
     case fromXML
     case toXML
 }
 
-class XMLMap {
-    private var XML: [String: Any] = [:]
+public final class XMLMap {
+    public internal(set) var XML: [String: Any] = [:]
     public let mappingType: XMLMappingType
+    public internal(set) var isKeyPresent = false
     public internal(set) var currentValue: Any?
     public internal(set) var currentKey: String?
     
-    public init(mappingType: XMLMappingType, XML: [String: Any]) {
-        self.XML = XML
+    public let toObject: Bool // indicates whether the mapping is being applied to an existing object
+    
+    public init(mappingType: XMLMappingType, XML: [String: Any], toObject: Bool = false) {
         self.mappingType = mappingType
+        self.XML = XML
+        self.toObject = toObject
     }
     
     public subscript(key: String) -> XMLMap {
+        
         currentKey = key
-        currentValue = XML[key]
+        let object = XML[key]
+        let isNSNull = object is NSNull
+        isKeyPresent = isNSNull ? true : object != nil
+        currentValue = isNSNull ? nil : object
+        
         return self
     }
     

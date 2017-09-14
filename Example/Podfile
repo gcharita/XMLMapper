@@ -2,7 +2,6 @@ use_frameworks!
 
 target 'XMLMapper_Example' do
   pod 'XMLMapper', :path => '../'
-  pod 'XMLDictionary', '~> 1.4'
   pod 'ObjectMapper', '~> 2.2'
 
   target 'XMLMapper_Tests' do

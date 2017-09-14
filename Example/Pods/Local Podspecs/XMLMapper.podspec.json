@@ -18,5 +18,10 @@
   "platforms": {
     "ios": "8.0"
   },
-  "source_files": "XMLMapper/Classes/**/*"
+  "source_files": "XMLMapper/Classes/**/*",
+  "dependencies": {
+    "XMLDictionary": [
+      "~> 1.4"
+    ]
+  }
 }
