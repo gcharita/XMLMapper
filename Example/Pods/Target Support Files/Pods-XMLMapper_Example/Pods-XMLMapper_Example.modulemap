@@ -1,0 +1,6 @@
+framework module Pods_XMLMapper_Example {
+  umbrella header "Pods-XMLMapper_Example-umbrella.h"
+
+  export *
+  module * { export * }
+}

@@ -1,0 +1,22 @@
+{
+  "name": "XMLMapper",
+  "version": "0.1.0",
+  "summary": "A short description of XMLMapper.",
+  "description": "TODO: Add long description of the pod here.",
+  "homepage": "https://github.com/gcharita/XMLMapper",
+  "license": {
+    "type": "MIT",
+    "file": "LICENSE"
+  },
+  "authors": {
+    "gcharita": "gcharita@arx.gr"
+  },
+  "source": {
+    "git": "https://github.com/gcharita/XMLMapper.git",
+    "tag": "0.1.0"
+  },
+  "platforms": {
+    "ios": "8.0"
+  },
+  "source_files": "XMLMapper/Classes/**/*"
+}

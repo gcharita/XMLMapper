@@ -1,0 +1,6 @@
+framework module XMLMapper {
+  umbrella header "XMLMapper-umbrella.h"
+
+  export *
+  module * { export * }
+}
