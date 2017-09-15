@@ -26,10 +26,14 @@ class TestXMLMappable: XMLMappable {
     }
 }
 
+enum EnumTest: String {
+    case theEnumValue = "enumValue"
+}
+
 class TestElementXMLMappable: XMLMappable {
     
     var testString: String?
-    var testAttribute: String?
+    var testAttribute: EnumTest?
     
     required init(map: XMLMap) {
         
