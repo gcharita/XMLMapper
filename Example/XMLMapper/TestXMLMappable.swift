@@ -41,6 +41,6 @@ class TestElementXMLMappable: XMLMappable {
     
     func mapping(map: XMLMap) {
         testString <<- map["testString"]
-        testAttribute <<- map["_testAttribute"]
+        testAttribute <<- map.attributes["testAttribute"]
     }
 }

@@ -17,6 +17,7 @@ public final class XMLMap {
     public internal(set) var isKeyPresent = false
     public internal(set) var currentValue: Any?
     public internal(set) var currentKey: String?
+    private var isAttribute = false
     
     public let toObject: Bool // indicates whether the mapping is being applied to an existing object
     
@@ -27,9 +28,13 @@ public final class XMLMap {
     }
     
     public subscript(key: String) -> XMLMap {
-        
-        currentKey = key
-        let object = XML[key]
+        var newKey = key
+        if isAttribute {
+            newKey = "_\(key)"
+            isAttribute = false
+        }
+        currentKey = newKey
+        let object = XML[newKey]
         let isNSNull = object is NSNull
         isKeyPresent = isNSNull ? true : object != nil
         currentValue = isNSNull ? nil : object
@@ -39,5 +44,10 @@ public final class XMLMap {
     
     public func value<T>() -> T? {
         return currentValue as? T
+    }
+    
+    public var attributes: XMLMap {
+        isAttribute = true
+        return self
     }
 }
