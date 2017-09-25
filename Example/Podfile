@@ -1,3 +1,4 @@
+platform :ios, '8.0'
 use_frameworks!
 
 target 'XMLMapper_Example' do
@@ -8,6 +9,6 @@ target 'XMLMapper_Example' do
     inherit! :search_paths
 
     pod 'Quick', '~> 1.0.0'
-    pod 'Nimble', '~> 5.1.1'
+    pod 'Nimble', '~> 7.0'
   end
 end
