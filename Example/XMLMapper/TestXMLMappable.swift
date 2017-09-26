@@ -20,10 +20,6 @@ class TestXMLMappable: XMLMappable {
     func mapping(map: XMLMap) {
         testElement <<- map["TestElementXMLMappable"]
     }
-    
-    var elementName: String {
-        return ""
-    }
 }
 
 enum EnumTest: String {
@@ -34,6 +30,7 @@ class TestElementXMLMappable: XMLMappable {
     
     var testString: String?
     var testAttribute: EnumTest?
+    var testList: [Element]?
     
     required init(map: XMLMap) {
         
@@ -42,5 +39,21 @@ class TestElementXMLMappable: XMLMappable {
     func mapping(map: XMLMap) {
         testString <<- map["testString"]
         testAttribute <<- map.attributes["testAttribute"]
+        testList <<- map["testList.element"]
+    }
+}
+
+class Element: XMLMappable {
+    
+    var testInt: String?
+    var testDouble: String?
+    
+    required init(map: XMLMap) {
+        
+    }
+    
+    func mapping(map: XMLMap) {
+        testInt <<- map["testInt"]
+        testDouble <<- map["testDouble"]
     }
 }

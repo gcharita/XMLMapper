@@ -8,15 +8,13 @@
 
 import UIKit
 import XMLMapper
-import XMLDictionary
 
 class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        let xml = "<root><TestElementXMLMappable testAttribute=\"enumValue\"><testString>Test string</testString></TestElementXMLMappable></root>"
-        let dict = XMLDictionaryParser.sharedInstance().dictionary(with: xml)
+        let xml = "<root> <TestElementXMLMappable testAttribute=\"enumValue\"> <testString>Test string</testString> <testList> <element> <testInt>1</testInt> <testDouble>1.0</testDouble> </element> <element> <testInt>2</testInt> <testDouble>2.0</testDouble> </element> <element> <testInt>3</testInt> <testDouble>3.0</testDouble> </element> <element> <testInt>4</testInt> <testDouble>4.0</testDouble> </element> </testList> </TestElementXMLMappable> </root>"
         let object = XMLMapper<TestXMLMappable>().map(XMLString: xml)
         print(object?.testElement.testAttribute ?? "nil")
         print(object?.toXMLString() ?? "nil")

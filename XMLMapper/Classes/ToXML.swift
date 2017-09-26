@@ -11,11 +11,38 @@ import Foundation
 import Foundation
 
 private func setValue(_ value: Any, map: XMLMap) {
-    setValue(value, key: map.currentKey!, dictionary: &map.XML)
+    setValue(value, key: map.currentKey!, checkForNestedKeys: map.keyIsNested, delimiter: map.nestedKeyDelimiter, dictionary: &map.XML)
 }
 
-private func setValue(_ value: Any, key: String, dictionary: inout [String : Any]) {
-    dictionary[key] = value
+private func setValue(_ value: Any, key: String, checkForNestedKeys: Bool, delimiter: String, dictionary: inout [String : Any]) {
+    if checkForNestedKeys {
+        let keyComponents = ArraySlice(key.components(separatedBy: delimiter).filter { !$0.isEmpty }.map { $0.characters })
+        setValue(value, forKeyPathComponents: keyComponents, dictionary: &dictionary)
+    } else {
+        dictionary[key] = value
+    }
+}
+
+private func setValue(_ value: Any, forKeyPathComponents components: ArraySlice<String.CharacterView.SubSequence>, dictionary: inout [String : Any]) {
+    if components.isEmpty {
+        return
+    }
+    
+    let head = components.first!
+    
+    if components.count == 1 {
+        dictionary[String(head)] = value
+    } else {
+        var child = dictionary[String(head)] as? [String : Any]
+        if child == nil {
+            child = [:]
+        }
+        
+        let tail = components.dropFirst()
+        setValue(value, forKeyPathComponents: tail, dictionary: &child!)
+        
+        dictionary[String(head)] = child
+    }
 }
 
 internal final class ToXML {
