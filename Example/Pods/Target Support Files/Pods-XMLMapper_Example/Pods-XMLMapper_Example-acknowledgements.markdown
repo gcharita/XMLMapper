@@ -25,7 +25,7 @@ freely, subject to the following restrictions:
 
 ## XMLMapper
 
-Copyright (c) 2017 gcharita <gcharita@arx.gr>
+Copyright (c) 2017 gcharita <chgiorgos13@gmail.com>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
