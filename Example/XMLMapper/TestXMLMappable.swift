@@ -18,7 +18,7 @@ class TestXMLMappable: XMLMappable {
     }
     
     func mapping(map: XMLMap) {
-        testElement <<- map["TestElementXMLMappable"]
+        testElement <- map["TestElementXMLMappable"]
     }
 }
 
@@ -37,9 +37,9 @@ class TestElementXMLMappable: XMLMappable {
     }
     
     func mapping(map: XMLMap) {
-        testString <<- map["testString"]
-        testAttribute <<- map.attributes["testAttribute"]
-        testList <<- map["testList.element"]
+        testString <- map["testString"]
+        testAttribute <- map.attributes["testAttribute"]
+        testList <- map["testList.element"]
     }
 }
 
@@ -53,7 +53,7 @@ class Element: XMLMappable {
     }
     
     func mapping(map: XMLMap) {
-        testInt <<- map["testInt"]
-        testDouble <<- map["testDouble"]
+        testInt <- map["testInt"]
+        testDouble <- map["testDouble"]
     }
 }

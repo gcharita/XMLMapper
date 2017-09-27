@@ -11,19 +11,19 @@ import Foundation
 // MARK:- Transforms
 
 /// Object of Basic type with Transform
-public func <<- <Transform: XMLTransformType>(left: inout Transform.Object, right: (XMLMap, Transform)) {
+public func <- <Transform: XMLTransformType>(left: inout Transform.Object, right: (XMLMap, Transform)) {
     let (map, transform) = right
     switch map.mappingType {
     case .fromXML where map.isKeyPresent:
         let value = transform.transformFromXML(map.currentValue)
         FromXML.basicType(&left, object: value)
     case .toXML:
-        left =>> right
+        left >>> right
     default: ()
     }
 }
 
-public func =>> <Transform: XMLTransformType>(left: Transform.Object, right: (XMLMap, Transform)) {
+public func >>> <Transform: XMLTransformType>(left: Transform.Object, right: (XMLMap, Transform)) {
     let (map, transform) = right
     if map.mappingType == .toXML {
         let value: Transform.XML? = transform.transformToXML(left)
@@ -33,19 +33,19 @@ public func =>> <Transform: XMLTransformType>(left: Transform.Object, right: (XM
 
 
 /// Optional object of basic type with Transform
-public func <<- <Transform: XMLTransformType>(left: inout Transform.Object?, right: (XMLMap, Transform)) {
+public func <- <Transform: XMLTransformType>(left: inout Transform.Object?, right: (XMLMap, Transform)) {
     let (map, transform) = right
     switch map.mappingType {
     case .fromXML where map.isKeyPresent:
         let value = transform.transformFromXML(map.currentValue)
         FromXML.optionalBasicType(&left, object: value)
     case .toXML:
-        left =>> right
+        left >>> right
     default: ()
     }
 }
 
-public func =>> <Transform: XMLTransformType>(left: Transform.Object?, right: (XMLMap, Transform)) {
+public func >>> <Transform: XMLTransformType>(left: Transform.Object?, right: (XMLMap, Transform)) {
     let (map, transform) = right
     if map.mappingType == .toXML {
         let value: Transform.XML? = transform.transformToXML(left)
@@ -55,32 +55,32 @@ public func =>> <Transform: XMLTransformType>(left: Transform.Object?, right: (X
 
 
 /// Implicitly unwrapped optional object of basic type with Transform
-public func <<- <Transform: XMLTransformType>(left: inout Transform.Object!, right: (XMLMap, Transform)) {
+public func <- <Transform: XMLTransformType>(left: inout Transform.Object!, right: (XMLMap, Transform)) {
     let (map, transform) = right
     switch map.mappingType {
     case .fromXML where map.isKeyPresent:
         let value = transform.transformFromXML(map.currentValue)
         FromXML.optionalBasicType(&left, object: value)
     case .toXML:
-        left =>> right
+        left >>> right
     default: ()
     }
 }
 
 /// Array of Basic type with Transform
-public func <<- <Transform: XMLTransformType>(left: inout [Transform.Object], right: (XMLMap, Transform)) {
+public func <- <Transform: XMLTransformType>(left: inout [Transform.Object], right: (XMLMap, Transform)) {
     let (map, transform) = right
     switch map.mappingType {
     case .fromXML where map.isKeyPresent:
         let values = fromXMLArrayWithTransform(map.currentValue, transform: transform)
         FromXML.basicType(&left, object: values)
     case .toXML:
-        left =>> right
+        left >>> right
     default: ()
     }
 }
 
-public func =>> <Transform: XMLTransformType>(left: [Transform.Object], right: (XMLMap, Transform)) {
+public func >>> <Transform: XMLTransformType>(left: [Transform.Object], right: (XMLMap, Transform)) {
     let (map, transform) = right
     if map.mappingType == .toXML{
         let values = toXMLArrayWithTransform(left, transform: transform)
@@ -90,19 +90,19 @@ public func =>> <Transform: XMLTransformType>(left: [Transform.Object], right: (
 
 
 /// Optional array of Basic type with Transform
-public func <<- <Transform: XMLTransformType>(left: inout [Transform.Object]?, right: (XMLMap, Transform)) {
+public func <- <Transform: XMLTransformType>(left: inout [Transform.Object]?, right: (XMLMap, Transform)) {
     let (map, transform) = right
     switch map.mappingType {
     case .fromXML where map.isKeyPresent:
         let values = fromXMLArrayWithTransform(map.currentValue, transform: transform)
         FromXML.optionalBasicType(&left, object: values)
     case .toXML:
-        left =>> right
+        left >>> right
     default: ()
     }
 }
 
-public func =>> <Transform: XMLTransformType>(left: [Transform.Object]?, right: (XMLMap, Transform)) {
+public func >>> <Transform: XMLTransformType>(left: [Transform.Object]?, right: (XMLMap, Transform)) {
     let (map, transform) = right
     if map.mappingType == .toXML {
         let values = toXMLArrayWithTransform(left, transform: transform)
@@ -112,32 +112,32 @@ public func =>> <Transform: XMLTransformType>(left: [Transform.Object]?, right: 
 
 
 /// Implicitly unwrapped optional array of Basic type with Transform
-public func <<- <Transform: XMLTransformType>(left: inout [Transform.Object]!, right: (XMLMap, Transform)) {
+public func <- <Transform: XMLTransformType>(left: inout [Transform.Object]!, right: (XMLMap, Transform)) {
     let (map, transform) = right
     switch map.mappingType {
     case .fromXML where map.isKeyPresent:
         let values = fromXMLArrayWithTransform(map.currentValue, transform: transform)
         FromXML.optionalBasicType(&left, object: values)
     case .toXML:
-        left =>> right
+        left >>> right
     default: ()
     }
 }
 
 /// Dictionary of Basic type with Transform
-public func <<- <Transform: XMLTransformType>(left: inout [String: Transform.Object], right: (XMLMap, Transform)) {
+public func <- <Transform: XMLTransformType>(left: inout [String: Transform.Object], right: (XMLMap, Transform)) {
     let (map, transform) = right
     switch map.mappingType {
     case .fromXML where map.isKeyPresent:
         let values = fromXMLDictionaryWithTransform(map.currentValue, transform: transform)
         FromXML.basicType(&left, object: values)
     case .toXML:
-        left =>> right
+        left >>> right
     default: ()
     }
 }
 
-public func =>> <Transform: XMLTransformType>(left: [String: Transform.Object], right: (XMLMap, Transform)) {
+public func >>> <Transform: XMLTransformType>(left: [String: Transform.Object], right: (XMLMap, Transform)) {
     let (map, transform) = right
     if map.mappingType == . toXML {
         let values = toXMLDictionaryWithTransform(left, transform: transform)
@@ -147,19 +147,19 @@ public func =>> <Transform: XMLTransformType>(left: [String: Transform.Object], 
 
 
 /// Optional dictionary of Basic type with Transform
-public func <<- <Transform: XMLTransformType>(left: inout [String: Transform.Object]?, right: (XMLMap, Transform)) {
+public func <- <Transform: XMLTransformType>(left: inout [String: Transform.Object]?, right: (XMLMap, Transform)) {
     let (map, transform) = right
     switch map.mappingType {
     case .fromXML where map.isKeyPresent:
         let values = fromXMLDictionaryWithTransform(map.currentValue, transform: transform)
         FromXML.optionalBasicType(&left, object: values)
     case .toXML:
-        left =>> right
+        left >>> right
     default: ()
     }
 }
 
-public func =>> <Transform: XMLTransformType>(left: [String: Transform.Object]?, right: (XMLMap, Transform)) {
+public func >>> <Transform: XMLTransformType>(left: [String: Transform.Object]?, right: (XMLMap, Transform)) {
     let (map, transform) = right
     if map.mappingType == .toXML {
         let values = toXMLDictionaryWithTransform(left, transform: transform)
@@ -169,14 +169,14 @@ public func =>> <Transform: XMLTransformType>(left: [String: Transform.Object]?,
 
 
 /// Implicitly unwrapped optional dictionary of Basic type with Transform
-public func <<- <Transform: XMLTransformType>(left: inout [String: Transform.Object]!, right: (XMLMap, Transform)) {
+public func <- <Transform: XMLTransformType>(left: inout [String: Transform.Object]!, right: (XMLMap, Transform)) {
     let (map, transform) = right
     switch map.mappingType {
     case .fromXML where map.isKeyPresent:
         let values = fromXMLDictionaryWithTransform(map.currentValue, transform: transform)
         FromXML.optionalBasicType(&left, object: values)
     case .toXML:
-        left =>> right
+        left >>> right
     default: ()
     }
 }
@@ -184,19 +184,19 @@ public func <<- <Transform: XMLTransformType>(left: inout [String: Transform.Obj
 // MARK:- Transforms of Mappable Objects - <T: XMLBaseMappable>
 
 /// Object conforming to Mappable that have transforms
-public func <<- <Transform: XMLTransformType>(left: inout Transform.Object, right: (XMLMap, Transform)) where Transform.Object: XMLBaseMappable {
+public func <- <Transform: XMLTransformType>(left: inout Transform.Object, right: (XMLMap, Transform)) where Transform.Object: XMLBaseMappable {
     let (map, transform) = right
     switch map.mappingType {
     case .fromXML where map.isKeyPresent:
         let value: Transform.Object? = transform.transformFromXML(map.currentValue)
         FromXML.basicType(&left, object: value)
     case .toXML:
-        left =>> right
+        left >>> right
     default: ()
     }
 }
 
-public func =>> <Transform: XMLTransformType>(left: Transform.Object, right: (XMLMap, Transform)) where Transform.Object: XMLBaseMappable {
+public func >>> <Transform: XMLTransformType>(left: Transform.Object, right: (XMLMap, Transform)) where Transform.Object: XMLBaseMappable {
     let (map, transform) = right
     if map.mappingType == .toXML {
         let value: Transform.XML? = transform.transformToXML(left)
@@ -206,19 +206,19 @@ public func =>> <Transform: XMLTransformType>(left: Transform.Object, right: (XM
 
 
 /// Optional Mappable objects that have transforms
-public func <<- <Transform: XMLTransformType>(left: inout Transform.Object?, right: (XMLMap, Transform)) where Transform.Object: XMLBaseMappable {
+public func <- <Transform: XMLTransformType>(left: inout Transform.Object?, right: (XMLMap, Transform)) where Transform.Object: XMLBaseMappable {
     let (map, transform) = right
     switch map.mappingType {
     case .fromXML where map.isKeyPresent:
         let value: Transform.Object? = transform.transformFromXML(map.currentValue)
         FromXML.optionalBasicType(&left, object: value)
     case .toXML:
-        left =>> right
+        left >>> right
     default: ()
     }
 }
 
-public func =>> <Transform: XMLTransformType>(left: Transform.Object?, right: (XMLMap, Transform)) where Transform.Object: XMLBaseMappable {
+public func >>> <Transform: XMLTransformType>(left: Transform.Object?, right: (XMLMap, Transform)) where Transform.Object: XMLBaseMappable {
     let (map, transform) = right
     if map.mappingType == .toXML{
         let value: Transform.XML? = transform.transformToXML(left)
@@ -228,14 +228,14 @@ public func =>> <Transform: XMLTransformType>(left: Transform.Object?, right: (X
 
 
 /// Implicitly unwrapped optional Mappable objects that have transforms
-public func <<- <Transform: XMLTransformType>(left: inout Transform.Object!, right: (XMLMap, Transform)) where Transform.Object: XMLBaseMappable {
+public func <- <Transform: XMLTransformType>(left: inout Transform.Object!, right: (XMLMap, Transform)) where Transform.Object: XMLBaseMappable {
     let (map, transform) = right
     switch map.mappingType {
     case .fromXML where map.isKeyPresent:
         let value: Transform.Object? = transform.transformFromXML(map.currentValue)
         FromXML.optionalBasicType(&left, object: value)
     case .toXML:
-        left =>> right
+        left >>> right
     default: ()
     }
 }
@@ -244,18 +244,18 @@ public func <<- <Transform: XMLTransformType>(left: inout Transform.Object!, rig
 // MARK:- Dictionary of Mappable objects with a transform - Dictionary<String, T: XMLBaseMappable>
 
 /// Dictionary of Mappable objects <String, T: Mappable> with a transform
-public func <<- <Transform: XMLTransformType>(left: inout Dictionary<String, Transform.Object>, right: (XMLMap, Transform)) where Transform.Object: XMLBaseMappable {
+public func <- <Transform: XMLTransformType>(left: inout Dictionary<String, Transform.Object>, right: (XMLMap, Transform)) where Transform.Object: XMLBaseMappable {
     let (map, transform) = right
     if map.mappingType == .fromXML && map.isKeyPresent,
         let object = map.currentValue as? [String: Any] {
         let value = fromXMLDictionaryWithTransform(object as Any?, transform: transform) ?? left
         FromXML.basicType(&left, object: value)
     } else if map.mappingType == .toXML {
-        left =>> right
+        left >>> right
     }
 }
 
-public func =>> <Transform: XMLTransformType>(left: Dictionary<String, Transform.Object>, right: (XMLMap, Transform)) where Transform.Object: XMLBaseMappable {
+public func >>> <Transform: XMLTransformType>(left: Dictionary<String, Transform.Object>, right: (XMLMap, Transform)) where Transform.Object: XMLBaseMappable {
     let (map, transform) = right
     if map.mappingType == .toXML {
         let value = toXMLDictionaryWithTransform(left, transform: transform)
@@ -265,17 +265,17 @@ public func =>> <Transform: XMLTransformType>(left: Dictionary<String, Transform
 
 
 /// Optional Dictionary of Mappable object <String, T: Mappable> with a transform
-public func <<- <Transform: XMLTransformType>(left: inout Dictionary<String, Transform.Object>?, right: (XMLMap, Transform)) where Transform.Object: XMLBaseMappable {
+public func <- <Transform: XMLTransformType>(left: inout Dictionary<String, Transform.Object>?, right: (XMLMap, Transform)) where Transform.Object: XMLBaseMappable {
     let (map, transform) = right
     if map.mappingType == .fromXML && map.isKeyPresent, let object = map.currentValue as? [String : Any]{
         let value = fromXMLDictionaryWithTransform(object as Any?, transform: transform) ?? left
         FromXML.optionalBasicType(&left, object: value)
     } else if map.mappingType == .toXML {
-        left =>> right
+        left >>> right
     }
 }
 
-public func =>> <Transform: XMLTransformType>(left: Dictionary<String, Transform.Object>?, right: (XMLMap, Transform)) where Transform.Object: XMLBaseMappable {
+public func >>> <Transform: XMLTransformType>(left: Dictionary<String, Transform.Object>?, right: (XMLMap, Transform)) where Transform.Object: XMLBaseMappable {
     let (map, transform) = right
     if map.mappingType == .toXML {
         let value = toXMLDictionaryWithTransform(left, transform: transform)
@@ -285,18 +285,18 @@ public func =>> <Transform: XMLTransformType>(left: Dictionary<String, Transform
 
 
 /// Implicitly unwrapped Optional Dictionary of Mappable object <String, T: Mappable> with a transform
-public func <<- <Transform: XMLTransformType>(left: inout Dictionary<String, Transform.Object>!, right: (XMLMap, Transform)) where Transform.Object: XMLBaseMappable {
+public func <- <Transform: XMLTransformType>(left: inout Dictionary<String, Transform.Object>!, right: (XMLMap, Transform)) where Transform.Object: XMLBaseMappable {
     let (map, transform) = right
     if map.mappingType == .fromXML && map.isKeyPresent, let dictionary = map.currentValue as? [String : Any]{
         let transformedDictionary = fromXMLDictionaryWithTransform(dictionary as Any?, transform: transform) ?? left
         FromXML.optionalBasicType(&left, object: transformedDictionary)
     } else if map.mappingType == .toXML {
-        left =>> right
+        left >>> right
     }
 }
 
 /// Dictionary of Mappable objects <String, T: Mappable> with a transform
-public func <<- <Transform: XMLTransformType>(left: inout Dictionary<String, [Transform.Object]>, right: (XMLMap, Transform)) where Transform.Object: XMLBaseMappable {
+public func <- <Transform: XMLTransformType>(left: inout Dictionary<String, [Transform.Object]>, right: (XMLMap, Transform)) where Transform.Object: XMLBaseMappable {
     let (map, transform) = right
     
     if let dictionary = map.currentValue as? [String : [Any]], map.mappingType == .fromXML && map.isKeyPresent {
@@ -312,11 +312,11 @@ public func <<- <Transform: XMLTransformType>(left: inout Dictionary<String, [Tr
         
         FromXML.basicType(&left, object: transformedDictionary)
     } else if map.mappingType == .toXML {
-        left =>> right
+        left >>> right
     }
 }
 
-public func =>> <Transform: XMLTransformType>(left: Dictionary<String, [Transform.Object]>, right: (XMLMap, Transform)) where Transform.Object: XMLBaseMappable {
+public func >>> <Transform: XMLTransformType>(left: Dictionary<String, [Transform.Object]>, right: (XMLMap, Transform)) where Transform.Object: XMLBaseMappable {
     let (map, transform) = right
     
     if map.mappingType == .toXML {
@@ -330,7 +330,7 @@ public func =>> <Transform: XMLTransformType>(left: Dictionary<String, [Transfor
 
 
 /// Optional Dictionary of Mappable object <String, T: Mappable> with a transform
-public func <<- <Transform: XMLTransformType>(left: inout Dictionary<String, [Transform.Object]>?, right: (XMLMap, Transform)) where Transform.Object: XMLBaseMappable {
+public func <- <Transform: XMLTransformType>(left: inout Dictionary<String, [Transform.Object]>?, right: (XMLMap, Transform)) where Transform.Object: XMLBaseMappable {
     let (map, transform) = right
     
     if let dictionary = map.currentValue as? [String : [Any]], map.mappingType == .fromXML && map.isKeyPresent {
@@ -348,11 +348,11 @@ public func <<- <Transform: XMLTransformType>(left: inout Dictionary<String, [Tr
         
         FromXML.optionalBasicType(&left, object: transformedDictionary)
     } else if map.mappingType == .toXML {
-        left =>> right
+        left >>> right
     }
 }
 
-public func =>> <Transform: XMLTransformType>(left: Dictionary<String, [Transform.Object]>?, right: (XMLMap, Transform)) where Transform.Object: XMLBaseMappable {
+public func >>> <Transform: XMLTransformType>(left: Dictionary<String, [Transform.Object]>?, right: (XMLMap, Transform)) where Transform.Object: XMLBaseMappable {
     let (map, transform) = right
     
     if map.mappingType == .toXML {
@@ -366,7 +366,7 @@ public func =>> <Transform: XMLTransformType>(left: Dictionary<String, [Transfor
 
 
 /// Implicitly unwrapped Optional Dictionary of Mappable object <String, T: Mappable> with a transform
-public func <<- <Transform: XMLTransformType>(left: inout Dictionary<String, [Transform.Object]>!, right: (XMLMap, Transform)) where Transform.Object: XMLBaseMappable {
+public func <- <Transform: XMLTransformType>(left: inout Dictionary<String, [Transform.Object]>!, right: (XMLMap, Transform)) where Transform.Object: XMLBaseMappable {
     let (map, transform) = right
     
     if let dictionary = map.currentValue as? [String : [Any]], map.mappingType == .fromXML && map.isKeyPresent {
@@ -381,14 +381,14 @@ public func <<- <Transform: XMLTransformType>(left: inout Dictionary<String, [Tr
         }
         FromXML.optionalBasicType(&left, object: transformedDictionary)
     } else if map.mappingType == .toXML {
-        left =>> right
+        left >>> right
     }
 }
 
 // MARK:- Array of Mappable objects with transforms - Array<T: XMLBaseMappable>
 
 /// Array of Mappable objects
-public func <<- <Transform: XMLTransformType>(left: inout Array<Transform.Object>, right: (XMLMap, Transform)) where Transform.Object: XMLBaseMappable {
+public func <- <Transform: XMLTransformType>(left: inout Array<Transform.Object>, right: (XMLMap, Transform)) where Transform.Object: XMLBaseMappable {
     let (map, transform) = right
     switch map.mappingType {
     case .fromXML where map.isKeyPresent:
@@ -396,12 +396,12 @@ public func <<- <Transform: XMLTransformType>(left: inout Array<Transform.Object
             FromXML.basicType(&left, object: transformedValues)
         }
     case .toXML:
-        left =>> right
+        left >>> right
     default: ()
     }
 }
 
-public func =>> <Transform: XMLTransformType>(left: Array<Transform.Object>, right: (XMLMap, Transform)) where Transform.Object: XMLBaseMappable {
+public func >>> <Transform: XMLTransformType>(left: Array<Transform.Object>, right: (XMLMap, Transform)) where Transform.Object: XMLBaseMappable {
     let (map, transform) = right
     if map.mappingType == .toXML {
         let transformedValues = toXMLArrayWithTransform(left, transform: transform)
@@ -411,19 +411,19 @@ public func =>> <Transform: XMLTransformType>(left: Array<Transform.Object>, rig
 
 
 /// Optional array of Mappable objects
-public func <<- <Transform: XMLTransformType>(left: inout Array<Transform.Object>?, right: (XMLMap, Transform)) where Transform.Object: XMLBaseMappable {
+public func <- <Transform: XMLTransformType>(left: inout Array<Transform.Object>?, right: (XMLMap, Transform)) where Transform.Object: XMLBaseMappable {
     let (map, transform) = right
     switch map.mappingType {
     case .fromXML where map.isKeyPresent:
         let transformedValues = fromXMLArrayWithTransform(map.currentValue, transform: transform)
         FromXML.optionalBasicType(&left, object: transformedValues)
     case .toXML:
-        left =>> right
+        left >>> right
     default: ()
     }
 }
 
-public func =>> <Transform: XMLTransformType>(left: Array<Transform.Object>?, right: (XMLMap, Transform)) where Transform.Object: XMLBaseMappable {
+public func >>> <Transform: XMLTransformType>(left: Array<Transform.Object>?, right: (XMLMap, Transform)) where Transform.Object: XMLBaseMappable {
     let (map, transform) = right
     if map.mappingType == .toXML {
         let transformedValues = toXMLArrayWithTransform(left, transform: transform)
@@ -433,26 +433,26 @@ public func =>> <Transform: XMLTransformType>(left: Array<Transform.Object>?, ri
 
 
 /// Implicitly unwrapped Optional array of Mappable objects
-public func <<- <Transform: XMLTransformType>(left: inout Array<Transform.Object>!, right: (XMLMap, Transform)) where Transform.Object: XMLBaseMappable {
+public func <- <Transform: XMLTransformType>(left: inout Array<Transform.Object>!, right: (XMLMap, Transform)) where Transform.Object: XMLBaseMappable {
     let (map, transform) = right
     switch map.mappingType {
     case .fromXML where map.isKeyPresent:
         let transformedValues = fromXMLArrayWithTransform(map.currentValue, transform: transform)
         FromXML.optionalBasicType(&left, object: transformedValues)
     case .toXML:
-        left =>> right
+        left >>> right
     default: ()
     }
 }
 
-// MARK:- Array of Array of objects - Array<Array<T=>> with transforms
+// MARK:- Array of Array of objects - Array<Array<T>>> with transforms
 
 /// Array of Array of objects with transform
-public func <<- <Transform: XMLTransformType>(left: inout [[Transform.Object]], right: (XMLMap, Transform)) {
+public func <- <Transform: XMLTransformType>(left: inout [[Transform.Object]], right: (XMLMap, Transform)) {
     let (map, transform) = right
     switch map.mappingType {
     case .toXML:
-        left =>> right
+        left >>> right
     case .fromXML where map.isKeyPresent:
         guard let original2DArray = map.currentValue as? [[Any]] else { break }
         let transformed2DArray = original2DArray.flatMap { values in
@@ -464,7 +464,7 @@ public func <<- <Transform: XMLTransformType>(left: inout [[Transform.Object]], 
     }
 }
 
-public func =>> <Transform: XMLTransformType>(left: [[Transform.Object]], right: (XMLMap, Transform)) {
+public func >>> <Transform: XMLTransformType>(left: [[Transform.Object]], right: (XMLMap, Transform)) {
     let (map, transform) = right
     if map.mappingType == .toXML{
         let transformed2DArray = left.flatMap { values in
@@ -475,11 +475,11 @@ public func =>> <Transform: XMLTransformType>(left: [[Transform.Object]], right:
 }
 
 /// Optional array of array of objects with transform
-public func <<- <Transform: XMLTransformType>(left: inout [[Transform.Object]]?, right: (XMLMap, Transform)) {
+public func <- <Transform: XMLTransformType>(left: inout [[Transform.Object]]?, right: (XMLMap, Transform)) {
     let (map, transform) = right
     switch map.mappingType {
     case .toXML:
-        left =>> right
+        left >>> right
     case .fromXML where map.isKeyPresent:
         guard let original2DArray = map.currentValue as? [[Any]] else { break }
         let transformed2DArray = original2DArray.flatMap { values in
@@ -491,7 +491,7 @@ public func <<- <Transform: XMLTransformType>(left: inout [[Transform.Object]]?,
     }
 }
 
-public func =>> <Transform: XMLTransformType>(left: [[Transform.Object]]?, right: (XMLMap, Transform)) {
+public func >>> <Transform: XMLTransformType>(left: [[Transform.Object]]?, right: (XMLMap, Transform)) {
     let (map, transform) = right
     if map.mappingType == .toXML {
         let transformed2DArray = left?.flatMap { values in
@@ -503,11 +503,11 @@ public func =>> <Transform: XMLTransformType>(left: [[Transform.Object]]?, right
 
 
 /// Implicitly unwrapped Optional array of array of objects with transform
-public func <<- <Transform: XMLTransformType>(left: inout [[Transform.Object]]!, right: (XMLMap, Transform)) {
+public func <- <Transform: XMLTransformType>(left: inout [[Transform.Object]]!, right: (XMLMap, Transform)) {
     let (map, transform) = right
     switch map.mappingType {
     case .toXML:
-        left =>> right
+        left >>> right
     case .fromXML where map.isKeyPresent:
         guard let original2DArray = map.currentValue as? [[Any]] else { break }
         let transformed2DArray = original2DArray.flatMap { values in
@@ -522,7 +522,7 @@ public func <<- <Transform: XMLTransformType>(left: inout [[Transform.Object]]!,
 // MARK:- Set of Mappable objects with a transform - Set<T: XMLBaseMappable where T: Hashable>
 
 /// Set of Mappable objects with transform
-public func <<- <Transform: XMLTransformType>(left: inout Set<Transform.Object>, right: (XMLMap, Transform)) where Transform.Object: Hashable & XMLBaseMappable {
+public func <- <Transform: XMLTransformType>(left: inout Set<Transform.Object>, right: (XMLMap, Transform)) where Transform.Object: Hashable & XMLBaseMappable {
     let (map, transform) = right
     switch map.mappingType {
     case .fromXML where map.isKeyPresent:
@@ -530,12 +530,12 @@ public func <<- <Transform: XMLTransformType>(left: inout Set<Transform.Object>,
             FromXML.basicType(&left, object: Set(transformedValues))
         }
     case .toXML:
-        left =>> right
+        left >>> right
     default: ()
     }
 }
 
-public func =>> <Transform: XMLTransformType>(left: Set<Transform.Object>, right: (XMLMap, Transform)) where Transform.Object: Hashable & XMLBaseMappable {
+public func >>> <Transform: XMLTransformType>(left: Set<Transform.Object>, right: (XMLMap, Transform)) where Transform.Object: Hashable & XMLBaseMappable {
     let (map, transform) = right
     if map.mappingType == .toXML {
         let transformedValues = toXMLArrayWithTransform(Array(left), transform: transform)
@@ -545,7 +545,7 @@ public func =>> <Transform: XMLTransformType>(left: Set<Transform.Object>, right
 
 
 /// Optional Set of Mappable objects with transform
-public func <<- <Transform: XMLTransformType>(left: inout Set<Transform.Object>?, right: (XMLMap, Transform)) where Transform.Object: Hashable & XMLBaseMappable {
+public func <- <Transform: XMLTransformType>(left: inout Set<Transform.Object>?, right: (XMLMap, Transform)) where Transform.Object: Hashable & XMLBaseMappable {
     let (map, transform) = right
     switch map.mappingType {
     case .fromXML where map.isKeyPresent:
@@ -553,12 +553,12 @@ public func <<- <Transform: XMLTransformType>(left: inout Set<Transform.Object>?
             FromXML.basicType(&left, object: Set(transformedValues))
         }
     case .toXML:
-        left =>> right
+        left >>> right
     default: ()
     }
 }
 
-public func =>> <Transform: XMLTransformType>(left: Set<Transform.Object>?, right: (XMLMap, Transform)) where Transform.Object: Hashable & XMLBaseMappable {
+public func >>> <Transform: XMLTransformType>(left: Set<Transform.Object>?, right: (XMLMap, Transform)) where Transform.Object: Hashable & XMLBaseMappable {
     let (map, transform) = right
     if map.mappingType == .toXML {
         if let values = left {
@@ -570,7 +570,7 @@ public func =>> <Transform: XMLTransformType>(left: Set<Transform.Object>?, righ
 
 
 /// Implicitly unwrapped Optional set of Mappable objects with transform
-public func <<- <Transform: XMLTransformType>(left: inout Set<Transform.Object>!, right: (XMLMap, Transform)) where Transform.Object: Hashable & XMLBaseMappable {
+public func <- <Transform: XMLTransformType>(left: inout Set<Transform.Object>!, right: (XMLMap, Transform)) where Transform.Object: Hashable & XMLBaseMappable {
     let (map, transform) = right
     switch map.mappingType {
     case .fromXML where map.isKeyPresent:
@@ -578,7 +578,7 @@ public func <<- <Transform: XMLTransformType>(left: inout Set<Transform.Object>!
             FromXML.basicType(&left, object: Set(transformedValues))
         }
     case .toXML:
-        left =>> right
+        left >>> right
     default: ()
     }
 }

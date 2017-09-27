@@ -7,25 +7,25 @@
 //
 
 /// Operator used for defining mappings to and from XML
-infix operator <<-
+infix operator <-
 
 /// Operator used to define mappings to XML
-infix operator =>>
+infix operator >>>
 
 // MARK:- Objects with Basic types
 
 /// Object of Basic type
-public func <<- <T>(left: inout T, right: XMLMap) {
+public func <- <T>(left: inout T, right: XMLMap) {
     switch right.mappingType {
     case .fromXML where right.isKeyPresent:
         FromXML.basicType(&left, object: right.value())
     case .toXML:
-        left =>> right
+        left >>> right
     default: ()
     }
 }
 
-public func =>> <T>(left: T, right: XMLMap) {
+public func >>> <T>(left: T, right: XMLMap) {
     if right.mappingType == .toXML {
         ToXML.basicType(left, map: right)
     }
@@ -33,17 +33,17 @@ public func =>> <T>(left: T, right: XMLMap) {
 
 
 /// Optional object of basic type
-public func <<- <T>(left: inout T?, right: XMLMap) {
+public func <- <T>(left: inout T?, right: XMLMap) {
     switch right.mappingType {
     case .fromXML where right.isKeyPresent:
         FromXML.optionalBasicType(&left, object: right.value())
     case .toXML:
-        left =>> right
+        left >>> right
     default: ()
     }
 }
 
-public func =>> <T>(left: T?, right: XMLMap) {
+public func >>> <T>(left: T?, right: XMLMap) {
     if right.mappingType == .toXML {
         ToXML.optionalBasicType(left, map: right)
     }
@@ -51,12 +51,12 @@ public func =>> <T>(left: T?, right: XMLMap) {
 
 
 /// Implicitly unwrapped optional object of basic type
-public func <<- <T>(left: inout T!, right: XMLMap) {
+public func <- <T>(left: inout T!, right: XMLMap) {
     switch right.mappingType {
     case .fromXML where right.isKeyPresent:
         FromXML.optionalBasicType(&left, object: right.value())
     case .toXML:
-        left =>> right
+        left >>> right
     default: ()
     }
 }
@@ -64,16 +64,16 @@ public func <<- <T>(left: inout T!, right: XMLMap) {
 // MARK:- Mappable Objects - <T: XMLBaseMappable>
 
 /// Object conforming to Mappable
-public func <<- <T: XMLBaseMappable>(left: inout T, right: XMLMap) {
+public func <- <T: XMLBaseMappable>(left: inout T, right: XMLMap) {
     switch right.mappingType {
     case .fromXML:
         FromXML.object(&left, map: right)
     case .toXML:
-        left =>> right
+        left >>> right
     }
 }
 
-public func =>> <T: XMLBaseMappable>(left: T, right: XMLMap) {
+public func >>> <T: XMLBaseMappable>(left: T, right: XMLMap) {
     if right.mappingType == .toXML {
         ToXML.object(left, map: right)
     }
@@ -81,17 +81,17 @@ public func =>> <T: XMLBaseMappable>(left: T, right: XMLMap) {
 
 
 /// Optional Mappable objects
-public func <<- <T: XMLBaseMappable>(left: inout T?, right: XMLMap) {
+public func <- <T: XMLBaseMappable>(left: inout T?, right: XMLMap) {
     switch right.mappingType {
     case .fromXML where right.isKeyPresent:
         FromXML.optionalObject(&left, map: right)
     case .toXML:
-        left =>> right
+        left >>> right
     default: ()
     }
 }
 
-public func =>> <T: XMLBaseMappable>(left: T?, right: XMLMap) {
+public func >>> <T: XMLBaseMappable>(left: T?, right: XMLMap) {
     if right.mappingType == .toXML {
         ToXML.optionalObject(left, map: right)
     }
@@ -99,12 +99,12 @@ public func =>> <T: XMLBaseMappable>(left: T?, right: XMLMap) {
 
 
 /// Implicitly unwrapped optional Mappable objects
-public func <<- <T: XMLBaseMappable>(left: inout T!, right: XMLMap) {
+public func <- <T: XMLBaseMappable>(left: inout T!, right: XMLMap) {
     switch right.mappingType {
     case .fromXML where right.isKeyPresent:
         FromXML.optionalObject(&left, map: right)
     case .toXML:
-        left =>> right
+        left >>> right
     default: ()
     }
 }
@@ -112,17 +112,17 @@ public func <<- <T: XMLBaseMappable>(left: inout T!, right: XMLMap) {
 // MARK:- Dictionary of Mappable objects - Dictionary<String, T: XMLBaseMappable>
 
 /// Dictionary of Mappable objects <String, T: Mappable>
-public func <<- <T: XMLBaseMappable>(left: inout Dictionary<String, T>, right: XMLMap) {
+public func <- <T: XMLBaseMappable>(left: inout Dictionary<String, T>, right: XMLMap) {
     switch right.mappingType {
     case .fromXML where right.isKeyPresent:
         FromXML.objectDictionary(&left, map: right)
     case .toXML:
-        left =>> right
+        left >>> right
     default: ()
     }
 }
 
-public func =>> <T: XMLBaseMappable>(left: Dictionary<String, T>, right: XMLMap) {
+public func >>> <T: XMLBaseMappable>(left: Dictionary<String, T>, right: XMLMap) {
     if right.mappingType == .toXML {
         ToXML.objectDictionary(left, map: right)
     }
@@ -130,17 +130,17 @@ public func =>> <T: XMLBaseMappable>(left: Dictionary<String, T>, right: XMLMap)
 
 
 /// Optional Dictionary of Mappable object <String, T: Mappable>
-public func <<- <T: XMLBaseMappable>(left: inout Dictionary<String, T>?, right: XMLMap) {
+public func <- <T: XMLBaseMappable>(left: inout Dictionary<String, T>?, right: XMLMap) {
     switch right.mappingType {
     case .fromXML where right.isKeyPresent:
         FromXML.optionalObjectDictionary(&left, map: right)
     case .toXML:
-        left =>> right
+        left >>> right
     default: ()
     }
 }
 
-public func =>> <T: XMLBaseMappable>(left: Dictionary<String, T>?, right: XMLMap) {
+public func >>> <T: XMLBaseMappable>(left: Dictionary<String, T>?, right: XMLMap) {
     if right.mappingType == .toXML {
         ToXML.optionalObjectDictionary(left, map: right)
     }
@@ -148,45 +148,45 @@ public func =>> <T: XMLBaseMappable>(left: Dictionary<String, T>?, right: XMLMap
 
 
 /// Implicitly unwrapped Optional Dictionary of Mappable object <String, T: Mappable>
-public func <<- <T: XMLBaseMappable>(left: inout Dictionary<String, T>!, right: XMLMap) {
+public func <- <T: XMLBaseMappable>(left: inout Dictionary<String, T>!, right: XMLMap) {
     switch right.mappingType {
     case .fromXML where right.isKeyPresent:
         FromXML.optionalObjectDictionary(&left, map: right)
     case .toXML:
-        left =>> right
+        left >>> right
     default: ()
     }
 }
 
 /// Dictionary of Mappable objects <String, T: Mappable>
-public func <<- <T: XMLBaseMappable>(left: inout Dictionary<String, [T]>, right: XMLMap) {
+public func <- <T: XMLBaseMappable>(left: inout Dictionary<String, [T]>, right: XMLMap) {
     switch right.mappingType {
     case .fromXML where right.isKeyPresent:
         FromXML.objectDictionaryOfArrays(&left, map: right)
     case .toXML:
-        left =>> right
+        left >>> right
     default: ()
     }
 }
 
-public func =>> <T: XMLBaseMappable>(left: Dictionary<String, [T]>, right: XMLMap) {
+public func >>> <T: XMLBaseMappable>(left: Dictionary<String, [T]>, right: XMLMap) {
     if right.mappingType == .toXML {
         ToXML.objectDictionaryOfArrays(left, map: right)
     }
 }
 
 /// Optional Dictionary of Mappable object <String, T: Mappable>
-public func <<- <T: XMLBaseMappable>(left: inout Dictionary<String, [T]>?, right: XMLMap) {
+public func <- <T: XMLBaseMappable>(left: inout Dictionary<String, [T]>?, right: XMLMap) {
     switch right.mappingType {
     case .fromXML where right.isKeyPresent:
         FromXML.optionalObjectDictionaryOfArrays(&left, map: right)
     case .toXML:
-        left =>> right
+        left >>> right
     default: ()
     }
 }
 
-public func =>> <T: XMLBaseMappable>(left: Dictionary<String, [T]>?, right: XMLMap) {
+public func >>> <T: XMLBaseMappable>(left: Dictionary<String, [T]>?, right: XMLMap) {
     if right.mappingType == .toXML {
         ToXML.optionalObjectDictionaryOfArrays(left, map: right)
     }
@@ -194,12 +194,12 @@ public func =>> <T: XMLBaseMappable>(left: Dictionary<String, [T]>?, right: XMLM
 
 
 /// Implicitly unwrapped Optional Dictionary of Mappable object <String, T: Mappable>
-public func <<- <T: XMLBaseMappable>(left: inout Dictionary<String, [T]>!, right: XMLMap) {
+public func <- <T: XMLBaseMappable>(left: inout Dictionary<String, [T]>!, right: XMLMap) {
     switch right.mappingType {
     case .fromXML where right.isKeyPresent:
         FromXML.optionalObjectDictionaryOfArrays(&left, map: right)
     case .toXML:
-        left =>> right
+        left >>> right
     default: ()
     }
 }
@@ -207,34 +207,34 @@ public func <<- <T: XMLBaseMappable>(left: inout Dictionary<String, [T]>!, right
 // MARK:- Array of Mappable objects - Array<T: XMLBaseMappable>
 
 /// Array of Mappable objects
-public func <<- <T: XMLBaseMappable>(left: inout Array<T>, right: XMLMap) {
+public func <- <T: XMLBaseMappable>(left: inout Array<T>, right: XMLMap) {
     switch right.mappingType {
     case .fromXML where right.isKeyPresent:
         FromXML.objectArray(&left, map: right)
     case .toXML:
-        left =>> right
+        left >>> right
     default: ()
     }
 }
 
-public func =>> <T: XMLBaseMappable>(left: Array<T>, right: XMLMap) {
+public func >>> <T: XMLBaseMappable>(left: Array<T>, right: XMLMap) {
     if right.mappingType == .toXML {
         ToXML.objectArray(left, map: right)
     }
 }
 
 /// Optional array of Mappable objects
-public func <<- <T: XMLBaseMappable>(left: inout Array<T>?, right: XMLMap) {
+public func <- <T: XMLBaseMappable>(left: inout Array<T>?, right: XMLMap) {
     switch right.mappingType {
     case .fromXML where right.isKeyPresent:
         FromXML.optionalObjectArray(&left, map: right)
     case .toXML:
-        left =>> right
+        left >>> right
     default: ()
     }
 }
 
-public func =>> <T: XMLBaseMappable>(left: Array<T>?, right: XMLMap) {
+public func >>> <T: XMLBaseMappable>(left: Array<T>?, right: XMLMap) {
     if right.mappingType == .toXML {
         ToXML.optionalObjectArray(left, map: right)
     }
@@ -242,12 +242,12 @@ public func =>> <T: XMLBaseMappable>(left: Array<T>?, right: XMLMap) {
 
 
 /// Implicitly unwrapped Optional array of Mappable objects
-public func <<- <T: XMLBaseMappable>(left: inout Array<T>!, right: XMLMap) {
+public func <- <T: XMLBaseMappable>(left: inout Array<T>!, right: XMLMap) {
     switch right.mappingType {
     case .fromXML where right.isKeyPresent:
         FromXML.optionalObjectArray(&left, map: right)
     case .toXML:
-        left =>> right
+        left >>> right
     default: ()
     }
 }
@@ -255,17 +255,17 @@ public func <<- <T: XMLBaseMappable>(left: inout Array<T>!, right: XMLMap) {
 // MARK:- Array of Array of Mappable objects - Array<Array<T: XMLBaseMappable>>
 
 /// Array of Array Mappable objects
-public func <<- <T: XMLBaseMappable>(left: inout Array<Array<T>>, right: XMLMap) {
+public func <- <T: XMLBaseMappable>(left: inout Array<Array<T>>, right: XMLMap) {
     switch right.mappingType {
     case .fromXML where right.isKeyPresent:
         FromXML.twoDimensionalObjectArray(&left, map: right)
     case .toXML:
-        left =>> right
+        left >>> right
     default: ()
     }
 }
 
-public func =>> <T: XMLBaseMappable>(left: Array<Array<T>>, right: XMLMap) {
+public func >>> <T: XMLBaseMappable>(left: Array<Array<T>>, right: XMLMap) {
     if right.mappingType == .toXML {
         ToXML.twoDimensionalObjectArray(left, map: right)
     }
@@ -273,17 +273,17 @@ public func =>> <T: XMLBaseMappable>(left: Array<Array<T>>, right: XMLMap) {
 
 
 /// Optional array of Mappable objects
-public func <<- <T: XMLBaseMappable>(left:inout Array<Array<T>>?, right: XMLMap) {
+public func <- <T: XMLBaseMappable>(left:inout Array<Array<T>>?, right: XMLMap) {
     switch right.mappingType {
     case .fromXML where right.isKeyPresent:
         FromXML.optionalTwoDimensionalObjectArray(&left, map: right)
     case .toXML:
-        left =>> right
+        left >>> right
     default: ()
     }
 }
 
-public func =>> <T: XMLBaseMappable>(left: Array<Array<T>>?, right: XMLMap) {
+public func >>> <T: XMLBaseMappable>(left: Array<Array<T>>?, right: XMLMap) {
     if right.mappingType == .toXML {
         ToXML.optionalTwoDimensionalObjectArray(left, map: right)
     }
@@ -291,12 +291,12 @@ public func =>> <T: XMLBaseMappable>(left: Array<Array<T>>?, right: XMLMap) {
 
 
 /// Implicitly unwrapped Optional array of Mappable objects
-public func <<- <T: XMLBaseMappable>(left: inout Array<Array<T>>!, right: XMLMap) {
+public func <- <T: XMLBaseMappable>(left: inout Array<Array<T>>!, right: XMLMap) {
     switch right.mappingType {
     case .fromXML where right.isKeyPresent:
         FromXML.optionalTwoDimensionalObjectArray(&left, map: right)
     case .toXML:
-        left =>> right
+        left >>> right
     default: ()
     }
 }
@@ -304,17 +304,17 @@ public func <<- <T: XMLBaseMappable>(left: inout Array<Array<T>>!, right: XMLMap
 // MARK:- Set of Mappable objects - Set<T: XMLBaseMappable where T: Hashable>
 
 /// Set of Mappable objects
-public func <<- <T: XMLBaseMappable>(left: inout Set<T>, right: XMLMap) where T: Hashable {
+public func <- <T: XMLBaseMappable>(left: inout Set<T>, right: XMLMap) where T: Hashable {
     switch right.mappingType {
     case .fromXML where right.isKeyPresent:
         FromXML.objectSet(&left, map: right)
     case .toXML:
-        left =>> right
+        left >>> right
     default: ()
     }
 }
 
-public func =>> <T: XMLBaseMappable>(left: Set<T>, right: XMLMap) where T: Hashable {
+public func >>> <T: XMLBaseMappable>(left: Set<T>, right: XMLMap) where T: Hashable {
     if right.mappingType == .toXML {
         ToXML.objectSet(left, map: right)
     }
@@ -322,17 +322,17 @@ public func =>> <T: XMLBaseMappable>(left: Set<T>, right: XMLMap) where T: Hasha
 
 
 /// Optional Set of Mappable objects
-public func <<- <T: XMLBaseMappable>(left: inout Set<T>?, right: XMLMap) where T: Hashable, T: Hashable {
+public func <- <T: XMLBaseMappable>(left: inout Set<T>?, right: XMLMap) where T: Hashable, T: Hashable {
     switch right.mappingType {
     case .fromXML where right.isKeyPresent:
         FromXML.optionalObjectSet(&left, map: right)
     case .toXML:
-        left =>> right
+        left >>> right
     default: ()
     }
 }
 
-public func =>> <T: XMLBaseMappable>(left: Set<T>?, right: XMLMap) where T: Hashable, T: Hashable {
+public func >>> <T: XMLBaseMappable>(left: Set<T>?, right: XMLMap) where T: Hashable, T: Hashable {
     if right.mappingType == .toXML {
         ToXML.optionalObjectSet(left, map: right)
     }
@@ -340,12 +340,12 @@ public func =>> <T: XMLBaseMappable>(left: Set<T>?, right: XMLMap) where T: Hash
 
 
 /// Implicitly unwrapped Optional Set of Mappable objects
-public func <<- <T: XMLBaseMappable>(left: inout Set<T>!, right: XMLMap) where T: Hashable {
+public func <- <T: XMLBaseMappable>(left: inout Set<T>!, right: XMLMap) where T: Hashable {
     switch right.mappingType {
     case .fromXML where right.isKeyPresent:
         FromXML.optionalObjectSet(&left, map: right)
     case .toXML:
-        left =>> right
+        left >>> right
     default: ()
     }
 }
