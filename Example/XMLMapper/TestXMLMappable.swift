@@ -45,8 +45,8 @@ class TestElementXMLMappable: XMLMappable {
 
 class Element: XMLMappable {
     
-    var testInt: String?
-    var testDouble: String?
+    var testInt: Int?
+    var testDouble: Float?
     
     required init(map: XMLMap) {
         
