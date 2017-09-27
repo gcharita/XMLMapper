@@ -1,8 +1,7 @@
 {
   "name": "XMLMapper",
   "version": "0.1.0",
-  "summary": "A short description of XMLMapper.",
-  "description": "TODO: Add long description of the pod here.",
+  "summary": "A simple way to map XML to Objects written in Swift",
   "homepage": "https://github.com/gcharita/XMLMapper",
   "license": {
     "type": "MIT",
