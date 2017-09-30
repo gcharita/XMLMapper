@@ -121,13 +121,13 @@ internal final class ToXML {
         }
     }
     
-    class func objectSet<N: XMLBaseMappable>(_ field: Set<N>, map: XMLMap) where N: Hashable {
+    class func objectSet<N: XMLBaseMappable>(_ field: Set<N>, map: XMLMap) {
         let XMLObjects = XMLMapper().toXMLSet(field)
         
         setValue(XMLObjects, map: map)
     }
     
-    class func optionalObjectSet<N: XMLBaseMappable>(_ field: Set<N>?, map: XMLMap) where N: Hashable {
+    class func optionalObjectSet<N: XMLBaseMappable>(_ field: Set<N>?, map: XMLMap) {
         if let field = field {
             objectSet(field, map: map)
         }

@@ -214,7 +214,20 @@ public final class XMLMapper<N: XMLBaseMappable> {
     
     /// Convert a XML String into an Object using NSXMLSerialization
     public static func parseXMLString(XMLString: String) -> Any? {
+        prepareXMLDictionaryParser()
         return XMLDictionaryParser.sharedInstance().dictionary(with: XMLString)
+    }
+    
+    // Make sure that the XMLDictionaryParser instance has always the right configuration
+    private static func prepareXMLDictionaryParser() {
+        XMLDictionaryParser.sharedInstance().collapseTextNodes = true
+        XMLDictionaryParser.sharedInstance().stripEmptyNodes = true
+        XMLDictionaryParser.sharedInstance().trimWhiteSpace = true
+        XMLDictionaryParser.sharedInstance().alwaysUseArrays = false
+        XMLDictionaryParser.sharedInstance().preserveComments = false
+        XMLDictionaryParser.sharedInstance().wrapRootNode = false
+        XMLDictionaryParser.sharedInstance().attributesMode = .prefixed
+        XMLDictionaryParser.sharedInstance().nodeNameMode = .rootOnly
     }
 }
 

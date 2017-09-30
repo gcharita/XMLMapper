@@ -7,7 +7,7 @@
 //
 
 public protocol XMLBaseMappable {
-    func mapping(map: XMLMap)
+    mutating func mapping(map: XMLMap)
 }
 
 public protocol XMLMappable: XMLBaseMappable {

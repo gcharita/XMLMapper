@@ -301,10 +301,10 @@ public func <- <T: XMLBaseMappable>(left: inout Array<Array<T>>!, right: XMLMap)
     }
 }
 
-// MARK:- Set of Mappable objects - Set<T: XMLBaseMappable where T: Hashable>
+// MARK:- Set of Mappable objects - Set<T: XMLBaseMappable>
 
 /// Set of Mappable objects
-public func <- <T: XMLBaseMappable>(left: inout Set<T>, right: XMLMap) where T: Hashable {
+public func <- <T: XMLBaseMappable>(left: inout Set<T>, right: XMLMap) {
     switch right.mappingType {
     case .fromXML where right.isKeyPresent:
         FromXML.objectSet(&left, map: right)
@@ -314,7 +314,7 @@ public func <- <T: XMLBaseMappable>(left: inout Set<T>, right: XMLMap) where T: 
     }
 }
 
-public func >>> <T: XMLBaseMappable>(left: Set<T>, right: XMLMap) where T: Hashable {
+public func >>> <T: XMLBaseMappable>(left: Set<T>, right: XMLMap) {
     if right.mappingType == .toXML {
         ToXML.objectSet(left, map: right)
     }
@@ -322,7 +322,7 @@ public func >>> <T: XMLBaseMappable>(left: Set<T>, right: XMLMap) where T: Hasha
 
 
 /// Optional Set of Mappable objects
-public func <- <T: XMLBaseMappable>(left: inout Set<T>?, right: XMLMap) where T: Hashable, T: Hashable {
+public func <- <T: XMLBaseMappable>(left: inout Set<T>?, right: XMLMap) {
     switch right.mappingType {
     case .fromXML where right.isKeyPresent:
         FromXML.optionalObjectSet(&left, map: right)
@@ -332,7 +332,7 @@ public func <- <T: XMLBaseMappable>(left: inout Set<T>?, right: XMLMap) where T:
     }
 }
 
-public func >>> <T: XMLBaseMappable>(left: Set<T>?, right: XMLMap) where T: Hashable, T: Hashable {
+public func >>> <T: XMLBaseMappable>(left: Set<T>?, right: XMLMap) {
     if right.mappingType == .toXML {
         ToXML.optionalObjectSet(left, map: right)
     }
@@ -340,7 +340,7 @@ public func >>> <T: XMLBaseMappable>(left: Set<T>?, right: XMLMap) where T: Hash
 
 
 /// Implicitly unwrapped Optional Set of Mappable objects
-public func <- <T: XMLBaseMappable>(left: inout Set<T>!, right: XMLMap) where T: Hashable {
+public func <- <T: XMLBaseMappable>(left: inout Set<T>!, right: XMLMap) {
     switch right.mappingType {
     case .fromXML where right.isKeyPresent:
         FromXML.optionalObjectSet(&left, map: right)

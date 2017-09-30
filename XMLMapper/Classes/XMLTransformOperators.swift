@@ -522,7 +522,7 @@ public func <- <Transform: XMLTransformType>(left: inout [[Transform.Object]]!, 
 // MARK:- Set of Mappable objects with a transform - Set<T: XMLBaseMappable where T: Hashable>
 
 /// Set of Mappable objects with transform
-public func <- <Transform: XMLTransformType>(left: inout Set<Transform.Object>, right: (XMLMap, Transform)) where Transform.Object: Hashable & XMLBaseMappable {
+public func <- <Transform: XMLTransformType>(left: inout Set<Transform.Object>, right: (XMLMap, Transform)) where Transform.Object: XMLBaseMappable {
     let (map, transform) = right
     switch map.mappingType {
     case .fromXML where map.isKeyPresent:
@@ -535,7 +535,7 @@ public func <- <Transform: XMLTransformType>(left: inout Set<Transform.Object>, 
     }
 }
 
-public func >>> <Transform: XMLTransformType>(left: Set<Transform.Object>, right: (XMLMap, Transform)) where Transform.Object: Hashable & XMLBaseMappable {
+public func >>> <Transform: XMLTransformType>(left: Set<Transform.Object>, right: (XMLMap, Transform)) where Transform.Object: XMLBaseMappable {
     let (map, transform) = right
     if map.mappingType == .toXML {
         let transformedValues = toXMLArrayWithTransform(Array(left), transform: transform)
@@ -545,7 +545,7 @@ public func >>> <Transform: XMLTransformType>(left: Set<Transform.Object>, right
 
 
 /// Optional Set of Mappable objects with transform
-public func <- <Transform: XMLTransformType>(left: inout Set<Transform.Object>?, right: (XMLMap, Transform)) where Transform.Object: Hashable & XMLBaseMappable {
+public func <- <Transform: XMLTransformType>(left: inout Set<Transform.Object>?, right: (XMLMap, Transform)) where Transform.Object: XMLBaseMappable {
     let (map, transform) = right
     switch map.mappingType {
     case .fromXML where map.isKeyPresent:
@@ -558,7 +558,7 @@ public func <- <Transform: XMLTransformType>(left: inout Set<Transform.Object>?,
     }
 }
 
-public func >>> <Transform: XMLTransformType>(left: Set<Transform.Object>?, right: (XMLMap, Transform)) where Transform.Object: Hashable & XMLBaseMappable {
+public func >>> <Transform: XMLTransformType>(left: Set<Transform.Object>?, right: (XMLMap, Transform)) where Transform.Object: XMLBaseMappable {
     let (map, transform) = right
     if map.mappingType == .toXML {
         if let values = left {
@@ -570,7 +570,7 @@ public func >>> <Transform: XMLTransformType>(left: Set<Transform.Object>?, righ
 
 
 /// Implicitly unwrapped Optional set of Mappable objects with transform
-public func <- <Transform: XMLTransformType>(left: inout Set<Transform.Object>!, right: (XMLMap, Transform)) where Transform.Object: Hashable & XMLBaseMappable {
+public func <- <Transform: XMLTransformType>(left: inout Set<Transform.Object>!, right: (XMLMap, Transform)) where Transform.Object: XMLBaseMappable {
     let (map, transform) = right
     switch map.mappingType {
     case .fromXML where map.isKeyPresent:
