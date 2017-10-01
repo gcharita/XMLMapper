@@ -2,7 +2,7 @@ platform :ios, '8.0'
 use_frameworks!
 
 target 'XMLMapper_Example' do
-  pod 'XMLMapper', :path => '../'
+  pod 'XMLMapper/Requests', :path => '../'
 
   target 'XMLMapper_Tests' do
     inherit! :search_paths

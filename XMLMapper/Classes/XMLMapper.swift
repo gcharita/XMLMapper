@@ -212,23 +212,18 @@ public final class XMLMapper<N: XMLBaseMappable> {
         return parsedXML as? [String: Any]
     }
     
-    /// Convert a XML String into an Object using NSXMLSerialization
+    /// Convert a XML String into an Object using XMLSerialization
     public static func parseXMLString(XMLString: String) -> Any? {
-        prepareXMLDictionaryParser()
-        return XMLDictionaryParser.sharedInstance().dictionary(with: XMLString)
+        var parsedXML: Any?
+        do {
+            parsedXML = try XMLSerialization.xmlObject(withString: XMLString)
+        } catch let error {
+            print(error)
+            parsedXML = nil
+        }
+        return parsedXML
     }
-    
-    // Make sure that the XMLDictionaryParser instance has always the right configuration
-    private static func prepareXMLDictionaryParser() {
-        XMLDictionaryParser.sharedInstance().collapseTextNodes = true
-        XMLDictionaryParser.sharedInstance().stripEmptyNodes = true
-        XMLDictionaryParser.sharedInstance().trimWhiteSpace = true
-        XMLDictionaryParser.sharedInstance().alwaysUseArrays = false
-        XMLDictionaryParser.sharedInstance().preserveComments = false
-        XMLDictionaryParser.sharedInstance().wrapRootNode = false
-        XMLDictionaryParser.sharedInstance().attributesMode = .prefixed
-        XMLDictionaryParser.sharedInstance().nodeNameMode = .rootOnly
-    }
+
 }
 
 extension XMLMapper {

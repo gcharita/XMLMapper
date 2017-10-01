@@ -18,7 +18,17 @@ Pod::Spec.new do |s|
 
   s.ios.deployment_target = '8.0'
 
-  s.source_files = 'XMLMapper/Classes/**/*'
+  s.default_subspec = 'Core'
 
-  s.dependency 'XMLDictionary', '~> 1.4'
+  s.subspec 'Core' do |core|
+    core.source_files = 'XMLMapper/Classes/**/*'
+    core.exclude_files = 'XMLMapper/Classes/Requests'
+    core.dependency 'XMLDictionary', '~> 1.4'
+  end
+
+  s.subspec 'Requests' do |requests|
+    requests.source_files = 'XMLMapper/Classes/Requests/'
+    requests.dependency 'XMLMapper/Core'
+    requests.dependency 'Alamofire', '~> 4.1'
+  end
 end

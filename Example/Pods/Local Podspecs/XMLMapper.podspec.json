@@ -17,10 +17,29 @@
   "platforms": {
     "ios": "8.0"
   },
-  "source_files": "XMLMapper/Classes/**/*",
-  "dependencies": {
-    "XMLDictionary": [
-      "~> 1.4"
-    ]
-  }
+  "default_subspecs": "Core",
+  "subspecs": [
+    {
+      "name": "Core",
+      "source_files": "XMLMapper/Classes/**/*",
+      "exclude_files": "XMLMapper/Classes/Requests",
+      "dependencies": {
+        "XMLDictionary": [
+          "~> 1.4"
+        ]
+      }
+    },
+    {
+      "name": "Requests",
+      "source_files": "XMLMapper/Classes/Requests/",
+      "dependencies": {
+        "XMLMapper/Core": [
+
+        ],
+        "Alamofire": [
+          "~> 4.1"
+        ]
+      }
+    }
+  ]
 }
