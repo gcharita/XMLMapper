@@ -5,9 +5,20 @@
 //  Created by Giorgos Charitakis on 14/09/2017.
 //
 //
+import XMLDictionary
 
 public protocol XMLBaseMappable {
+    var nodeName: String! { get set }
     mutating func mapping(map: XMLMap)
+}
+
+extension XMLBaseMappable {
+    
+    /// Start mapping by map the XML nodeName first
+    mutating func mapping(with map: XMLMap) {
+        nodeName <- map[XMLDictionaryNodeNameKey]
+        mapping(map: map)
+    }
 }
 
 public protocol XMLMappable: XMLBaseMappable {

@@ -39,7 +39,7 @@ public final class XMLMapper<N: XMLBaseMappable> {
     public func map(XML: [String: Any], toObject object: N) -> N {
         var mutableObject = object
         let map = XMLMap(mappingType: .fromXML, XML: XML, toObject: true)
-        mutableObject.mapping(map: map)
+        mutableObject.mapping(with: map)
         return mutableObject
     }
     
@@ -69,7 +69,7 @@ public final class XMLMapper<N: XMLBaseMappable> {
         
         if let klass = N.self as? XMLMappable.Type { // Check if object is Mappable
             if var object = klass.init(map: map) as? N {
-                object.mapping(map: map)
+                object.mapping(with: map)
                 return object
             }
         } else {
@@ -239,7 +239,7 @@ extension XMLMapper {
     public func toXML(_ object: N) -> [String: Any] {
         var mutableObject = object
         let map = XMLMap(mappingType: .toXML, XML: [:])
-        mutableObject.mapping(map: map)
+        mutableObject.mapping(with: map)
         return map.XML
     }
     

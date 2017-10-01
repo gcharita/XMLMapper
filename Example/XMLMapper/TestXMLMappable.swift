@@ -10,6 +10,7 @@ import Foundation
 import XMLMapper
 
 class TestXMLMappable: XMLMappable {
+    var nodeName: String!
     
     var testElement: TestElementXMLMappable!
     
@@ -27,6 +28,7 @@ enum EnumTest: String {
 }
 
 class TestElementXMLMappable: XMLMappable {
+    var nodeName: String!
     
     var testString: String?
     var testAttribute: EnumTest?
@@ -44,6 +46,7 @@ class TestElementXMLMappable: XMLMappable {
 }
 
 class Element: XMLMappable {
+    var nodeName: String!
     
     var testInt: Int?
     var testDouble: Float?
