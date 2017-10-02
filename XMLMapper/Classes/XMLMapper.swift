@@ -278,11 +278,8 @@ extension XMLMapper {
     
     /// Converts an Object to a XML string with option of pretty formatting
     public static func toXMLString(_ XMLObject: Any, prettyPrint: Bool) -> String? {
-        if let XMLDictionary = XMLObject as? [String: Any] {
-            return XMLDictionary.xmlString
-        } else if let XMLArrayDictionary = XMLObject as? [[String: Any]] {
-            // TODO: Find root note name if needed
-            return XMLArrayDictionary.map({ $0.xmlString }).joined()
+        if let xmlRepresentable = XMLObject as? XMLRepresentable {
+            return xmlRepresentable.xmlString
         }
         
         return nil
