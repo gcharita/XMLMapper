@@ -58,7 +58,7 @@ public class XMLSerialization {
      */
     open class func data(withXMLObject obj: Any, appendingXMLDeclaration: Bool = false) throws -> Data {
         prepareXMLDictionaryParser()
-        guard var xmlString = (obj as? [String: Any])?.xmlString else {
+        guard var xmlString = (obj as? XMLRepresentable)?.xmlString else {
             throw XMLSerializationError.invalidFoundationObject
         }
         if appendingXMLDeclaration {
