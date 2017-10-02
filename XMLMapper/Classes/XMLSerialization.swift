@@ -56,12 +56,18 @@ public class XMLSerialization {
     
     /* Generate XML data from a Foundation object. If an error occurs, then an exception will be thrown. The resulting data is a encoded in UTF-8.
      */
-    open class func data(withXMLObject obj: Any) throws -> Data {
+    open class func data(withXMLObject obj: Any, appendingXMLDeclaration: Bool = false) throws -> Data {
         prepareXMLDictionaryParser()
-        guard let xmlData = (obj as? [String: Any])?.xmlString.data(using: .utf8) else {
+        guard var xmlString = (obj as? [String: Any])?.xmlString else {
             throw XMLSerializationError.invalidFoundationObject
         }
-        return xmlData
+        if appendingXMLDeclaration {
+            xmlString = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\(xmlString)"
+        }
+        guard let data = xmlString.data(using: .utf8) else {
+            throw XMLSerializationError.invalidFoundationObject
+        }
+        return data
     }
     
     // Make sure that the XMLDictionaryParser instance has always the right configuration

@@ -51,7 +51,7 @@ public struct XMLEncoding: ParameterEncoding {
             urlRequest.setValue("text/xml; charset=\"utf-8\"", forHTTPHeaderField: "Content-Type")
         }
         
-        let data = try XMLSerialization.data(withXMLObject: parameters)
+        let data = try XMLSerialization.data(withXMLObject: parameters, appendingXMLDeclaration: true)
         if let soapAction = soapAction {
             urlRequest.setValue(soapAction, forHTTPHeaderField: "SOAPACTION")
             urlRequest.setValue("\(data.count)", forHTTPHeaderField: "Content-Length")
