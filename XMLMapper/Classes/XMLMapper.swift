@@ -268,21 +268,21 @@ extension XMLMapper {
     }
     
     /// Maps an Object to a XML string with option of pretty formatting
-    public func toXMLString(_ object: N, prettyPrint: Bool = false) -> String? {
+    public func toXMLString(_ object: N) -> String? {
         let XMLDict = toXML(object)
         
-        return XMLMapper.toXMLString(XMLDict as Any, prettyPrint: prettyPrint)
+        return XMLMapper.toXMLString(XMLDict as Any)
     }
     
     /// Maps an array of Objects to a XML string with option of pretty formatting
-    public func toXMLString(_ array: [N], prettyPrint: Bool = false) -> String? {
+    public func toXMLString(_ array: [N]) -> String? {
         let XMLDict = toXMLArray(array)
         
-        return XMLMapper.toXMLString(XMLDict as Any, prettyPrint: prettyPrint)
+        return XMLMapper.toXMLString(XMLDict as Any)
     }
     
     /// Converts an Object to a XML string with option of pretty formatting
-    public static func toXMLString(_ XMLObject: Any, prettyPrint: Bool) -> String? {
+    public static func toXMLString(_ XMLObject: Any) -> String? {
         if let XMLDictionary = XMLObject as? [String: Any] {
             return XMLDictionary.xmlString
         } else if let XMLArrayDictionary = XMLObject as? [[String: Any]] {
@@ -337,10 +337,10 @@ extension XMLMapper where N: Hashable {
     }
     
     /// Maps a set of Objects to a XML string with option of pretty formatting
-    public func toXMLString(_ set: Set<N>, prettyPrint: Bool = false) -> String? {
+    public func toXMLString(_ set: Set<N>) -> String? {
         let XMLDict = toXMLSet(set)
         
-        return XMLMapper.toXMLString(XMLDict as Any, prettyPrint: prettyPrint)
+        return XMLMapper.toXMLString(XMLDict as Any)
     }
 }
 

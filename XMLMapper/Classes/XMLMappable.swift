@@ -51,8 +51,8 @@ public extension XMLBaseMappable {
     }
     
     /// Returns the XML String for the object
-    public func toXMLString(prettyPrint: Bool = false) -> String? {
-        return XMLMapper().toXMLString(self, prettyPrint: prettyPrint)
+    public func toXMLString() -> String? {
+        return XMLMapper().toXMLString(self)
     }
 }
 
@@ -79,8 +79,8 @@ public extension Array where Element: XMLBaseMappable {
     }
     
     /// Returns the XML String for the object
-    public func toXMLString(prettyPrint: Bool = false) -> String? {
-        return XMLMapper().toXMLString(self, prettyPrint: prettyPrint)
+    public func toXMLString() -> String? {
+        return XMLMapper().toXMLString(self)
     }
 }
 
@@ -109,7 +109,7 @@ public extension Set where Element: XMLBaseMappable {
     }
     
     /// Returns the XML String for the object
-    public func toXMLString(prettyPrint: Bool = false) -> String? {
-        return XMLMapper().toXMLString(self, prettyPrint: prettyPrint)
+    public func toXMLString() -> String? {
+        return XMLMapper().toXMLString(self)
     }
 }
