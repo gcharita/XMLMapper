@@ -208,6 +208,7 @@ to classes:
 
 ```swift
 class TestXMLMappable: XMLMappable {
+    var nodeName: String!
 
     var testElement: TestElementXMLMappable!
 
@@ -225,6 +226,7 @@ enum EnumTest: String {
 }
 
 class TestElementXMLMappable: XMLMappable {
+    var nodeName: String!
 
     var testString: String?
     var testAttribute: EnumTest?
@@ -242,6 +244,7 @@ class TestElementXMLMappable: XMLMappable {
 }
 
 class Element: XMLMappable {
+    var nodeName: String!
 
     var testInt: Int?
     var testDouble: Float?
@@ -257,6 +260,168 @@ class Element: XMLMappable {
 }
 ```
 
+## Requests subspec
+
+Create and send easily request with XML body using ```Alamofire``` (added missing ```XMLEncoding``` struct)
+
+```swift
+Alamofire.request(url, method: .post, parameters: xmlMappableObject.toXML(), encoding: XMLEncoding.default)
+```
+
+Also map XML responses to ```XMLMappable``` objects using the ```Alamofire``` extension. For example a URL returns the following CD catalog:
+
+```xml
+<CATALOG>
+    <CD>
+        <TITLE>Empire Burlesque</TITLE>
+        <ARTIST>Bob Dylan</ARTIST>
+        <COUNTRY>USA</COUNTRY>
+        <COMPANY>Columbia</COMPANY>
+        <PRICE>10.90</PRICE>
+        <YEAR>1985</YEAR>
+    </CD>
+    <CD>
+        <TITLE>Hide your heart</TITLE>
+        <ARTIST>Bonnie Tyler</ARTIST>
+        <COUNTRY>UK</COUNTRY>
+        <COMPANY>CBS Records</COMPANY>
+        <PRICE>9.90</PRICE>
+        <YEAR>1988</YEAR>
+    </CD>
+</CATALOG>
+```
+
+Map the response as follows:
+
+```swift
+Alamofire.request(url).responseXMLObject { (response: DataResponse<CDCatalog>) in
+    let catalog = response.result.value
+    print(catalog?.cds?.first?.title ?? "nil")
+}
+```
+
+The ```CDCatalog``` object will look something like this:
+
+```swift
+class CDCatalog: XMLMappable {
+    var nodeName: String!
+
+    var cds: [CD]?
+
+    required init(map: XMLMap) {
+
+    }
+
+    func mapping(map: XMLMap) {
+        cds <- map["CD"]
+    }
+
+}
+
+class CD: XMLMappable {
+    var nodeName: String!
+
+    var title: String!
+    var artist: String?
+    var country: String?
+    var company: String?
+    var price: Double?
+    var year: Int?
+
+    required init(map: XMLMap) {
+
+    }
+
+    func mapping(map: XMLMap) {
+        title <- map["TITLE"]
+        artist <- map["ARTIST"]
+        country <- map["COUNTRY"]
+        company <- map["COMPANY"]
+        price <- map["PRICE"]
+        year <- map["YEAR"]
+    }
+
+}
+```
+
+Last but not least, create easily and send SOAP requests, again using ```Alamofire```:
+
+```swift
+let soapMessage = SOAPMessage(soapAction: "ActionName", nameSpace: "ActionNameSpace")
+let soapEnvelope = SOAPEnvelope(soapMessage: soapMessage)
+
+Alamofire.request(url, method: .post, parameters: soapEnvelope.toXML(), encoding: XMLEncoding.soap(withAction: "ActionNameSpace#ActionName"))
+```
+
+The request will look something like this:
+
+```rest
+POST / HTTP/1.1
+Host: <The url>
+Content-Type: text/xml; charset="utf-8"
+Connection: keep-alive
+SOAPAction: ActionNameSpace#ActionName
+Accept: */*
+User-Agent: XMLMapper_Example/1.0 (org.cocoapods.demo.XMLMapper-Example; build:1; iOS 11.0.0) Alamofire/4.5.1
+Accept-Language: en;q=1.0
+Content-Length: 251
+Accept-Encoding: gzip;q=1.0, compress;q=0.5
+
+<?xml version="1.0" encoding="utf-8"?>
+<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" soap:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
+    <soap:Body>
+        <m:ActionName xmlns:m="ActionNameSpace"/>
+    </soap:Body>
+</soap:Envelope>
+```
+
+Adding action parameters is as easy as subclassing the ```SOAPMessage``` class. 
+
+```swift
+class MySOAPMessage: SOAPMessage {
+
+    // Custom properties
+
+    override func mapping(map: XMLMap) {
+        super.mapping(map: map)
+
+        // Map the custom properties
+    }
+}
+```
+
+Also specify the SOAP version that the endpoint use as follows:
+
+```swift
+let soapMessage = SOAPMessage(soapAction: "ActionName", nameSpace: "ActionNameSpace")
+let soapEnvelope = SOAPEnvelope(soapMessage: soapMessage, soapVersion: .version1point2)
+
+Alamofire.request(url, method: .post, parameters: soapEnvelope.toXML(), encoding: XMLEncoding.soap(withAction: "ActionNameSpace#ActionName", soapVersion: .version1point2))
+```
+
+and the request will change to this:
+
+```rest
+POST / HTTP/1.1
+Host: <The url>
+Content-Type: application/soap+xml;charset=UTF-8;action="ActionNameSpace#ActionName"
+Connection: keep-alive
+Accept: */*
+User-Agent: XMLMapper_Example/1.0 (org.cocoapods.demo.XMLMapper-Example; build:1; iOS 11.0.0) Alamofire/4.5.1
+Accept-Language: en;q=1.0
+Content-Length: 248
+Accept-Encoding: gzip;q=1.0, compress;q=0.5
+
+<?xml version="1.0" encoding="utf-8"?>
+<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope/" soap:encodingStyle="http://www.w3.org/2003/05/soap-encoding">
+    <soap:Body>
+        <m:ActionName xmlns:m="ActionNameSpace"/>
+    </soap:Body>
+</soap:Envelope>
+```
+
+Unfortunately, there isn't an easy way to map SOAP response, other than creating your own XMLMappable objects (at least not for the moment)
+
 ## Installation
 
 XMLMapper is available through [CocoaPods](http://cocoapods.org). To install
@@ -266,10 +431,18 @@ it, simply add the following line to your Podfile:
 pod 'XMLMapper'
 ```
 
+To install the ```Requests``` subspec add the following line to your Podfile:
+
+```ruby
+pod 'XMLMapper/Requests'
+```
+
 ## Special thanks
 
 - Special thanks to [Hearst-DD](https://github.com/Hearst-DD). This project is based in  [ObjectMapper](https://github.com/Hearst-DD/ObjectMapper) for the most part, which is a great solution for JSON mapping
+- Special thanks to [Tristan Himmelman](https://github.com/tristanhimmelman) and [AlamofireObjectMapper](https://github.com/tristanhimmelman/AlamofireObjectMapper). The Requests subspec is based on his idea.
 - A special thanks to [Nick Lockwood](https://github.com/nicklockwood) and [XMLDictionary](https://github.com/nicklockwood/XMLDictionary) for the project dependency
+- A special thanks to [Alamofire](https://github.com/Alamofire/Alamofire) for the subspec dependency
 
 ## License
 
