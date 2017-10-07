@@ -15,7 +15,9 @@ public class SOAPEnvelope: XMLMappable {
     var soapBody: SOAPBody!
     var soapHeader: SOAPHeader?
     
-    public init(soapMessage: SOAPMessage, soapInformation: SOAPInformation? = nil) {
+    public init(soapMessage: SOAPMessage, soapInformation: SOAPInformation? = nil, soapVersion: SOAPVersion = .version1point1) {
+        xmlnsSOAP = soapVersion.namespace
+        soapEncodingStyle = soapVersion.encodingStyle
         self.soapBody = SOAPBody(soapMessage: soapMessage)
         if let soapInformation = soapInformation {
             self.soapHeader = SOAPHeader(soapInformation: soapInformation)

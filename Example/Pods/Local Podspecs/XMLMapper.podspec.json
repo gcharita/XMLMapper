@@ -1,6 +1,6 @@
 {
   "name": "XMLMapper",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "summary": "A simple way to map XML to Objects written in Swift",
   "homepage": "https://github.com/gcharita/XMLMapper",
   "license": {
@@ -12,10 +12,13 @@
   },
   "source": {
     "git": "https://github.com/gcharita/XMLMapper.git",
-    "tag": "0.1.0"
+    "tag": "1.0.0"
   },
   "platforms": {
-    "ios": "8.0"
+    "watchos": "2.0",
+    "ios": "8.0",
+    "osx": "10.9",
+    "tvos": "9.0"
   },
   "default_subspecs": "Core",
   "subspecs": [
@@ -31,6 +34,12 @@
     },
     {
       "name": "Requests",
+      "platforms": {
+        "watchos": "2.0",
+        "ios": "8.0",
+        "osx": "10.10",
+        "tvos": "9.0"
+      },
       "source_files": "XMLMapper/Classes/Requests/",
       "dependencies": {
         "XMLMapper/Core": [

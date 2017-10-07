@@ -1,6 +1,6 @@
 //
 //  FromXML.swift
-//  Pods
+//  XMLMapper
 //
 //  Created by Giorgos Charitakis on 14/09/2017.
 //

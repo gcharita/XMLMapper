@@ -1,5 +1,5 @@
 //
-//  AlamofireXMLMapper.swift
+//  DataRequest+XMLMapper.swift
 //  XMLMapper
 //
 //  Created by Giorgos Charitakis on 30/09/2017.

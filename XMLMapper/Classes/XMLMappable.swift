@@ -1,6 +1,6 @@
 //
-//  XMLMapper.swift
-//  Pods
+//  XMLMappable.swift
+//  XMLMapper
 //
 //  Created by Giorgos Charitakis on 14/09/2017.
 //

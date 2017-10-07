@@ -3,9 +3,9 @@ PODS:
   - Nimble (7.0.1)
   - Quick (1.0.0)
   - XMLDictionary (1.4.1)
-  - XMLMapper/Core (0.1.0):
+  - XMLMapper/Core (1.0.0):
     - XMLDictionary (~> 1.4)
-  - XMLMapper/Requests (0.1.0):
+  - XMLMapper/Requests (1.0.0):
     - Alamofire (~> 4.1)
     - XMLMapper/Core
 
@@ -23,7 +23,7 @@ SPEC CHECKSUMS:
   Nimble: 657d000e11df8aebe27cdaf9d244de7f30ed87f7
   Quick: 8024e4a47e6cc03a9d5245ef0948264fc6d27cff
   XMLDictionary: fa07b6ff422b3a91d47a5de9bc82e3fc04fbd167
-  XMLMapper: 7adcf9803ef0f14536b73d1fa838aa88b5c9ee54
+  XMLMapper: 244ec65a0d58f3f5e530c9a41ef310e41674a4a4
 
 PODFILE CHECKSUM: 7ff8d10f5c76f1b6e08849801d9e6c94d4a27308
 

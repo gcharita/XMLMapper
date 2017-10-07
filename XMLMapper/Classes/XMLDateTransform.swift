@@ -1,6 +1,6 @@
 //
 //  XMLDateTransform.swift
-//  Pods
+//  XMLMapper
 //
 //  Created by Giorgos Charitakis on 15/09/2017.
 //

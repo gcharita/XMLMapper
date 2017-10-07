@@ -1,6 +1,6 @@
 //
 //  XMLEncoding.swift
-//  Pods
+//  XMLMapper
 //
 //  Created by Giorgos Charitakis on 30/09/2017.
 //
@@ -14,22 +14,23 @@ public struct XMLEncoding: ParameterEncoding {
     
     // MARK: Properties
     
-    /// Returns a `XMLEncoding` instance for a simple XML body
+    /// Returns a `XMLEncoding` instance for a simple XML request body
     public static var `default`: XMLEncoding { return XMLEncoding() }
     
     private var soapAction: String?
+    private var soapVersion: SOAPVersion?
     
     // MARK: Initialization
     
     /// Creates a `XMLEncoding` instance
-    private init() { }
-    private init(soapAction: String) {
+    public init(withAction soapAction: String? = nil, soapVersion: SOAPVersion? = nil) {
         self.soapAction = soapAction
+        self.soapVersion = soapVersion
     }
     
-    /// Returns a `XMLEncoding` instance for a SOAP body
-    public static func soap(withAction soapAction: String) -> XMLEncoding {
-        return XMLEncoding(soapAction: soapAction)
+    /// Returns a `XMLEncoding` instance for a SOAP request body
+    public static func soap(withAction soapAction: String?, soapVersion: SOAPVersion = .version1point1) -> XMLEncoding {
+        return XMLEncoding(withAction: soapAction, soapVersion: soapVersion)
     }
     
     // MARK: Encoding
@@ -47,13 +48,26 @@ public struct XMLEncoding: ParameterEncoding {
         
         guard let parameters = parameters else { return urlRequest }
         
+        let data = try XMLSerialization.data(withXMLObject: parameters, appendingXMLDeclaration: true)
+        
         if urlRequest.value(forHTTPHeaderField: "Content-Type") == nil {
-            urlRequest.setValue("text/xml; charset=\"utf-8\"", forHTTPHeaderField: "Content-Type")
+            switch soapVersion {
+            case .none:
+                urlRequest.setValue("text/xml; charset=\"utf-8\"", forHTTPHeaderField: "Content-Type")
+            case .some(let soapVersion):
+                var contentType = soapVersion.contentType
+                if let soapAction = soapAction, soapVersion == .version1point2 {
+                    contentType += ";action=\"\(soapAction)\""
+                }
+                urlRequest.setValue(contentType, forHTTPHeaderField: "Content-Type")
+            }
         }
         
-        let data = try XMLSerialization.data(withXMLObject: parameters, appendingXMLDeclaration: true)
-        if let soapAction = soapAction {
-            urlRequest.setValue(soapAction, forHTTPHeaderField: "SOAPACTION")
+        if let soapAction = soapAction, urlRequest.value(forHTTPHeaderField: "SOAPAction") == nil, soapVersion == .version1point1 {
+            urlRequest.setValue(soapAction, forHTTPHeaderField: "SOAPAction")
+        }
+        
+        if urlRequest.value(forHTTPHeaderField: "Content-Length") == nil, soapVersion != nil {
             urlRequest.setValue("\(data.count)", forHTTPHeaderField: "Content-Length")
         }
         
