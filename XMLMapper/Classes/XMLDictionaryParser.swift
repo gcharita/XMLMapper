@@ -41,8 +41,8 @@ class XMLDictionaryParser: NSObject, NSCopying, XMLParserDelegate {
     var attributesMode: XMLDictionaryAttributesMode = .prefixed
     var nodeNameMode: XMLDictionaryNodeNameMode = .rootOnly
     
-    var root: [String: Any]?
-    var stack: [[String: Any]]?
+    var root: NSMutableDictionary?
+    var stack: [NSMutableDictionary]?
     var text: String?
     
     internal required override init() {
@@ -74,7 +74,7 @@ class XMLDictionaryParser: NSObject, NSCopying, XMLParserDelegate {
         root = nil
         stack = nil
         text = nil
-        return result
+        return result as? [String: Any]
     }
     
     func dictionary(withData data: Data) -> [String: Any]? {
@@ -124,7 +124,7 @@ class XMLDictionaryParser: NSObject, NSCopying, XMLParserDelegate {
             text = text?.trimmingCharacters(in: .whitespacesAndNewlines)
         }
         if let text = text, !text.isEmpty {
-            var top = stack?.last
+            let top = stack?.last
             let existing = top?[XMLDictionaryTextKey]
             if var existingArray = existing as? [Any] {
                 existingArray.append(text)
@@ -146,7 +146,7 @@ class XMLDictionaryParser: NSObject, NSCopying, XMLParserDelegate {
     func parser(_ parser: XMLParser, didStartElement elementName: String, namespaceURI: String?, qualifiedName qName: String?, attributes attributeDict: [String : String] = [:]) {
         endText()
         
-        var node: [String: Any] = [:]
+        let node: NSMutableDictionary = [:]
         switch nodeNameMode {
         case .rootOnly:
             if root == nil {
@@ -183,7 +183,7 @@ class XMLDictionaryParser: NSObject, NSCopying, XMLParserDelegate {
                 stack?.insert(root!, at: 0)
             }
         } else {
-            var top = stack?.last
+            let top = stack?.last
             let existing = top?[elementName]
             if var existingArray = existing as? [Any] {
                 existingArray.append(node)
@@ -216,11 +216,11 @@ class XMLDictionaryParser: NSObject, NSCopying, XMLParserDelegate {
     func parser(_ parser: XMLParser, didEndElement elementName: String, namespaceURI: String?, qualifiedName qName: String?) {
         endText()
         
-        var top = stack?.removeLast()
+        let top = stack?.removeLast()
         
         if top?.attributes == nil && top?.childNodes == nil && top?.comments == nil {
-            var newTop = stack?.last
-            if let nodeName = name(forNode: top, inDictionary: newTop) {
+            let newTop = stack?.last
+            if let nodeName = name(forNode: top as? [String: Any], inDictionary: newTop as? [String: Any]) {
                 let parentNode = newTop?[nodeName]
                 let innerText = top?.innerText
                 if let innerText = innerText, collapseTextNodes {
@@ -234,7 +234,8 @@ class XMLDictionaryParser: NSObject, NSCopying, XMLParserDelegate {
                         if var parentNodeArray = parentNode as? [Any] {
                             parentNodeArray.removeLast()
                         } else {
-                            newTop?.removeValue(forKey: nodeName)
+                            newTop?.removeObject(forKey:
+                                nodeName)
                         }
                     } else if !collapseTextNodes {
                         top?[XMLDictionaryTextKey] = ""
@@ -257,7 +258,7 @@ class XMLDictionaryParser: NSObject, NSCopying, XMLParserDelegate {
     
     func parser(_ parser: XMLParser, foundComment comment: String) {
         if preserveComments {
-            var top = stack?.last
+            let top = stack?.last
             var comments = top?[XMLDictionaryCommentsKey] as? [String]
             if comments == nil {
                 comments = [comment]
@@ -272,6 +273,52 @@ class XMLDictionaryParser: NSObject, NSCopying, XMLParserDelegate {
 func == <K, V>(left: [K: V], right: [K: V]) -> Bool {
     return NSDictionary(dictionary: left).isEqual(to: right)
 }
+
+
+extension NSMutableDictionary {
+    var attributes: [String: String]? {
+        let dictionary = self as? [String: Any]
+        if let attributes = dictionary?[XMLDictionaryAttributesKey] {
+            return attributes as? [String: String]
+        } else {
+            var filteredDict = dictionary
+            let filteredKeys = [XMLDictionaryCommentsKey, XMLDictionaryTextKey, XMLDictionaryNodeNameKey]
+            filteredKeys.forEach({ filteredDict?.removeValue(forKey: $0) })
+            filteredDict?.keys.forEach({ (key: String) in
+                filteredDict?.removeValue(forKey: key)
+                if key.hasPrefix(XMLDictionaryAttributePrefix) {
+                    filteredDict?[key.substring(from: XMLDictionaryAttributePrefix.endIndex)] = dictionary?[key]
+                }
+            })
+            return filteredDict as? [String: String]
+        }
+    }
+    
+    var childNodes: [String: Any]? {
+        var filteredDict = self as? [String: Any]
+        let filteredKeys = [XMLDictionaryAttributesKey, XMLDictionaryCommentsKey, XMLDictionaryTextKey, XMLDictionaryNodeNameKey]
+        filteredKeys.forEach({ filteredDict?.removeValue(forKey: $0) })
+        filteredDict?.keys.forEach({ (key: String) in
+            if key.hasPrefix(XMLDictionaryAttributePrefix) {
+                filteredDict?.removeValue(forKey: key)
+            }
+        })
+        return filteredDict
+    }
+    
+    var comments: [String]? {
+        return self[XMLDictionaryCommentsKey] as? [String]
+    }
+    
+    var innerText: String? {
+        let text = self[XMLDictionaryTextKey]
+        if let stringArray = text as? [String] {
+            return stringArray.joined(separator: "\n")
+        }
+        return text as? String
+    }
+}
+
 
 extension Dictionary {
     static func with(parser: XMLParser) -> [String: Any]? {
