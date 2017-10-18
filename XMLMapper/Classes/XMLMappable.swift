@@ -5,7 +5,6 @@
 //  Created by Giorgos Charitakis on 14/09/2017.
 //
 //
-import XMLDictionary
 
 public protocol XMLBaseMappable {
     var nodeName: String! { get set }

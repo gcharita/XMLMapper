@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import XMLDictionary
 
 public class XMLSerialization {
     private enum XMLSerializationError: String, Error {
@@ -37,7 +36,7 @@ public class XMLSerialization {
     
     open class func xmlObject(withString xmlString: String) throws -> Any {
         prepareXMLDictionaryParser()
-        guard let xmlObject = XMLDictionaryParser.sharedInstance().dictionary(with: xmlString) else {
+        guard let xmlObject = XMLDictionaryParser.shared.dictionary(withString: xmlString) else {
             throw XMLSerializationError.invalidXMLDocument
         }
         return xmlObject
@@ -48,7 +47,7 @@ public class XMLSerialization {
      */
     open class func xmlObject(with data: Data) throws -> Any {
         prepareXMLDictionaryParser()
-        guard let xmlObject =  XMLDictionaryParser.sharedInstance().dictionary(with: data) else {
+        guard let xmlObject =  XMLDictionaryParser.shared.dictionary(withData: data) else {
             throw XMLSerializationError.invalidData
         }
         return xmlObject
@@ -72,13 +71,13 @@ public class XMLSerialization {
     
     // Make sure that the XMLDictionaryParser instance has always the right configuration
     private static func prepareXMLDictionaryParser() {
-        XMLDictionaryParser.sharedInstance().collapseTextNodes = true
-        XMLDictionaryParser.sharedInstance().stripEmptyNodes = true
-        XMLDictionaryParser.sharedInstance().trimWhiteSpace = true
-        XMLDictionaryParser.sharedInstance().alwaysUseArrays = false
-        XMLDictionaryParser.sharedInstance().preserveComments = false
-        XMLDictionaryParser.sharedInstance().wrapRootNode = false
-        XMLDictionaryParser.sharedInstance().attributesMode = .prefixed
-        XMLDictionaryParser.sharedInstance().nodeNameMode = .always
+        XMLDictionaryParser.shared.collapseTextNodes = true
+        XMLDictionaryParser.shared.stripEmptyNodes = true
+        XMLDictionaryParser.shared.trimWhiteSpace = true
+        XMLDictionaryParser.shared.alwaysUseArrays = false
+        XMLDictionaryParser.shared.preserveComments = false
+        XMLDictionaryParser.shared.wrapRootNode = false
+        XMLDictionaryParser.shared.attributesMode = .prefixed
+        XMLDictionaryParser.shared.nodeNameMode = .always
     }
 }

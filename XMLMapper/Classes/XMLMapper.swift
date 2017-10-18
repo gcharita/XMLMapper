@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import XMLDictionary
 
 public final class XMLMapper<N: XMLBaseMappable> {
 //    public var shouldIncludeNilValues = false /// If this is set to true, toXML output will include null values for any variables that are not set.

@@ -7,16 +7,12 @@
 //
 
 import Foundation
-import XMLDictionary
 
 protocol XMLRepresentable {
     var xmlString: String { get }
 }
 
 extension Dictionary: XMLRepresentable {
-    var xmlString: String {
-        return (self as NSDictionary).xmlString
-    }
 }
 
 extension Array: XMLRepresentable {
