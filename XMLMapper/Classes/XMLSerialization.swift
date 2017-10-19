@@ -36,7 +36,7 @@ public class XMLSerialization {
     
     open class func xmlObject(withString xmlString: String) throws -> Any {
         prepareXMLDictionaryParser()
-        guard let xmlObject = XMLDictionaryParser.shared.dictionary(withString: xmlString) else {
+        guard let xmlObject = XMLObjectParser.shared.dictionary(withString: xmlString) else {
             throw XMLSerializationError.invalidXMLDocument
         }
         return xmlObject
@@ -47,7 +47,7 @@ public class XMLSerialization {
      */
     open class func xmlObject(with data: Data) throws -> Any {
         prepareXMLDictionaryParser()
-        guard let xmlObject =  XMLDictionaryParser.shared.dictionary(withData: data) else {
+        guard let xmlObject =  XMLObjectParser.shared.dictionary(withData: data) else {
             throw XMLSerializationError.invalidData
         }
         return xmlObject
@@ -71,13 +71,13 @@ public class XMLSerialization {
     
     // Make sure that the XMLDictionaryParser instance has always the right configuration
     private static func prepareXMLDictionaryParser() {
-        XMLDictionaryParser.shared.collapseTextNodes = true
-        XMLDictionaryParser.shared.stripEmptyNodes = true
-        XMLDictionaryParser.shared.trimWhiteSpace = true
-        XMLDictionaryParser.shared.alwaysUseArrays = false
-        XMLDictionaryParser.shared.preserveComments = false
-        XMLDictionaryParser.shared.wrapRootNode = false
-        XMLDictionaryParser.shared.attributesMode = .prefixed
-        XMLDictionaryParser.shared.nodeNameMode = .always
+        XMLObjectParser.shared.collapseTextNodes = true
+        XMLObjectParser.shared.stripEmptyNodes = true
+        XMLObjectParser.shared.trimWhiteSpace = true
+        XMLObjectParser.shared.alwaysUseArrays = false
+        XMLObjectParser.shared.preserveComments = false
+        XMLObjectParser.shared.wrapRootNode = false
+        XMLObjectParser.shared.attributesMode = .prefixed
+        XMLObjectParser.shared.nodeNameMode = .always
     }
 }

@@ -15,7 +15,7 @@ extension XMLBaseMappable {
     
     /// Start mapping by map the XML nodeName first
     mutating func mapping(with map: XMLMap) {
-        nodeName <- map[XMLDictionaryNodeNameKey]
+        nodeName <- map[XMLObjectParserNodeNameKey]
         mapping(map: map)
     }
 }
