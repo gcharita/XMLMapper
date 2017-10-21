@@ -22,7 +22,7 @@ extension NSMutableDictionary {
                     filteredDict?[key.substring(from: XMLObjectParserAttributePrefix.endIndex)] = dictionary?[key]
                 }
             })
-            return filteredDict as? [String: String]
+            return filteredDict?.isEmpty == false ? filteredDict as? [String: String] : nil
         }
     }
     
@@ -35,7 +35,7 @@ extension NSMutableDictionary {
                 filteredDict?.removeValue(forKey: key)
             }
         })
-        return filteredDict
+        return filteredDict?.isEmpty == false ? filteredDict : nil
     }
     
     var comments: [String]? {

@@ -98,10 +98,10 @@ class XMLObjectParser: NSObject {
         if let text = text, !text.isEmpty {
             let top = stack?.last
             let existing = top?[XMLObjectParserTextKey]
-            if var existingArray = existing as? [Any] {
-                existingArray.append(text)
+            if let existingArray = existing as? NSMutableArray {
+                existingArray.add(text)
             } else if let existing = existing {
-                top?[XMLObjectParserTextKey] = [existing, text]
+                top?[XMLObjectParserTextKey] = NSMutableArray(array: [existing, text])
             } else {
                 top?[XMLObjectParserTextKey] = text
             }
@@ -161,11 +161,12 @@ extension XMLObjectParser: XMLParserDelegate {
         } else {
             let top = stack?.last
             let existing = top?[elementName]
-            if var existingArray = existing as? [Any] {
-                existingArray.append(node)
-                top?[elementName] = existingArray
+            if let existingArray = existing as? NSMutableArray {
+                existingArray.add(node)
             } else if let existing = existing {
-                top?[elementName] = [existing, node]
+                top?[elementName] = NSMutableArray(array: [existing, node])
+            } else if alwaysUseArrays {
+                top?[elementName] = NSMutableArray(object: node)
             } else {
                 top?[elementName] = node
             }
@@ -184,18 +185,17 @@ extension XMLObjectParser: XMLParserDelegate {
                 let parentNode = newTop?[nodeName]
                 let innerText = top?.innerText
                 if let innerText = innerText, collapseTextNodes {
-                    if var parentNodeArray = parentNode as? [Any] {
+                    if let parentNodeArray = parentNode as? NSMutableArray {
                         parentNodeArray[parentNodeArray.count - 1] = innerText
                     } else {
                         newTop?[nodeName] = innerText
                     }
                 } else if innerText == nil {
                     if stripEmptyNodes {
-                        if var parentNodeArray = parentNode as? [Any] {
-                            parentNodeArray.removeLast()
+                        if let parentNodeArray = parentNode as? NSMutableArray {
+                            parentNodeArray.removeLastObject()
                         } else {
-                            newTop?.removeObject(forKey:
-                                nodeName)
+                            newTop?.removeObject(forKey: nodeName)
                         }
                     } else if !collapseTextNodes {
                         top?[XMLObjectParserTextKey] = ""
@@ -219,12 +219,12 @@ extension XMLObjectParser: XMLParserDelegate {
     func parser(_ parser: XMLParser, foundComment comment: String) {
         if preserveComments {
             let top = stack?.last
-            var comments = top?[XMLObjectParserCommentsKey] as? [String]
+            var comments = top?[XMLObjectParserCommentsKey] as? NSMutableArray
             if comments == nil {
-                comments = [comment]
+                comments = NSMutableArray(object: comment)
                 top?[XMLObjectParserCommentsKey] = comments
             } else {
-                comments?.append(comment)
+                comments?.add(comment)
             }
         }
     }
