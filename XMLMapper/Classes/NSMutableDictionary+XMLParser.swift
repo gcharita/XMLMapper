@@ -10,16 +10,16 @@ import Foundation
 extension NSMutableDictionary {
     var attributes: [String: String]? {
         let dictionary = self as? [String: Any]
-        if let attributes = dictionary?[XMLObjectParserAttributesKey] {
+        if let attributes = dictionary?[XMLParserConstant.Key.attributes] {
             return attributes as? [String: String]
         } else {
             var filteredDict = dictionary
-            let filteredKeys = [XMLObjectParserCommentsKey, XMLObjectParserTextKey, XMLObjectParserNodeNameKey]
+            let filteredKeys = [XMLParserConstant.Key.comments, XMLParserConstant.Key.text, XMLParserConstant.Key.nodeName]
             filteredKeys.forEach({ filteredDict?.removeValue(forKey: $0) })
             filteredDict?.keys.forEach({ (key: String) in
                 filteredDict?.removeValue(forKey: key)
-                if key.hasPrefix(XMLObjectParserAttributePrefix) {
-                    filteredDict?[key.substring(from: XMLObjectParserAttributePrefix.endIndex)] = dictionary?[key]
+                if key.hasPrefix(XMLParserConstant.attributePrefix) {
+                    filteredDict?[key.substring(from: XMLParserConstant.attributePrefix.endIndex)] = dictionary?[key]
                 }
             })
             return filteredDict?.isEmpty == false ? filteredDict as? [String: String] : nil
@@ -28,10 +28,10 @@ extension NSMutableDictionary {
     
     var childNodes: [String: Any]? {
         var filteredDict = self as? [String: Any]
-        let filteredKeys = [XMLObjectParserAttributesKey, XMLObjectParserCommentsKey, XMLObjectParserTextKey, XMLObjectParserNodeNameKey]
+        let filteredKeys = [XMLParserConstant.Key.attributes, XMLParserConstant.Key.comments, XMLParserConstant.Key.text, XMLParserConstant.Key.nodeName]
         filteredKeys.forEach({ filteredDict?.removeValue(forKey: $0) })
         filteredDict?.keys.forEach({ (key: String) in
-            if key.hasPrefix(XMLObjectParserAttributePrefix) {
+            if key.hasPrefix(XMLParserConstant.attributePrefix) {
                 filteredDict?.removeValue(forKey: key)
             }
         })
@@ -39,11 +39,11 @@ extension NSMutableDictionary {
     }
     
     var comments: [String]? {
-        return self[XMLObjectParserCommentsKey] as? [String]
+        return self[XMLParserConstant.Key.comments] as? [String]
     }
     
     var innerText: String? {
-        let text = self[XMLObjectParserTextKey]
+        let text = self[XMLParserConstant.Key.text]
         if let stringArray = text as? [String] {
             return stringArray.joined(separator: "\n")
         }

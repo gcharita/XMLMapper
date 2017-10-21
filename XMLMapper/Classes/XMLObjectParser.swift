@@ -20,12 +20,6 @@ enum XMLObjectParserNodeNameMode {
     case never
 }
 
-let XMLObjectParserAttributesKey = "__attributes"
-let XMLObjectParserCommentsKey = "__comments"
-let XMLObjectParserTextKey = "__text"
-let XMLObjectParserNodeNameKey = "__name"
-let XMLObjectParserAttributePrefix = "_"
-
 class XMLObjectParser: NSObject {
     
     // MARK: - Properties
@@ -97,13 +91,13 @@ class XMLObjectParser: NSObject {
         }
         if let text = text, !text.isEmpty {
             let top = stack?.last
-            let existing = top?[XMLObjectParserTextKey]
+            let existing = top?[XMLParserConstant.Key.text]
             if let existingArray = existing as? NSMutableArray {
                 existingArray.add(text)
             } else if let existing = existing {
-                top?[XMLObjectParserTextKey] = NSMutableArray(array: [existing, text])
+                top?[XMLParserConstant.Key.text] = NSMutableArray(array: [existing, text])
             } else {
-                top?[XMLObjectParserTextKey] = text
+                top?[XMLParserConstant.Key.text] = text
             }
         }
         text = nil
@@ -126,10 +120,10 @@ extension XMLObjectParser: XMLParserDelegate {
         switch nodeNameMode {
         case .rootOnly:
             if root == nil {
-                node[XMLObjectParserNodeNameKey] = elementName
+                node[XMLParserConstant.Key.nodeName] = elementName
             }
         case .always:
-            node[XMLObjectParserNodeNameKey] = elementName
+            node[XMLParserConstant.Key.nodeName] = elementName
         case .never:
             break
         }
@@ -138,10 +132,10 @@ extension XMLObjectParser: XMLParserDelegate {
             switch attributesMode {
             case .prefixed:
                 for (key, value) in attributeDict {
-                    node["\(XMLObjectParserAttributePrefix)\(key)"] = value
+                    node["\(XMLParserConstant.attributePrefix)\(key)"] = value
                 }
             case .dictionary:
-                node[XMLObjectParserAttributesKey] = attributeDict
+                node[XMLParserConstant.Key.attributes] = attributeDict
             case .unprefixed:
                 for (key, value) in attributeDict {
                     node[key] = value
@@ -198,7 +192,7 @@ extension XMLObjectParser: XMLParserDelegate {
                             newTop?.removeObject(forKey: nodeName)
                         }
                     } else if !collapseTextNodes {
-                        top?[XMLObjectParserTextKey] = ""
+                        top?[XMLParserConstant.Key.text] = ""
                     }
                 }
             }
@@ -219,10 +213,10 @@ extension XMLObjectParser: XMLParserDelegate {
     func parser(_ parser: XMLParser, foundComment comment: String) {
         if preserveComments {
             let top = stack?.last
-            var comments = top?[XMLObjectParserCommentsKey] as? NSMutableArray
+            var comments = top?[XMLParserConstant.Key.comments] as? NSMutableArray
             if comments == nil {
                 comments = NSMutableArray(object: comment)
-                top?[XMLObjectParserCommentsKey] = comments
+                top?[XMLParserConstant.Key.comments] = comments
             } else {
                 comments?.add(comment)
             }

@@ -26,16 +26,16 @@ extension Dictionary {
     
     var attributes: [String: String]? {
         let dictionary = self as? [String: Any]
-        if let attributes = dictionary?[XMLObjectParserAttributesKey] {
+        if let attributes = dictionary?[XMLParserConstant.Key.attributes] {
             return attributes as? [String: String]
         } else {
             var filteredDict = dictionary
-            let filteredKeys = [XMLObjectParserCommentsKey, XMLObjectParserTextKey, XMLObjectParserNodeNameKey]
+            let filteredKeys = [XMLParserConstant.Key.comments, XMLParserConstant.Key.text, XMLParserConstant.Key.nodeName]
             filteredKeys.forEach({ filteredDict?.removeValue(forKey: $0) })
             filteredDict?.keys.forEach({ (key: String) in
                 filteredDict?.removeValue(forKey: key)
-                if key.hasPrefix(XMLObjectParserAttributePrefix) {
-                    filteredDict?[key.substring(from: XMLObjectParserAttributePrefix.endIndex)] = dictionary?[key]
+                if key.hasPrefix(XMLParserConstant.attributePrefix) {
+                    filteredDict?[key.substring(from: XMLParserConstant.attributePrefix.endIndex)] = dictionary?[key]
                 }
             })
             return filteredDict as? [String: String]
@@ -44,10 +44,10 @@ extension Dictionary {
     
     var childNodes: [String: Any]? {
         var filteredDict = self as? [String: Any]
-        let filteredKeys = [XMLObjectParserAttributesKey, XMLObjectParserCommentsKey, XMLObjectParserTextKey, XMLObjectParserNodeNameKey]
+        let filteredKeys = [XMLParserConstant.Key.attributes, XMLParserConstant.Key.comments, XMLParserConstant.Key.text, XMLParserConstant.Key.nodeName]
         filteredKeys.forEach({ filteredDict?.removeValue(forKey: $0) })
         filteredDict?.keys.forEach({ (key: String) in
-            if key.hasPrefix(XMLObjectParserAttributePrefix) {
+            if key.hasPrefix(XMLParserConstant.attributePrefix) {
                 filteredDict?.removeValue(forKey: key)
             }
         })
@@ -55,15 +55,15 @@ extension Dictionary {
     }
     
     var comments: [String]? {
-        return (self as [AnyHashable: Any])[XMLObjectParserCommentsKey] as? [String]
+        return (self as [AnyHashable: Any])[XMLParserConstant.Key.comments] as? [String]
     }
     
     var nodeName: String? {
-        return (self as [AnyHashable: Any])[XMLObjectParserNodeNameKey] as? String
+        return (self as [AnyHashable: Any])[XMLParserConstant.Key.nodeName] as? String
     }
     
     var innerText: String? {
-        let text = (self as [AnyHashable: Any])[XMLObjectParserTextKey]
+        let text = (self as [AnyHashable: Any])[XMLParserConstant.Key.text]
         if let stringArray = text as? [String] {
             return stringArray.joined(separator: "\n")
         }
