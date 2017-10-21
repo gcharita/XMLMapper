@@ -163,6 +163,7 @@ extension XMLObjectParser: XMLParserDelegate {
             let existing = top?[elementName]
             if var existingArray = existing as? [Any] {
                 existingArray.append(node)
+                top?[elementName] = existingArray
             } else if let existing = existing {
                 top?[elementName] = [existing, node]
             } else {
