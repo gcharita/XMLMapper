@@ -26,7 +26,7 @@ let XMLObjectParserTextKey = "__text"
 let XMLObjectParserNodeNameKey = "__name"
 let XMLObjectParserAttributePrefix = "_"
 
-class XMLObjectParser: NSObject, NSCopying {
+class XMLObjectParser: NSObject {
     
     // MARK: - Properties
     
@@ -39,7 +39,7 @@ class XMLObjectParser: NSObject, NSCopying {
     var preserveComments: Bool
     var wrapRootNode: Bool
     var attributesMode: XMLObjectParserAttributesMode = .prefixed
-    var nodeNameMode: XMLObjectParserNodeNameMode = .rootOnly
+    var nodeNameMode: XMLObjectParserNodeNameMode = .always
     
     fileprivate var root: NSMutableDictionary?
     fileprivate var stack: [NSMutableDictionary]?
@@ -54,21 +54,6 @@ class XMLObjectParser: NSObject, NSCopying {
         alwaysUseArrays = false
         preserveComments = false
         wrapRootNode = false
-    }
-    
-    // MARK: - NSCopying
-    
-    func copy(with zone: NSZone? = nil) -> Any {
-        let copy = type(of: self).init()
-        copy.collapseTextNodes = collapseTextNodes
-        copy.stripEmptyNodes = stripEmptyNodes
-        copy.trimWhiteSpace = trimWhiteSpace
-        copy.alwaysUseArrays = alwaysUseArrays
-        copy.preserveComments = preserveComments
-        copy.attributesMode = attributesMode
-        copy.nodeNameMode = nodeNameMode
-        copy.wrapRootNode = wrapRootNode
-        return copy
     }
     
     // MARK: - Basic interface functions
