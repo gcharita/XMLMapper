@@ -8,7 +8,7 @@
 import Foundation
 
 extension String {
-    var xmlEncodedString: String {
+    public var xmlEncodedString: String {
         return self.replacingOccurrences(of: "&", with: "&amp;")
             .replacingOccurrences(of: "<", with: "&lt;")
             .replacingOccurrences(of: ">", with: "&gt;")

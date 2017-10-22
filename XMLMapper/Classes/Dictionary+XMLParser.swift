@@ -8,22 +8,6 @@
 import Foundation
 
 extension Dictionary {
-    static func with(parser: XMLParser) -> [String: Any]? {
-        return XMLObjectParser.shared.dictionary(with: parser)
-    }
-    
-    static func with(data: Data) -> [String: Any]? {
-        return XMLObjectParser.shared.dictionary(withData: data)
-    }
-    
-    static func with(string: String) -> [String: Any]? {
-        return XMLObjectParser.shared.dictionary(withString: string)
-    }
-    
-    static func with(filePath: String) -> [String: Any]? {
-        return XMLObjectParser.shared.dictionary(withFile: filePath)
-    }
-    
     var attributes: [String: String]? {
         let dictionary = self as? [String: Any]
         if let attributes = dictionary?[XMLParserConstant.Key.attributes] {
@@ -38,7 +22,7 @@ extension Dictionary {
                     filteredDict?[key.substring(from: XMLParserConstant.attributePrefix.endIndex)] = dictionary?[key]
                 }
             })
-            return filteredDict as? [String: String]
+            return filteredDict?.isEmpty == false ? filteredDict as? [String: String] : nil
         }
     }
     
@@ -51,7 +35,7 @@ extension Dictionary {
                 filteredDict?.removeValue(forKey: key)
             }
         })
-        return filteredDict
+        return filteredDict?.isEmpty == false ? filteredDict : nil
     }
     
     var comments: [String]? {

@@ -25,12 +25,12 @@ public class XMLSerialization {
         }
     }
     
-    open class func xmlObject(withString xmlString: String, options: ParseOptions = .default) throws -> Any {
+    open class func xmlObject(withString xmlString: String, using encoding: String.Encoding = .utf8, options: ParseOptions = .default) throws -> Any {
         options.applyToParser()
-        guard let xmlObject = XMLObjectParser.shared.dictionary(withString: xmlString) else {
+        guard let xmlData = xmlString.data(using: encoding) else {
             throw XMLSerializationError.invalidXMLDocument
         }
-        return xmlObject
+        return try xmlObject(with: xmlData)
     }
     
     /* Create a Foundation object from XML data. If an error occurs during the parse, then an exception will be thrown.
