@@ -24,7 +24,7 @@ class XMLObjectParser: NSObject {
     
     // MARK: - Properties
     
-    static let shared = XMLObjectParser()
+    private static let shared = XMLObjectParser()
     
     var collapseTextNodes: Bool
     var stripEmptyNodes: Bool
@@ -50,40 +50,52 @@ class XMLObjectParser: NSObject {
         wrapRootNode = false
     }
     
-    // MARK: - Basic interface functions
+    // MARK: - Basic interface function
     
-    func dictionary(with parser: XMLParser) -> [String: Any]? {
-        parser.delegate = self
+    class func dictionary(with parser: XMLParser, options: XMLSerialization.ReadingOptions) -> [String: Any]? {
+        parser.delegate = shared
+        shared.applyOptions(options)
         parser.parse()
-        let result = root
-        root = nil
-        stack = nil
-        text = nil
+        let result = shared.root
+        shared.clearProperties()
         return result as? [String: Any]
     }
     
-    func dictionary(withData data: Data) -> [String: Any]? {
-        let parser = XMLParser(data: data)
-        return dictionary(with: parser)
-    }
-    
-    func dictionary(withString string: String) -> [String: Any]? {
-        guard let data = string.data(using: .utf8) else {
-            return nil
-        }
-        return dictionary(withData: data)
-    }
-    
-    func dictionary(withFile path: String) -> [String: Any]? {
-        do {
-            let string = try String(contentsOfFile: path)
-            return dictionary(withString: string)
-        } catch {
-            return nil
-        }
-    }
-    
     // MARK: - Util functions
+    
+    func applyOptions(_ options: XMLSerialization.ReadingOptions = .default) {
+        collapseTextNodes = options.contains(.collapseTextNodes)
+        stripEmptyNodes = options.contains(.stripEmptyNodes)
+        trimWhiteSpace = options.contains(.trimWhiteSpace)
+        alwaysUseArrays = options.contains(.alwaysUseArrays)
+        preserveComments = options.contains(.preserveComments)
+        wrapRootNode = options.contains(.wrapRootNode)
+
+        if options.contains(.prefixedAttributes) {
+            attributesMode = .prefixed
+        } else if options.contains(.unprefixedAttributes) {
+            attributesMode = .unprefixed
+        } else if options.contains(.dictionaryAttributes) {
+            attributesMode = .dictionary
+        } else if options.contains(.discardAttributes) {
+            attributesMode = .discard
+        }
+
+        if options.contains(.alwaysNodeName) {
+            nodeNameMode = .always
+        } else if options.contains(.rootOnlyNodeName) {
+            nodeNameMode = .rootOnly
+        } else if options.contains(.neverNodeName) {
+            nodeNameMode = .never
+        }
+    }
+    
+    func clearProperties() {
+        root = nil
+        stack = nil
+        text = nil
+        applyOptions()
+    }
     
     func endText() {
         if trimWhiteSpace {

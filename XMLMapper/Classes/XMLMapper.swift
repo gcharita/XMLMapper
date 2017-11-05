@@ -205,7 +205,7 @@ public final class XMLMapper<N: XMLBaseMappable> {
     
     // MARK: Utility functions for converting strings to XML objects
     
-    /// Convert a XML String into a Dictionary<String, Any> using NSXMLSerialization
+    /// Convert a XML String into a Dictionary<String, Any> using XMLSerialization
     public static func parseXMLStringIntoDictionary(XMLString: String) -> [String: Any]? {
         let parsedXML: Any? = XMLMapper.parseXMLString(XMLString: XMLString)
         return parsedXML as? [String: Any]

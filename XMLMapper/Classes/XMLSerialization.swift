@@ -25,29 +25,30 @@ public class XMLSerialization {
         }
     }
     
-    open class func xmlObject(withString xmlString: String, using encoding: String.Encoding = .utf8, options: ParseOptions = .default) throws -> Any {
-        options.applyToParser()
-        guard let xmlData = xmlString.data(using: encoding) else {
-            throw XMLSerializationError.invalidXMLDocument
-        }
-        return try xmlObject(with: xmlData)
-    }
-    
-    /* Create a Foundation object from XML data. If an error occurs during the parse, then an exception will be thrown.
-     The data must be in one of the 5 supported encodings listed in the XML specification: UTF-8, UTF-16LE, UTF-16BE, UTF-32LE, UTF-32BE. The data may or may not have a BOM. The most efficient encoding to use for parsing is UTF-8, so if you have a choice in encoding the data passed to this method, use UTF-8.
-     */
-    open class func xmlObject(with data: Data, options: ParseOptions = .default) throws -> Any {
-        options.applyToParser()
-        guard let xmlObject =  XMLObjectParser.shared.dictionary(withData: data) else {
+    open class func xmlObject(with parser: XMLParser, options: ReadingOptions = .default) throws -> Any {
+        guard let xmlObject = XMLObjectParser.dictionary(with: parser, options: options) else {
             throw XMLSerializationError.invalidData
         }
         return xmlObject
     }
     
+    open class func xmlObject(withString xmlString: String, using encoding: String.Encoding = .utf8, options: ReadingOptions = .default) throws -> Any {
+        guard let xmlData = xmlString.data(using: encoding) else {
+            throw XMLSerializationError.invalidXMLDocument
+        }
+        return try xmlObject(with: xmlData, options: options)
+    }
+    
+    /* Create a Foundation object from XML data. If an error occurs during the parse, then an exception will be thrown.
+     The data must be in one of the 5 supported encodings listed in the XML specification: UTF-8, UTF-16LE, UTF-16BE, UTF-32LE, UTF-32BE. The data may or may not have a BOM. The most efficient encoding to use for parsing is UTF-8, so if you have a choice in encoding the data passed to this method, use UTF-8.
+     */
+    open class func xmlObject(with data: Data, options: ReadingOptions = .default) throws -> Any {
+        return try xmlObject(with: XMLParser(data: data), options: options)
+    }
+    
     /* Generate XML data from a Foundation object. If an error occurs, then an exception will be thrown. The resulting data is a encoded in UTF-8.
      */
-    open class func data(withXMLObject obj: Any, appendingXMLDeclaration: Bool = false, options: ParseOptions = .default) throws -> Data {
-        options.applyToParser()
+    open class func data(withXMLObject obj: Any, appendingXMLDeclaration: Bool = false, options: ReadingOptions = .default) throws -> Data {
         guard var xmlString = (obj as? XMLRepresentable)?.xmlString else {
             throw XMLSerializationError.invalidFoundationObject
         }
