@@ -48,7 +48,7 @@ public struct XMLEncoding: ParameterEncoding {
         
         guard let parameters = parameters else { return urlRequest }
         
-        let data = try XMLSerialization.data(withXMLObject: parameters, appendingXMLDeclaration: true)
+        let data = try XMLSerialization.data(withXMLObject: parameters, addXMLDeclaration: true)
         
         if urlRequest.value(forHTTPHeaderField: "Content-Type") == nil {
             switch soapVersion {
