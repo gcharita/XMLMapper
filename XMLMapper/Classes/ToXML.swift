@@ -16,14 +16,14 @@ private func setValue(_ value: Any, map: XMLMap) {
 
 private func setValue(_ value: Any, key: String, checkForNestedKeys: Bool, delimiter: String, dictionary: inout [String : Any]) {
     if checkForNestedKeys {
-        let keyComponents = ArraySlice(key.components(separatedBy: delimiter).filter { !$0.isEmpty }.map { $0.characters })
+        let keyComponents = ArraySlice(key.components(separatedBy: delimiter).filter { !$0.isEmpty })
         setValue(value, forKeyPathComponents: keyComponents, dictionary: &dictionary)
     } else {
         dictionary[key] = value
     }
 }
 
-private func setValue(_ value: Any, forKeyPathComponents components: ArraySlice<String.CharacterView.SubSequence>, dictionary: inout [String : Any]) {
+private func setValue(_ value: Any, forKeyPathComponents components: ArraySlice<String>, dictionary: inout [String : Any]) {
     if components.isEmpty {
         return
     }
@@ -31,9 +31,9 @@ private func setValue(_ value: Any, forKeyPathComponents components: ArraySlice<
     let head = components.first!
     
     if components.count == 1 {
-        dictionary[String(head)] = value
+        dictionary[head] = value
     } else {
-        var child = dictionary[String(head)] as? [String : Any]
+        var child = dictionary[head] as? [String : Any]
         if child == nil {
             child = [:]
         }
@@ -41,7 +41,7 @@ private func setValue(_ value: Any, forKeyPathComponents components: ArraySlice<
         let tail = components.dropFirst()
         setValue(value, forKeyPathComponents: tail, dictionary: &child!)
         
-        dictionary[String(head)] = child
+        dictionary[head] = child
     }
 }
 
