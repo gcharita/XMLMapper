@@ -300,7 +300,8 @@ public func <- <Transform: XMLTransformType>(left: inout Dictionary<String, [Tra
     let (map, transform) = right
     
     if let dictionary = map.currentValue as? [String : [Any]], map.mappingType == .fromXML && map.isKeyPresent {
-        let transformedDictionary = dictionary.map { (key: String, values: [Any]) -> (String, [Transform.Object]) in
+        let transformedDictionary = dictionary.map { (arg: (key: String, values: [Any])) -> (String, [Transform.Object]) in
+            let (key, values) = arg
             if let XMLArray = fromXMLArrayWithTransform(values, transform: transform) {
                 return (key, XMLArray)
             }
@@ -320,8 +321,8 @@ public func >>> <Transform: XMLTransformType>(left: Dictionary<String, [Transfor
     let (map, transform) = right
     
     if map.mappingType == .toXML {
-        let transformedDictionary = left.map { (key, values) in
-            return (key, toXMLArrayWithTransform(values, transform: transform) ?? [])
+        let transformedDictionary = left.map { (arg: (key: String, value: [Transform.Object])) in
+            return (arg.key, toXMLArrayWithTransform(arg.value, transform: transform) ?? [])
         }
         
         ToXML.basicType(transformedDictionary, map: map)
@@ -335,7 +336,8 @@ public func <- <Transform: XMLTransformType>(left: inout Dictionary<String, [Tra
     
     if let dictionary = map.currentValue as? [String : [Any]], map.mappingType == .fromXML && map.isKeyPresent {
         
-        let transformedDictionary = dictionary.map { (key: String, values: [Any]) -> (String, [Transform.Object]) in
+        let transformedDictionary = dictionary.map { (arg: (key: String, values: [Any])) -> (String, [Transform.Object]) in
+            let (key, values) = arg
             if let XMLArray = fromXMLArrayWithTransform(values, transform: transform) {
                 return (key, XMLArray)
             }
@@ -343,7 +345,6 @@ public func <- <Transform: XMLTransformType>(left: inout Dictionary<String, [Tra
                 return (key, leftValue)
             }
             return (key, [])
-            
         }
         
         FromXML.optionalBasicType(&left, object: transformedDictionary)
@@ -356,8 +357,8 @@ public func >>> <Transform: XMLTransformType>(left: Dictionary<String, [Transfor
     let (map, transform) = right
     
     if map.mappingType == .toXML {
-        let transformedDictionary = left?.map { (key, values) in
-            return (key, toXMLArrayWithTransform(values, transform: transform) ?? [])
+        let transformedDictionary = left?.map { (arg: (key: String, values: [Transform.Object])) in
+            return (arg.key, toXMLArrayWithTransform(arg.values, transform: transform) ?? [])
         }
         
         ToXML.optionalBasicType(transformedDictionary, map: map)
@@ -370,7 +371,8 @@ public func <- <Transform: XMLTransformType>(left: inout Dictionary<String, [Tra
     let (map, transform) = right
     
     if let dictionary = map.currentValue as? [String : [Any]], map.mappingType == .fromXML && map.isKeyPresent {
-        let transformedDictionary = dictionary.map { (key: String, values: [Any]) -> (String, [Transform.Object]) in
+        let transformedDictionary = dictionary.map { (arg: (key: String, values: [Any])) -> (String, [Transform.Object]) in
+            let (key, values) = arg
             if let XMLArray = fromXMLArrayWithTransform(values, transform: transform) {
                 return (key, XMLArray)
             }
