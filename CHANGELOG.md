@@ -1,5 +1,12 @@
 # Change Log
 
+## [1.4.0](https://github.com/gcharita/XMLMapper/releases/tag/1.4.0) (2018-01-04)
+
+- Added Swift 4 support
+- Added Swift Package Manager support
+- Added CHANGELOG.md
+- Fixed compilation warnings
+
 ## [1.3.0](https://github.com/gcharita/XMLMapper/releases/tag/1.3.0) (2017-11-05)
 
 - Removed XMLDictionary dependency and replaced with Swift code
