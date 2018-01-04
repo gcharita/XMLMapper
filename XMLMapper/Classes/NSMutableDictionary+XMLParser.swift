@@ -19,7 +19,7 @@ extension NSMutableDictionary {
             filteredDict?.keys.forEach({ (key: String) in
                 filteredDict?.removeValue(forKey: key)
                 if key.hasPrefix(XMLParserConstant.attributePrefix) {
-                    filteredDict?[key.substring(from: XMLParserConstant.attributePrefix.endIndex)] = dictionary?[key]
+                    filteredDict?[String(key[XMLParserConstant.attributePrefix.endIndex...])] = dictionary?[key]
                 }
             })
             return filteredDict?.isEmpty == false ? filteredDict as? [String: String] : nil

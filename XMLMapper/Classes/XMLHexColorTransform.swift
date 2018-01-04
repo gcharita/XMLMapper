@@ -36,7 +36,7 @@ open class XMLHexColorTransform: XMLTransformType {
         if let rgba = value as? String {
             if rgba.hasPrefix("#") {
                 let index = rgba.index(rgba.startIndex, offsetBy: 1)
-                let hex = rgba.substring(from: index)
+                let hex = String(rgba[index...])
                 return getColor(hex: hex)
             } else {
                 return getColor(hex: rgba)
