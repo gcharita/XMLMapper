@@ -4,6 +4,7 @@
 [![Version](https://img.shields.io/cocoapods/v/XMLMapper.svg?style=flat)](http://cocoapods.org/pods/XMLMapper)
 [![License](https://img.shields.io/cocoapods/l/XMLMapper.svg?style=flat)](http://cocoapods.org/pods/XMLMapper)
 [![Platform](https://img.shields.io/cocoapods/p/XMLMapper.svg?style=flat)](http://cocoapods.org/pods/XMLMapper)
+[![Swift Package Manager compatible](https://img.shields.io/badge/Swift%20Package%20Manager-compatible-brightgreen.svg)](https://github.com/apple/swift-package-manager)
 
 ## Example
 
@@ -436,6 +437,14 @@ To install the ```Requests``` subspec add the following line to your Podfile:
 ```ruby
 pod 'XMLMapper/Requests'
 ```
+
+To add XMLMapper to a [Swift Package Manager](https://swift.org/package-manager/) based project, add the following:
+
+```swift
+.package(url: "https://github.com/gcharita/XMLMapper.git", from: "1.4.0")
+```
+
+to the `dependencies` value of your `Package.swift`.
 
 ## Special thanks
 
