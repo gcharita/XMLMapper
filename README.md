@@ -441,7 +441,7 @@ pod 'XMLMapper/Requests'
 
 - Special thanks to [Hearst-DD](https://github.com/Hearst-DD). This project is based in  [ObjectMapper](https://github.com/Hearst-DD/ObjectMapper) for the most part, which is a great solution for JSON mapping
 - Special thanks to [Tristan Himmelman](https://github.com/tristanhimmelman) and [AlamofireObjectMapper](https://github.com/tristanhimmelman/AlamofireObjectMapper). The Requests subspec is based on his idea.
-- A special thanks to [Nick Lockwood](https://github.com/nicklockwood) and [XMLDictionary](https://github.com/nicklockwood/XMLDictionary) for the project dependency
+- A special thanks to [Nick Lockwood](https://github.com/nicklockwood) and his idea behind [XMLDictionary](https://github.com/nicklockwood/XMLDictionary)
 - A special thanks to [Alamofire](https://github.com/Alamofire/Alamofire) for the subspec dependency
 
 ## License
