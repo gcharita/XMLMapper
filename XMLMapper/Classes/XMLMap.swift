@@ -5,6 +5,7 @@
 //  Created by Giorgos Charitakis on 14/09/2017.
 //
 //
+import Foundation
 
 public enum XMLMappingType {
     case fromXML
