@@ -2,7 +2,7 @@
 # * http://www.objc.io/issue-6/travis-ci.html
 # * https://github.com/supermarin/xcpretty#usage
 
-osx_image: xcode9.1
+osx_image: xcode9.2
 language: objective-c
 # cache: cocoapods
 # podfile: Example/Podfile
@@ -11,5 +11,5 @@ language: objective-c
 # - pod install --project-directory=Example
 script:
 # - set -o pipefail && xcodebuild test -enableCodeCoverage YES -workspace Example/XMLMapper.xcworkspace -scheme XMLMapper-Example -sdk iphonesimulator9.3 ONLY_ACTIVE_ARCH=NO | xcpretty
-- set -o pipefail && xcodebuild test -enableCodeCoverage YES -workspace Example/XMLMapper.xcworkspace -scheme XMLMapper-Example -destination 'platform=iOS Simulator,name=iPhone 6,OS=9.3' ONLY_ACTIVE_ARCH=NO | xcpretty
-- pod lib lint --allow-warnings
+- set -o pipefail && xcodebuild test -enableCodeCoverage YES -workspace Example/XMLMapper.xcworkspace -scheme XMLMapper-Example -destination 'platform=iOS Simulator,name=iPhone 6,OS=11.2' ONLY_ACTIVE_ARCH=NO | xcpretty
+- pod lib lint
