@@ -1,5 +1,5 @@
 PODS:
-  - Alamofire (4.5.1)
+  - Alamofire (4.6.0)
   - Nimble (7.0.3)
   - Quick (1.2.0)
   - XMLMapper/Core (1.4.0)
@@ -17,7 +17,7 @@ EXTERNAL SOURCES:
     :path: ../
 
 SPEC CHECKSUMS:
-  Alamofire: 2d95912bf4c34f164fdfc335872e8c312acaea4a
+  Alamofire: f41a599bd63041760b26d393ec1069d9d7b917f4
   Nimble: 7f5a9c447a33002645a071bddafbfb24ea70e0ac
   Quick: 58d203b1c5e27fff7229c4c1ae445ad7069a7a08
   XMLMapper: 347840d1d81a2703e01b0e3cbc4e3b8a4adf817f
