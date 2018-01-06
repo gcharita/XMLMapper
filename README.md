@@ -5,6 +5,7 @@
 [![License](https://img.shields.io/cocoapods/l/XMLMapper.svg?style=flat)](http://cocoapods.org/pods/XMLMapper)
 [![Platform](https://img.shields.io/cocoapods/p/XMLMapper.svg?style=flat)](http://cocoapods.org/pods/XMLMapper)
 [![Swift Package Manager compatible](https://img.shields.io/badge/Swift%20Package%20Manager-compatible-brightgreen.svg)](https://github.com/apple/swift-package-manager)
+[![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 
 ## Example
 
@@ -425,18 +426,30 @@ Unfortunately, there isn't an easy way to map SOAP response, other than creating
 
 ## Installation
 
+### CocoaPods
+
 XMLMapper is available through [CocoaPods](http://cocoapods.org). To install
-it, simply add the following line to your Podfile:
+it, simply add the following line to your `Podfile`:
 
 ```ruby
 pod 'XMLMapper'
 ```
 
-To install the ```Requests``` subspec add the following line to your Podfile:
+To install the `Requests` subspec add the following line to your `Podfile`:
 
 ```ruby
 pod 'XMLMapper/Requests'
 ```
+
+### Carthage
+
+To integrate XMLMapper into your Xcode project using [Carthage](https://github.com/Carthage/Carthage), add the following line to your  `Cartfile`:
+
+```ogdl
+github "gcharita/XMLMapper" ~> 1.4
+```
+
+### Swift Package Manager
 
 To add XMLMapper to a [Swift Package Manager](https://swift.org/package-manager/) based project, add the following:
 
