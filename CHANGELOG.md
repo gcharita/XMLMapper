@@ -1,5 +1,9 @@
 # Change Log
 
+## [1.4.1](https://github.com/gcharita/XMLMapper/releases/tag/1.4.1) (2018-01-25)
+
+- Added Carthage support
+
 ## [1.4.0](https://github.com/gcharita/XMLMapper/releases/tag/1.4.0) (2018-01-04)
 
 - Added Swift 4 support
