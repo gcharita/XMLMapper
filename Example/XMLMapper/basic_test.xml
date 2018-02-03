@@ -1,6 +1,7 @@
 <root>
     <TestElementXMLMappable testAttribute="enumValue">
         <testString>Test string</testString>
+        <testBoolAndAttribute testAttribute="some string">false</testBoolAndAttribute>
         <testList>
             <element>
                 <testInt>1</testInt>

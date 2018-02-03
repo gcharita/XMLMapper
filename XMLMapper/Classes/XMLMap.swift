@@ -105,6 +105,10 @@ public final class XMLMap {
         isAttribute = true
         return self
     }
+    
+    public var innerText: XMLMap {
+        return self[XMLParserConstant.Key.text]
+    }
 }
 
 /// Fetch value from XML dictionary, loop through keyPathComponents until we reach the desired object
