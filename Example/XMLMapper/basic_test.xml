@@ -1,0 +1,23 @@
+<root>
+    <TestElementXMLMappable testAttribute="enumValue">
+        <testString>Test string</testString>
+        <testList>
+            <element>
+                <testInt>1</testInt>
+                <testDouble>1.0</testDouble>
+            </element>
+            <element>
+                <testInt>2</testInt>
+                <testDouble>2.0</testDouble>
+            </element>
+            <element>
+                <testInt>3</testInt>
+                <testDouble>3.0</testDouble>
+            </element>
+            <element>
+                <testInt>4</testInt>
+                <testDouble>4.0</testDouble>
+            </element>
+        </testList>
+    </TestElementXMLMappable>
+</root>

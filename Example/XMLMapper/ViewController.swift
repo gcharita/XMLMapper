@@ -13,11 +13,18 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
-        let xml = "<root> <TestElementXMLMappable testAttribute=\"enumValue\"> <testString>Test string</testString> <testList> <element> <testInt>1</testInt> <testDouble>1.0</testDouble> </element> <element> <testInt>2</testInt> <testDouble>2.0</testDouble> </element> <element> <testInt>3</testInt> <testDouble>3.0</testDouble> </element> <element> <testInt>4</testInt> <testDouble>4.0</testDouble> </element> </testList> </TestElementXMLMappable> </root>"
-        let object = XMLMapper<TestXMLMappable>().map(XMLString: xml)
-        print(object?.testElement.testAttribute ?? "nil")
-        print(object?.toXMLString() ?? "nil")
+        if let basicTestPath = Bundle.main.path(forResource: "basic_test", ofType: "xml") {
+            do {
+                let xml = try String(contentsOfFile: basicTestPath)
+                let object = XMLMapper<TestXMLMappable>().map(XMLString: xml)
+                print(object?.testElement.testAttribute ?? "nil")
+                print(object?.toXMLString() ?? "nil")
+            } catch {
+                print("An error occurred reading resource basic_test.xml: \(error.localizedDescription)")
+            }
+        } else {
+            print("Path for basic_test.xml not found")
+        }
     }
 
     override func didReceiveMemoryWarning() {

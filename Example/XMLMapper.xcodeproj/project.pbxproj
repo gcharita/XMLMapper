@@ -15,6 +15,7 @@
 		607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDC1AFB9204008FA782 /* Images.xcassets */; };
 		607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDE1AFB9204008FA782 /* LaunchScreen.xib */; };
 		607FACEC1AFB9204008FA782 /* Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACEB1AFB9204008FA782 /* Tests.swift */; };
+		9FCA5ADF202602AF000C800F /* basic_test.xml in Resources */ = {isa = PBXBuildFile; fileRef = 9FCA5ADE202602AF000C800F /* basic_test.xml */; };
 		9FF577621F6A9F8600F3C260 /* TestXMLMappable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FF577611F6A9F8600F3C260 /* TestXMLMappable.swift */; };
 /* End PBXBuildFile section */
 
@@ -46,6 +47,7 @@
 		607FACEB1AFB9204008FA782 /* Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests.swift; sourceTree = "<group>"; };
 		82C87A7CE2D244ED79C09CDB /* Pods-XMLMapper_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-XMLMapper_Example.release.xcconfig"; path = "Pods/Target Support Files/Pods-XMLMapper_Example/Pods-XMLMapper_Example.release.xcconfig"; sourceTree = "<group>"; };
 		997EB59810BEF6ACD4C41E77 /* Pods-XMLMapper_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-XMLMapper_Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-XMLMapper_Tests/Pods-XMLMapper_Tests.debug.xcconfig"; sourceTree = "<group>"; };
+		9FCA5ADE202602AF000C800F /* basic_test.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = basic_test.xml; sourceTree = "<group>"; };
 		9FF577611F6A9F8600F3C260 /* TestXMLMappable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestXMLMappable.swift; sourceTree = "<group>"; };
 		B2DE9F85B7C942A1A254F2DD /* Pods_XMLMapper_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_XMLMapper_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EB8C1122176274924515A50E /* Pods-XMLMapper_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-XMLMapper_Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-XMLMapper_Tests/Pods-XMLMapper_Tests.release.xcconfig"; sourceTree = "<group>"; };
@@ -122,6 +124,7 @@
 				607FACDE1AFB9204008FA782 /* LaunchScreen.xib */,
 				607FACD31AFB9204008FA782 /* Supporting Files */,
 				9FF577611F6A9F8600F3C260 /* TestXMLMappable.swift */,
+				9FCA5ADE202602AF000C800F /* basic_test.xml */,
 			);
 			name = "Example for XMLMapper";
 			path = XMLMapper;
@@ -253,6 +256,7 @@
 			files = (
 				607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */,
 				607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */,
+				9FCA5ADF202602AF000C800F /* basic_test.xml in Resources */,
 				607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
