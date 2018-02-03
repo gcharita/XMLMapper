@@ -36,7 +36,11 @@ open class XMLHexColorTransform: XMLTransformType {
         if let rgba = value as? String {
             if rgba.hasPrefix("#") {
                 let index = rgba.index(rgba.startIndex, offsetBy: 1)
-                let hex = String(rgba[index...])
+                #if swift(>=3.2)
+                    let hex = String(rgba[index...])
+                #else
+                    let hex = rgba.substring(from: index)
+                #endif
                 return getColor(hex: hex)
             } else {
                 return getColor(hex: rgba)
@@ -89,7 +93,12 @@ open class XMLHexColorTransform: XMLTransformType {
         let scanner = Scanner(string: hex)
         var hexValue: CUnsignedLongLong = 0
         if scanner.scanHexInt64(&hexValue) {
-            switch (hex.count) {
+            #if swift(>=3.2)
+                let hexCharactersCount = hex.count
+            #else
+                let hexCharactersCount = hex.characters.count
+            #endif
+            switch (hexCharactersCount) {
             case 3:
                 red   = CGFloat((hexValue & 0xF00) >> 8)       / 15.0
                 green = CGFloat((hexValue & 0x0F0) >> 4)       / 15.0

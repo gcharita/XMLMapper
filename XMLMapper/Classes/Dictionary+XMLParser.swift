@@ -19,7 +19,11 @@ extension Dictionary {
             filteredDict?.keys.forEach({ (key: String) in
                 filteredDict?.removeValue(forKey: key)
                 if key.hasPrefix(XMLParserConstant.attributePrefix) {
-                    filteredDict?[String(key[XMLParserConstant.attributePrefix.endIndex...])] = dictionary?[key]
+                    #if swift(>=3.2)
+                        filteredDict?[String(key[XMLParserConstant.attributePrefix.endIndex...])] = dictionary?[key]
+                    #else
+                        filteredDict?[key.substring(from: XMLParserConstant.attributePrefix.endIndex)] = dictionary?[key]
+                    #endif
                 }
             })
             return filteredDict?.isEmpty == false ? filteredDict as? [String: String] : nil
