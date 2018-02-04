@@ -12,8 +12,7 @@ protocol XMLRepresentable {
     var xmlString: String { get }
 }
 
-extension Dictionary: XMLRepresentable {
-}
+extension Dictionary: XMLRepresentable { }
 
 extension Array: XMLRepresentable {
     var xmlString: String {
@@ -21,5 +20,17 @@ extension Array: XMLRepresentable {
             return ""
         }
         return dictionaryArray.map({ $0.xmlString }).joined()
+    }
+}
+
+extension NSDictionary: XMLRepresentable {
+    var xmlString: String {
+        return (self as Dictionary).xmlString
+    }
+}
+
+extension NSArray: XMLRepresentable {
+    var xmlString: String {
+        return (self as Array).xmlString
     }
 }
