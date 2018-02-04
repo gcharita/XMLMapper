@@ -1,5 +1,11 @@
 # Change Log
 
+## [1.4.2](https://github.com/gcharita/XMLMapper/releases/tag/1.4.2) (2018-02-04)
+
+- Fixed changes that broke Swift 3.1 and Xcode 8.3 support
+- Added `innerText` property in `XMLMap` to map directly the text of current XML node #1
+- General code improvements
+
 ## [1.4.1](https://github.com/gcharita/XMLMapper/releases/tag/1.4.1) (2018-01-25)
 
 - Added Carthage support
