@@ -374,7 +374,7 @@ extension XMLMapper where N: Hashable {
 }
 
 extension Dictionary {
-    internal func map<K: Hashable, V>(_ f: (Element) throws -> (K, V)) rethrows -> [K: V] {
+    internal func map<K, V>(_ f: (Element) throws -> (K, V)) rethrows -> [K: V] {
         var mapped = [K: V]()
         
         for element in self {
@@ -385,7 +385,7 @@ extension Dictionary {
         return mapped
     }
     
-    internal func map<K: Hashable, V>(_ f: (Element) throws -> (K, [V])) rethrows -> [K: [V]] {
+    internal func map<K, V>(_ f: (Element) throws -> (K, [V])) rethrows -> [K: [V]] {
         var mapped = [K: [V]]()
         
         for element in self {
