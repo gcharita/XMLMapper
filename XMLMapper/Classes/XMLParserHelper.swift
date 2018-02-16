@@ -21,7 +21,7 @@ class XMLParserHelper {
             if !innerXML.isEmpty {
                 return String(format: "<%1$@%2$@>%3$@</%1$@>", nodeName, attributeString, innerXML)
             } else {
-                return String(format: "<%1$@>%2$@</%1$@>", nodeName, attributeString)
+                return String(format: "<%@%@/>", nodeName, attributeString)
             }
         } else if let nodeString = node as? String {
             return String(format: "<%1$@>%2$@</%1$@>", nodeName, nodeString.xmlEncodedString)
