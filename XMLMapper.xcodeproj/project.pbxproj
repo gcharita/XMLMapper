@@ -151,6 +151,9 @@
 		9F6DE1B72039FC61007557E8 /* BasicTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F34A95F203780FF00BB2EBA /* BasicTypes.swift */; };
 		9F6DE1B82039FC62007557E8 /* XMLMapperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F34A93820377EED00BB2EBA /* XMLMapperTests.swift */; };
 		9F6DE1B92039FC62007557E8 /* BasicTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F34A95F203780FF00BB2EBA /* BasicTypes.swift */; };
+		9F6DE1BB2039FDE9007557E8 /* BasicTypesTestsToXML.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F6DE1BA2039FDE9007557E8 /* BasicTypesTestsToXML.swift */; };
+		9F6DE1BC2039FDE9007557E8 /* BasicTypesTestsToXML.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F6DE1BA2039FDE9007557E8 /* BasicTypesTestsToXML.swift */; };
+		9F6DE1BD2039FDE9007557E8 /* BasicTypesTestsToXML.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F6DE1BA2039FDE9007557E8 /* BasicTypesTestsToXML.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -228,6 +231,7 @@
 		9F34A95820377F9100BB2EBA /* Info-macOS.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Info-macOS.plist"; sourceTree = "<group>"; };
 		9F34A95F203780FF00BB2EBA /* BasicTypes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BasicTypes.swift; sourceTree = "<group>"; };
 		9F34A96F2037812200BB2EBA /* BasicTypesTestsFromXML.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BasicTypesTestsFromXML.swift; sourceTree = "<group>"; };
+		9F6DE1BA2039FDE9007557E8 /* BasicTypesTestsToXML.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BasicTypesTestsToXML.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -378,6 +382,7 @@
 				9F34A93820377EED00BB2EBA /* XMLMapperTests.swift */,
 				9F34A95F203780FF00BB2EBA /* BasicTypes.swift */,
 				9F34A96F2037812200BB2EBA /* BasicTypesTestsFromXML.swift */,
+				9F6DE1BA2039FDE9007557E8 /* BasicTypesTestsToXML.swift */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -828,6 +833,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9F34A960203780FF00BB2EBA /* BasicTypes.swift in Sources */,
+				9F6DE1BB2039FDE9007557E8 /* BasicTypesTestsToXML.swift in Sources */,
 				9F34A93920377EED00BB2EBA /* XMLMapperTests.swift in Sources */,
 				9F34A99F2037812300BB2EBA /* BasicTypesTestsFromXML.swift in Sources */,
 			);
@@ -838,6 +844,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9F6DE1B62039FC61007557E8 /* XMLMapperTests.swift in Sources */,
+				9F6DE1BC2039FDE9007557E8 /* BasicTypesTestsToXML.swift in Sources */,
 				9F34A9A02037812300BB2EBA /* BasicTypesTestsFromXML.swift in Sources */,
 				9F6DE1B72039FC61007557E8 /* BasicTypes.swift in Sources */,
 			);
@@ -848,6 +855,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9F6DE1B82039FC62007557E8 /* XMLMapperTests.swift in Sources */,
+				9F6DE1BD2039FDE9007557E8 /* BasicTypesTestsToXML.swift in Sources */,
 				9F34A9A12037812300BB2EBA /* BasicTypesTestsFromXML.swift in Sources */,
 				9F6DE1B92039FC62007557E8 /* BasicTypes.swift in Sources */,
 			);
