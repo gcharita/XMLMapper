@@ -160,6 +160,9 @@
 		9F914585203A0E9C006FC76B /* XMLDataTransformTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F914584203A0E9C006FC76B /* XMLDataTransformTests.swift */; };
 		9F914586203A0E9C006FC76B /* XMLDataTransformTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F914584203A0E9C006FC76B /* XMLDataTransformTests.swift */; };
 		9F914587203A0E9C006FC76B /* XMLDataTransformTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F914584203A0E9C006FC76B /* XMLDataTransformTests.swift */; };
+		9F914589203A10B3006FC76B /* XMLDictionaryTransformTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F914588203A10B3006FC76B /* XMLDictionaryTransformTests.swift */; };
+		9F91458A203A10B3006FC76B /* XMLDictionaryTransformTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F914588203A10B3006FC76B /* XMLDictionaryTransformTests.swift */; };
+		9F91458B203A10B3006FC76B /* XMLDictionaryTransformTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F914588203A10B3006FC76B /* XMLDictionaryTransformTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -240,6 +243,7 @@
 		9F6DE1BA2039FDE9007557E8 /* BasicTypesTestsToXML.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BasicTypesTestsToXML.swift; sourceTree = "<group>"; };
 		9F6DE1BE203A097A007557E8 /* XMLCustomTransformTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XMLCustomTransformTests.swift; sourceTree = "<group>"; };
 		9F914584203A0E9C006FC76B /* XMLDataTransformTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XMLDataTransformTests.swift; sourceTree = "<group>"; };
+		9F914588203A10B3006FC76B /* XMLDictionaryTransformTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XMLDictionaryTransformTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -393,6 +397,7 @@
 				9F6DE1BA2039FDE9007557E8 /* BasicTypesTestsToXML.swift */,
 				9F6DE1BE203A097A007557E8 /* XMLCustomTransformTests.swift */,
 				9F914584203A0E9C006FC76B /* XMLDataTransformTests.swift */,
+				9F914588203A10B3006FC76B /* XMLDictionaryTransformTests.swift */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -845,6 +850,7 @@
 				9F914585203A0E9C006FC76B /* XMLDataTransformTests.swift in Sources */,
 				9F34A960203780FF00BB2EBA /* BasicTypes.swift in Sources */,
 				9F6DE1BB2039FDE9007557E8 /* BasicTypesTestsToXML.swift in Sources */,
+				9F914589203A10B3006FC76B /* XMLDictionaryTransformTests.swift in Sources */,
 				9F6DE1BF203A097A007557E8 /* XMLCustomTransformTests.swift in Sources */,
 				9F34A93920377EED00BB2EBA /* XMLMapperTests.swift in Sources */,
 				9F34A99F2037812300BB2EBA /* BasicTypesTestsFromXML.swift in Sources */,
@@ -858,6 +864,7 @@
 				9F914586203A0E9C006FC76B /* XMLDataTransformTests.swift in Sources */,
 				9F6DE1B62039FC61007557E8 /* XMLMapperTests.swift in Sources */,
 				9F6DE1BC2039FDE9007557E8 /* BasicTypesTestsToXML.swift in Sources */,
+				9F91458A203A10B3006FC76B /* XMLDictionaryTransformTests.swift in Sources */,
 				9F6DE1C0203A097A007557E8 /* XMLCustomTransformTests.swift in Sources */,
 				9F34A9A02037812300BB2EBA /* BasicTypesTestsFromXML.swift in Sources */,
 				9F6DE1B72039FC61007557E8 /* BasicTypes.swift in Sources */,
@@ -871,6 +878,7 @@
 				9F914587203A0E9C006FC76B /* XMLDataTransformTests.swift in Sources */,
 				9F6DE1B82039FC62007557E8 /* XMLMapperTests.swift in Sources */,
 				9F6DE1BD2039FDE9007557E8 /* BasicTypesTestsToXML.swift in Sources */,
+				9F91458B203A10B3006FC76B /* XMLDictionaryTransformTests.swift in Sources */,
 				9F6DE1C1203A097A007557E8 /* XMLCustomTransformTests.swift in Sources */,
 				9F34A9A12037812300BB2EBA /* BasicTypesTestsFromXML.swift in Sources */,
 				9F6DE1B92039FC62007557E8 /* BasicTypes.swift in Sources */,
