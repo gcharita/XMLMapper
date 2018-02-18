@@ -1,5 +1,5 @@
 //
-//  CustomTransformTestsL.swift
+//  XMLCustomTransformTests.swift
 //  XMLMapperTests
 //
 //  Created by Giorgos Charitakis on 18/02/2018.
@@ -15,7 +15,7 @@ import XMLMapper
 	typealias TestHexColor = NSColor
 #endif
 
-class CustomTransformTests: XCTestCase {
+class XMLCustomTransformTests: XCTestCase {
 
 	let mapper = XMLMapper<Transforms>()
 	
