@@ -40,7 +40,7 @@ class XMLCustomTransformTests: XCTestCase {
 		XCTAssertEqual(parsedTransforms?.date, transforms.date)
 		XCTAssertEqual(parsedTransforms?.dateOpt, transforms.dateOpt)
 		
-		let XMLDateString: [String: Any] = ["date": "946684800", "dateOpt": "946684912"]
+        let XMLDateString: [String: Any] = ["date": "946684800", "dateOpt": "946684912"]
 		let parsedTransformsDateString = mapper.map(XML: XMLDateString)
 		
 		XCTAssertNotNil(parsedTransformsDateString)
@@ -51,9 +51,10 @@ class XMLCustomTransformTests: XCTestCase {
 	
 	func testCustomFormatDateTransform(){
 		let dateString = "2015-03-03T02:36:44"
-		let XML: [String: Any] = ["customFormateDate": dateString]
+        let XML: [String: Any] = ["customFormateDate": dateString, "customFormatDateNotAString": [String: Any]()]
 		let transform: Transforms! = mapper.map(XML: XML)
 		XCTAssertNotNil(transform)
+        XCTAssertNil(transform.customFormatDateNotAString)
 		
 		let XMLOutput = mapper.toXML(transform)
 
@@ -159,6 +160,7 @@ class Transforms: XMLMappable {
 	
 	var customFormatDate = Date()
 	var customFormatDateOpt: Date?
+    var customFormatDateNotAString: Date?
 	
 	var URL = Foundation.URL(string: "")
 	var URLOpt: Foundation.URL?
@@ -196,6 +198,7 @@ class Transforms: XMLMappable {
 		
 		customFormatDate	<- (map["customFormateDate"], XMLCustomDateFormatTransform(formatString: "yyyy-MM-dd'T'HH:mm:ss"))
 		customFormatDateOpt <- (map["customFormateDateOpt"], XMLCustomDateFormatTransform(formatString: "yyyy-MM-dd'T'HH:mm:ss"))
+        customFormatDateNotAString <- (map["customFormatDateNotAString"], XMLCustomDateFormatTransform(formatString: "yyyy-MM-dd'T'HH:mm:ss"))
 
 		URL					<- (map["URL"], XMLURLTransform())
 		URLOpt				<- (map["URLOpt"], XMLURLTransform())
