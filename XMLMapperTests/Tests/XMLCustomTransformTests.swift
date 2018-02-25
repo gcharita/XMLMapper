@@ -105,23 +105,29 @@ class XMLCustomTransformTests: XCTestCase {
 	}
 	
 	func testHexColorTransform() {
-		let XML: [String: Any] = [
-			"colorRed": "#FF0000",
-			"colorGreenLowercase": "#00FF00",
-			"colorBlueWithoutHash": "0000FF",
-			"color3lenght": "F00",
-			"color4lenght": "F00f",
-			"color8lenght": "ff0000ff"
+        let XML: [String: Any] = [
+            "colorRed": "#FF0000",
+            "colorGreenLowercase": "#00FF00",
+            "colorBlueWithoutHash": "0000FF",
+            "color3lenght": "F00",
+            "color4lenght": "F00f",
+            "color8lenght": "ff0000ff",
+            "colorInvalidRGBString": "ff",
+            "colorErrorInScanHex": "-"
 		]
 		
 		let transform = mapper.map(XML: XML)
 		
-		XCTAssertEqual(transform?.colorRed, TestHexColor.red)
-		XCTAssertEqual(transform?.colorGreenLowercase, TestHexColor.green)
-		XCTAssertEqual(transform?.colorBlueWithoutHash, TestHexColor.blue)
-		XCTAssertEqual(transform?.color3lenght, TestHexColor.red)
-		XCTAssertEqual(transform?.color4lenght, TestHexColor.red)
-		XCTAssertEqual(transform?.color8lenght, TestHexColor.red)
+        XCTAssertEqual(transform?.colorRed, TestHexColor.red)
+        XCTAssertEqual(transform?.colorGreenLowercase, TestHexColor.green)
+        XCTAssertEqual(transform?.colorBlueWithoutHash, TestHexColor.blue)
+        XCTAssertEqual(transform?.color3lenght, TestHexColor.red)
+        XCTAssertEqual(transform?.color4lenght, TestHexColor.red)
+        XCTAssertEqual(transform?.color8lenght, TestHexColor.red)
+        XCTAssertNil(transform?.colorInvalidRGBString)
+        XCTAssertNil(transform?.colorErrorInScanHex)
+        
+        transform?.colorGrayscale = UIColor(white: 0, alpha: 1)
 		
 		let XMLOutput = mapper.toXML(transform!)
 		
@@ -131,6 +137,9 @@ class XMLCustomTransformTests: XCTestCase {
 		XCTAssertEqual(XMLOutput["color3lenght"] as? String, "FF0000")
 		XCTAssertEqual(XMLOutput["color4lenght"] as? String, "FF0000")
 		XCTAssertEqual(XMLOutput["color8lenght"] as? String, "FF0000FF") // alphaToXML = true
+        XCTAssertNil(XMLOutput["colorInvalidRGBString"])
+        XCTAssertNil(XMLOutput["colorErrorInScanHex"])
+        XCTAssertEqual(XMLOutput["colorGrayscale"] as? String, "000000FF")
 	}
 }
 
@@ -165,6 +174,9 @@ class Transforms: XMLMappable {
 	var color3lenght: TestHexColor?
 	var color4lenght: TestHexColor?
 	var color8lenght: TestHexColor?
+    var colorInvalidRGBString: TestHexColor?
+    var colorErrorInScanHex: TestHexColor?
+    var colorGrayscale: TestHexColor?
 
 	init(){
 		
@@ -197,6 +209,9 @@ class Transforms: XMLMappable {
 		color3lenght			<- (map["color3lenght"], XMLHexColorTransform())
 		color4lenght			<- (map["color4lenght"], XMLHexColorTransform())
 		color8lenght			<- (map["color8lenght"], XMLHexColorTransform(alphaToXML: true))
+        colorInvalidRGBString   <- (map["colorInvalidRGBString"], XMLHexColorTransform())
+        colorErrorInScanHex     <- (map["colorErrorInScanHex"], XMLHexColorTransform())
+        colorGrayscale          <- (map["colorGrayscale"], XMLHexColorTransform(alphaToXML: true))
 	}
 }
 
