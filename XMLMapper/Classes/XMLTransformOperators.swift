@@ -591,6 +591,8 @@ private func fromXMLArrayWithTransform<Transform: XMLTransformType>(_ input: Any
         return values.flatMap { value in
             return transform.transformFromXML(value)
         }
+    } else if let value = transform.transformFromXML(input) {
+        return [value]
     } else {
         return nil
     }
