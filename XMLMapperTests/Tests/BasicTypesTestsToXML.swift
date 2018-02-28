@@ -521,11 +521,11 @@ class BasicTypesTestsToXML: XCTestCase {
 
         let XML = XMLMapper<TestCollectionOfPrimitives>().toXML(object)
 
-        XCTAssertTrue((XML["dictStringString"] as? [String:String])?.count ?? 0 > 0)
-        XCTAssertTrue((XML["dictStringBool"] as? [String:String])?.count ?? 0 > 0)
-        XCTAssertTrue((XML["dictStringInt"] as? [String:String])?.count ?? 0 > 0)
-        XCTAssertTrue((XML["dictStringDouble"] as? [String:String])?.count ?? 0 > 0)
-        XCTAssertTrue((XML["dictStringFloat"] as? [String:String])?.count ?? 0 > 0)
+        XCTAssertTrue((XML["dictStringString"] as? [String:String])?.isEmpty == false)
+        XCTAssertTrue((XML["dictStringBool"] as? [String:String])?.isEmpty == false)
+        XCTAssertTrue((XML["dictStringInt"] as? [String:String])?.isEmpty == false)
+        XCTAssertTrue((XML["dictStringDouble"] as? [String:String])?.isEmpty == false)
+        XCTAssertTrue((XML["dictStringFloat"] as? [String:String])?.isEmpty == false)
         XCTAssertEqual((XML["dictStringString"] as? [String:String])?["string"], "string")
     }
 }
