@@ -59,8 +59,6 @@ internal final class FromXML {
     class func objectArray<N: XMLBaseMappable>(_ field: inout Array<N>, map: XMLMap) {
         if let objects = XMLMapper<N>().mapArray(XMLObject: map.currentValue) {
             field = objects
-        } else if let objects = XMLMapper<N>().mapArray(XMLObject: [map.currentValue]) {
-            field = objects
         }
     }
     
@@ -68,8 +66,6 @@ internal final class FromXML {
     
     class func optionalObjectArray<N: XMLBaseMappable>(_ field: inout Array<N>?, map: XMLMap) {
         if let objects: Array<N> = XMLMapper().mapArray(XMLObject: map.currentValue) {
-            field = objects
-        } else if let objects: Array<N> = XMLMapper().mapArray(XMLObject: [map.currentValue]) {
             field = objects
         } else {
             field = nil
@@ -79,8 +75,6 @@ internal final class FromXML {
     /// Implicitly unwrapped optional mappable object array
     class func optionalObjectArray<N: XMLBaseMappable>(_ field: inout Array<N>!, map: XMLMap) {
         if let objects: Array<N> = XMLMapper().mapArray(XMLObject: map.currentValue) {
-            field = objects
-        } else if let objects: Array<N> = XMLMapper().mapArray(XMLObject: [map.currentValue]) {
             field = objects
         } else {
             field = nil

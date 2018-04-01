@@ -84,24 +84,19 @@ public final class XMLMapper<N: XMLBaseMappable> {
     /// Maps a XML array to an object that conforms to XMLMappable
     public func mapArray(XMLString: String) -> [N]? {
         let parsedXML: Any? = XMLMapper.parseXMLString(XMLString: XMLString)
-        
-        if let objectArray = mapArray(XMLObject: parsedXML) {
-            return objectArray
-        }
-        
-        // failed to parse XML into array form
-        // try to parse it into a dictionary and then wrap it in an array
-        if let object = map(XMLObject: parsedXML) {
-            return [object]
-        }
-        
-        return nil
+        return mapArray(XMLObject: parsedXML)
     }
     
     /// Maps a XML object to an array of XMLMappable objects if it is an array of XML dictionary, or returns nil.
     public func mapArray(XMLObject: Any?) -> [N]? {
         if let XMLArray = XMLObject as? [[String: Any]] {
             return mapArray(XMLArray: XMLArray)
+        }
+        
+        // failed to parse XML into array form
+        // try to parse it into a dictionary and then wrap it in an array
+        if let object = map(XMLObject: XMLObject) {
+            return [object]
         }
         
         return nil
@@ -167,6 +162,12 @@ public final class XMLMapper<N: XMLBaseMappable> {
     public func mapDictionaryOfArrays(XMLObject: Any?) -> [String: [N]]? {
         if let XML = XMLObject as? [String: [[String: Any]]] {
             return mapDictionaryOfArrays(XML: XML)
+        }
+        
+        // failed to parse XML into dictionary of arrays form
+        // try to parse it into a dictionary of dictionaries and then wrap the values in an array
+        if let dictionary = mapDictionary(XMLObject: XMLObject) {
+            return dictionary.mapValues({ [$0] })
         }
         
         return nil
@@ -333,12 +334,6 @@ extension XMLMapper where N: Hashable {
             return Set(objectArray)
         }
         
-        // failed to parse XML into array form
-        // try to parse it into a dictionary and then wrap it in an array
-        if let object = map(XMLObject: parsedXML) {
-            return Set([object])
-        }
-        
         return nil
     }
     
@@ -346,6 +341,12 @@ extension XMLMapper where N: Hashable {
     public func mapSet(XMLObject: Any?) -> Set<N>? {
         if let XMLArray = XMLObject as? [[String: Any]] {
             return mapSet(XMLArray: XMLArray)
+        }
+        
+        // failed to parse XML into array form
+        // try to parse it into a dictionary and then wrap it in an array
+        if let object = map(XMLObject: XMLObject) {
+            return Set([object])
         }
         
         return nil
