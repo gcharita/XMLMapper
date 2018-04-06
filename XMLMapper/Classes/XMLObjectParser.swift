@@ -24,20 +24,18 @@ class XMLObjectParser: NSObject {
     
     // MARK: - Properties
     
-    private static let shared = XMLObjectParser()
+    private var collapseTextNodes: Bool
+    private var stripEmptyNodes: Bool
+    private var trimWhiteSpace: Bool
+    private var alwaysUseArrays: Bool
+    private var preserveComments: Bool
+    private var wrapRootNode: Bool
+    private var attributesMode: XMLObjectParserAttributesMode = .prefixed
+    private var nodeNameMode: XMLObjectParserNodeNameMode = .always
     
-    var collapseTextNodes: Bool
-    var stripEmptyNodes: Bool
-    var trimWhiteSpace: Bool
-    var alwaysUseArrays: Bool
-    var preserveComments: Bool
-    var wrapRootNode: Bool
-    var attributesMode: XMLObjectParserAttributesMode = .prefixed
-    var nodeNameMode: XMLObjectParserNodeNameMode = .always
-    
-    fileprivate var root: NSMutableDictionary?
-    fileprivate var stack: [NSMutableDictionary]?
-    fileprivate var text: String?
+    private var root: NSMutableDictionary?
+    private var stack: [NSMutableDictionary]?
+    private var text: String?
     
     // MARK: - Initialazer
     
@@ -53,11 +51,12 @@ class XMLObjectParser: NSObject {
     // MARK: - Basic interface function
     
     class func dictionary(with parser: XMLParser, options: XMLSerialization.ReadingOptions) -> [String: Any]? {
-        parser.delegate = shared
-        shared.applyOptions(options)
+        let xmlObjectParser = XMLObjectParser()
+        parser.delegate = xmlObjectParser
+        xmlObjectParser.applyOptions(options)
         parser.parse()
-        let result = shared.root
-        shared.clearProperties()
+        let result = xmlObjectParser.root
+        xmlObjectParser.clearProperties()
         return result as? [String: Any]
     }
     

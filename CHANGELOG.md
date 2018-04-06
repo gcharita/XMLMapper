@@ -1,5 +1,10 @@
 # Change Log
 
+## [1.4.4](https://github.com/gcharita/XMLMapper/releases/tag/1.4.4) (2018-04-01)
+
+- Fixed [#5](https://github.com/gcharita/XMLMapper/issues/5). Mapping Array of single object.
+- Fixed [#8](https://github.com/gcharita/XMLMapper/issues/8). Threading problem in `XMLObjectParser` causing crash.
+
 ## [1.4.3](https://github.com/gcharita/XMLMapper/releases/tag/1.4.3) (2018-02-17)
 
 - Fixed [#2](https://github.com/gcharita/XMLMapper/issues/2). Wrong XML String from nodes with attributes only.

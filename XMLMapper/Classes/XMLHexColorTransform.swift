@@ -56,7 +56,7 @@ open class XMLHexColorTransform: XMLTransformType {
         return nil
     }
     
-    fileprivate func hexString(color: Object) -> String {
+    private func hexString(color: Object) -> String {
         let comps = color.cgColor.components!
         let compsCount = color.cgColor.numberOfComponents
         let r: Int
@@ -84,7 +84,7 @@ open class XMLHexColorTransform: XMLTransformType {
         return hexString
     }
     
-    fileprivate func getColor(hex: String) -> Object? {
+    private func getColor(hex: String) -> Object? {
         var red: CGFloat   = 0.0
         var green: CGFloat = 0.0
         var blue: CGFloat  = 0.0
