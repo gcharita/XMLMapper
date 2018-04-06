@@ -14,8 +14,8 @@ open class XMLStringConvertibleTransform<T: LosslessStringConvertible>: XMLTrans
     public init() {}
     
     open func transformFromXML(_ value: Any?) -> Object? {
-        if let raw = value as? XML {
-            return T(raw)
+        if let stringValue = value as? XML {
+            return T(stringValue)
         }
         return nil
     }

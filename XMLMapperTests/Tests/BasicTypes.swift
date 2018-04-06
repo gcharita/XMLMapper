@@ -106,31 +106,55 @@ class BasicTypes: XMLMappable {
 	var dictAnyObjectOptional: Dictionary<String, Any>?
 	var dictAnyObjectImplicitlyUnwrapped: Dictionary<String, Any>!
 
-	enum EnumString: String {
-		case `default` = "Default"
-		case another = "Another"
+	enum EnumInt: Int {
+		case `default`
+		case another
 	}
-	var enumString: EnumString = .default
+	var enumInt: EnumInt = .default
+	var enumIntOptional: EnumInt?
+	var enumIntImplicitlyUnwrapped: EnumInt!
+
+	enum EnumDouble: Double {
+		case `default`
+		case another
+	}
+	var enumDouble: EnumDouble = .default
+	var enumDoubleOptional: EnumDouble?
+	var enumDoubleImplicitlyUnwrapped: EnumDouble!
+
+	enum EnumFloat: Float {
+		case `default`
+		case another
+	}
+	var enumFloat: EnumFloat = .default
+	var enumFloatOptional: EnumFloat?
+	var enumFloatImplicitlyUnwrapped: EnumFloat!
+
+	enum EnumString: String {
+        case `default` = "Default"
+        case another = "Another"
+	}
+    var enumString: EnumString = .default
 	var enumStringOptional: EnumString?
 	var enumStringImplicitlyUnwrapped: EnumString!
 
-	var arrayEnumString: [EnumString] = []
-	var arrayEnumStringOptional: [EnumString]?
-	var arrayEnumStringImplicitlyUnwrapped: [EnumString]!
+	var arrayEnumInt: [EnumInt] = []
+	var arrayEnumIntOptional: [EnumInt]?
+	var arrayEnumIntImplicitlyUnwrapped: [EnumInt]!
 
-	var dictEnumString: [String: EnumString] = [:]
-	var dictEnumStringOptional: [String: EnumString]?
-	var dictEnumStringImplicitlyUnwrapped: [String: EnumString]!
+	var dictEnumInt: [String: EnumInt] = [:]
+	var dictEnumIntOptional: [String: EnumInt]?
+	var dictEnumIntImplicitlyUnwrapped: [String: EnumInt]!
 
 	init(){
 		
 	}
 	
-	required init(map: XMLMap){
+    required init(map: XMLMap){
 
 	}
 	
-	func mapping(map: XMLMap) {
+    func mapping(map: XMLMap) {
 		bool								<- map["bool"]
 		boolOptional						<- map["boolOpt"]
 		boolImplicityUnwrapped				<- map["boolImp"]
@@ -225,18 +249,27 @@ class BasicTypes: XMLMappable {
 		dictAnyObject						<- map["dictAnyObject"]
 		dictAnyObjectOptional				<- map["dictAnyObjectOpt"]
 		dictAnyObjectImplicitlyUnwrapped	<- map["dictAnyObjectImp"]
-        
+
+		enumInt								<- map["enumInt"]
+		enumIntOptional						<- map["enumIntOpt"]
+		enumIntImplicitlyUnwrapped			<- map["enumIntImp"]
+		enumDouble							<- map["enumDouble"]
+		enumDoubleOptional					<- map["enumDoubleOpt"]
+		enumDoubleImplicitlyUnwrapped		<- map["enumDoubleImp"]
+		enumFloat							<- map["enumFloat"]
+		enumFloatOptional					<- map["enumFloatOpt"]
+		enumFloatImplicitlyUnwrapped		<- map["enumFloatImp"]
 		enumString							<- map["enumString"]
 		enumStringOptional					<- map["enumStringOpt"]
 		enumStringImplicitlyUnwrapped		<- map["enumStringImp"]
 
-		arrayEnumString						<- map["arrayEnumString"]
-		arrayEnumStringOptional				<- map["arrayEnumStringOpt"]
-		arrayEnumStringImplicitlyUnwrapped	<- map["arrayEnumStringImp"]
+		arrayEnumInt						<- map["arrayEnumInt"]
+		arrayEnumIntOptional				<- map["arrayEnumIntOpt"]
+		arrayEnumIntImplicitlyUnwrapped		<- map["arrayEnumIntImp"]
 		
-		dictEnumString							<- map["dictEnumString"]
-		dictEnumStringOptional					<- map["dictEnumStringOpt"]
-		dictEnumStringImplicitlyUnwrapped		<- map["dictEnumStringImp"]
+		dictEnumInt							<- map["dictEnumInt"]
+		dictEnumIntOptional					<- map["dictEnumIntOpt"]
+		dictEnumIntImplicitlyUnwrapped		<- map["dictEnumIntImp"]
 	}
 }
 
@@ -259,16 +292,16 @@ class TestCollectionOfPrimitives: XMLMappable {
 		
 	}
 	
-	required init(map: XMLMap){
+    required init(map: XMLMap){
 		if map["value"].value() == nil {
 			
 		}
-		if map.XML["value"] == nil {
+        if map.XML["value"] == nil {
 			
 		}
 	}
 	
-	func mapping(map: XMLMap) {
+    func mapping(map: XMLMap) {
 		dictStringString    <- map["dictStringString"]
 		dictStringBool      <- map["dictStringBool"]
 		dictStringInt       <- map["dictStringInt"]

@@ -8,23 +8,20 @@
 
 import Foundation
 
-open class XMLEnumTransform<T: RawRepresentable>: XMLTransformType {
+open class XMLEnumTransform<T: RawRepresentable>: XMLTransformType where T.RawValue: LosslessStringConvertible {
     public typealias Object = T
-    public typealias XML = T.RawValue
+    public typealias XML = String
     
     public init() {}
     
     open func transformFromXML(_ value: Any?) -> Object? {
-        if let raw = value as? T.RawValue {
+        if let stringValue = value as? XML, let raw = T.RawValue(stringValue) {
             return T(rawValue: raw)
         }
         return nil
     }
     
     open func transformToXML(_ value: T?) -> XML? {
-        if let obj = value {
-            return obj.rawValue
-        }
-        return nil
+        return value?.rawValue.description
     }
 }

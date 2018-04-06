@@ -98,6 +98,11 @@ public final class XMLMap {
     }
     
     public func value<T>() -> T? {
+        if let _ = T.self as? Array<Any>.Type, currentValue as? T == nil {
+            return [currentValue] as? T
+        } else if let _ = T.self as? Dictionary<String, [Any]>.Type, currentValue as? T == nil {
+            return (currentValue as? [String: Any])?.mapValues({ [$0] }) as? T
+        }
         return currentValue as? T
     }
     

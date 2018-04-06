@@ -25,11 +25,11 @@ class BasicTypesTestsFromXML: XCTestCase {
 	
 	// MARK: Test mapping to XML and back (basic types: Bool, Int, Double, Float, String)
 	
-	func testMappingBoolFromJSON(){
+	func testMappingBoolFromXML(){
 		let value: Bool = true
-		let JSONString = "<root><bool>\(value)</bool><boolOpt>\(value)</boolOpt><boolImp>\(value)</boolImp></root>"
+		let XMLString = "<root><bool>\(value)</bool><boolOpt>\(value)</boolOpt><boolImp>\(value)</boolImp></root>"
 		
-		let mappedObject = mapper.map(XMLString: JSONString)
+		let mappedObject = mapper.map(XMLString: XMLString)
 
 		XCTAssertNotNil(mappedObject)
 		XCTAssertEqual(mappedObject?.bool, value)
@@ -300,97 +300,76 @@ class BasicTypesTestsFromXML: XCTestCase {
 	
     func testMappingBoolArrayFromXML(){
         let value: Bool = true
-        let XMLString = "<root><arrayBool>\(value)</arrayBool><arrayBool>\(!value)</arrayBool><arrayBoolOpt>\(value)</arrayBoolOpt><arrayBoolOpt>\(!value)</arrayBoolOpt><arrayBoolImp>\(value)</arrayBoolImp><arrayBoolImp>\(!value)</arrayBoolImp></root>"
+        let XMLString = "<root><arrayBool>\(value)</arrayBool><arrayBoolOpt>\(value)</arrayBoolOpt><arrayBoolImp>\(value)</arrayBoolImp></root>"
 
         let mappedObject = mapper.map(XMLString: XMLString)
 
         XCTAssertNotNil(mappedObject)
         XCTAssertEqual(mappedObject?.arrayBool.first, value)
-        XCTAssertEqual(mappedObject?.arrayBool.last, !value)
         XCTAssertEqual(mappedObject?.arrayBoolOptional?.first, value)
-        XCTAssertEqual(mappedObject?.arrayBoolOptional?.last, !value)
         XCTAssertEqual(mappedObject?.arrayBoolImplicityUnwrapped.first, value)
-        XCTAssertEqual(mappedObject?.arrayBoolImplicityUnwrapped.last, !value)
     }
     
     func testMappingIntArrayFromXML(){
         let value1: Int = 1
-        let value2: Int = 2
-        let XMLString = "<root><arrayInt>\(value1)</arrayInt><arrayInt>\(value2)</arrayInt><arrayIntOpt>\(value1)</arrayIntOpt><arrayIntOpt>\(value2)</arrayIntOpt><arrayIntImp>\(value1)</arrayIntImp><arrayIntImp>\(value2)</arrayIntImp></root>"
+        let XMLString = "<root><arrayInt>\(value1)</arrayInt><arrayIntOpt>\(value1)</arrayIntOpt><arrayIntImp>\(value1)</arrayIntImp></root>"
 
         let mappedObject = mapper.map(XMLString: XMLString)
 
         XCTAssertNotNil(mappedObject)
         XCTAssertEqual(mappedObject?.arrayInt.first, value1)
-        XCTAssertEqual(mappedObject?.arrayInt.last, value2)
         XCTAssertEqual(mappedObject?.arrayIntOptional?.first, value1)
-        XCTAssertEqual(mappedObject?.arrayIntOptional?.last, value2)
         XCTAssertEqual(mappedObject?.arrayIntImplicityUnwrapped.first, value1)
-        XCTAssertEqual(mappedObject?.arrayIntImplicityUnwrapped.last, value2)
     }
     
     func testMappingDoubleArrayFromXML(){
         let value1: Double = 1.0
-        let value2: Double = 2.0
-        let XMLString = "<root><arrayDouble>\(value1)</arrayDouble><arrayDouble>\(value2)</arrayDouble><arrayDoubleOpt>\(value1)</arrayDoubleOpt><arrayDoubleOpt>\(value2)</arrayDoubleOpt><arrayDoubleImp>\(value1)</arrayDoubleImp><arrayDoubleImp>\(value2)</arrayDoubleImp></root>"
+        let XMLString = "<root><arrayDouble>\(value1)</arrayDouble><arrayDoubleOpt>\(value1)</arrayDoubleOpt><arrayDoubleImp>\(value1)</arrayDoubleImp></root>"
 
         let mappedObject = mapper.map(XMLString: XMLString)
 
         XCTAssertNotNil(mappedObject)
         XCTAssertEqual(mappedObject?.arrayDouble.first, value1)
-        XCTAssertEqual(mappedObject?.arrayDouble.last, value2)
         XCTAssertEqual(mappedObject?.arrayDoubleOptional?.first, value1)
-        XCTAssertEqual(mappedObject?.arrayDoubleOptional?.last, value2)
         XCTAssertEqual(mappedObject?.arrayDoubleImplicityUnwrapped.first, value1)
-        XCTAssertEqual(mappedObject?.arrayDoubleImplicityUnwrapped.last, value2)
     }
     
     func testMappingFloatArrayFromXML(){
         let value1: Float = 1.001
-        let value2: Float = 2.002
-        let XMLString = "<root><arrayFloat>\(value1)</arrayFloat><arrayFloat>\(value2)</arrayFloat><arrayFloatOpt>\(value1)</arrayFloatOpt><arrayFloatOpt>\(value2)</arrayFloatOpt><arrayFloatImp>\(value1)</arrayFloatImp><arrayFloatImp>\(value2)</arrayFloatImp></root>"
+        let XMLString = "<root><arrayFloat>\(value1)</arrayFloat><arrayFloatOpt>\(value1)</arrayFloatOpt><arrayFloatImp>\(value1)</arrayFloatImp></root>"
         
         let mappedObject = mapper.map(XMLString: XMLString)
 
         XCTAssertNotNil(mappedObject)
         XCTAssertEqual(mappedObject?.arrayFloat.first, value1)
-        XCTAssertEqual(mappedObject?.arrayFloat.last, value2)
         XCTAssertEqual(mappedObject?.arrayFloatOptional?.first, value1)
-        XCTAssertEqual(mappedObject?.arrayFloatOptional?.last, value2)
         XCTAssertEqual(mappedObject?.arrayFloatImplicityUnwrapped?.first, value1)
-        XCTAssertEqual(mappedObject?.arrayFloatImplicityUnwrapped?.last, value2)
     }
     
     func testMappingStringArrayFromXML(){
         let value: String = "Stringgggg"
-        let XMLString = "<root><arrayString>\(value)</arrayString><arrayString>\(value)</arrayString><arrayStringOpt>\(value)</arrayStringOpt><arrayStringOpt>\(value)</arrayStringOpt><arrayStringImp>\(value)</arrayStringImp><arrayStringImp>\(value)</arrayStringImp></root>"
+        let XMLString = "<root><arrayString>\(value)</arrayString><arrayStringOpt>\(value)</arrayStringOpt><arrayStringImp>\(value)</arrayStringImp></root>"
         
         let mappedObject = mapper.map(XMLString: XMLString)
 
         XCTAssertNotNil(mappedObject)
         XCTAssertEqual(mappedObject?.arrayString.first, value)
-        XCTAssertEqual(mappedObject?.arrayString.last, value)
         XCTAssertEqual(mappedObject?.arrayStringOptional?.first, value)
-        XCTAssertEqual(mappedObject?.arrayStringOptional?.last, value)
         XCTAssertEqual(mappedObject?.arrayStringImplicityUnwrapped.first, value)
-        XCTAssertEqual(mappedObject?.arrayStringImplicityUnwrapped.last, value)
     }
     
     func testMappingAnyObjectArrayFromXML(){
         let value1 = "STRING"
         let value2: Int = 1234
         let value3: Double = 11.11
-        let XMLString = "<root><arrayAnyObject>\(value1)</arrayAnyObject><arrayAnyObject>\(value1)</arrayAnyObject><arrayAnyObjectOpt>\(value2)</arrayAnyObjectOpt><arrayAnyObjectOpt>\(value2)</arrayAnyObjectOpt><arrayAnyObjectImp>\(value3)</arrayAnyObjectImp><arrayAnyObjectImp>\(value3)</arrayAnyObjectImp></root>"
+        let XMLString = "<root><arrayAnyObject>\(value1)</arrayAnyObject><arrayAnyObjectOpt>\(value2)</arrayAnyObjectOpt><arrayAnyObjectImp>\(value3)</arrayAnyObjectImp></root>"
         
         let mappedObject = mapper.map(XMLString: XMLString)
 
         XCTAssertNotNil(mappedObject)
         XCTAssertEqual(mappedObject?.arrayAnyObject.first as? String, value1)
-        XCTAssertEqual(mappedObject?.arrayAnyObject.last as? String, value1)
         XCTAssertEqual(mappedObject?.arrayAnyObjectOptional?.first as? String, value2.description)
-        XCTAssertEqual(mappedObject?.arrayAnyObjectOptional?.last as? String, value2.description)
         XCTAssertEqual(mappedObject?.arrayAnyObjectImplicitlyUnwrapped.first as? String, value3.description)
-        XCTAssertEqual(mappedObject?.arrayAnyObjectImplicitlyUnwrapped.last as? String, value3.description)
     }
     
     // MARK: Test mapping Dictionaries to XML and back (with basic types in them Bool, Int, Double, Float, String)
@@ -475,6 +454,54 @@ class BasicTypesTestsFromXML: XCTestCase {
         XCTAssertEqual(mappedObject?.dictAnyObjectImplicitlyUnwrapped[key] as? String, value3.description)
     }
     
+    func testMappingIntEnumFromXML(){
+        let value: BasicTypes.EnumInt = .another
+        let XMLString = "<root><enumInt>\(value.rawValue)</enumInt><enumIntOpt>\(value.rawValue)</enumIntOpt><enumIntImp>\(value.rawValue)</enumIntImp></root>"
+        
+        let mappedObject = mapper.map(XMLString: XMLString)
+        
+        XCTAssertNotNil(mappedObject)
+        XCTAssertEqual(mappedObject?.enumInt, value)
+        XCTAssertEqual(mappedObject?.enumIntOptional, value)
+        XCTAssertEqual(mappedObject?.enumIntImplicitlyUnwrapped, value)
+    }
+    
+    func testMappingIntEnumFromXMLShouldNotCrashWithNonDefinedvalue() {
+        let value = Int.min
+        let XMLString = "<root><enumInt>\(value)</enumInt><enumIntOpt>\(value)</enumIntOpt><enumIntImp>\(value)</enumIntImp></root>"
+        
+        let mappedObject = mapper.map(XMLString: XMLString)
+        
+        XCTAssertNotNil(mappedObject)
+        XCTAssertEqual(mappedObject?.enumInt, BasicTypes.EnumInt.default)
+        XCTAssertNil(mappedObject?.enumIntOptional)
+        XCTAssertNil(mappedObject?.enumIntImplicitlyUnwrapped)
+    }
+    
+    func testMappingDoubleEnumFromXML(){
+        let value: BasicTypes.EnumDouble = .another
+        let XMLString = "<root><enumDouble>\(value.rawValue)</enumDouble><enumDoubleOpt>\(value.rawValue)</enumDoubleOpt><enumDoubleImp>\(value.rawValue)</enumDoubleImp></root>"
+        
+        let mappedObject = mapper.map(XMLString: XMLString)
+        
+        XCTAssertNotNil(mappedObject)
+        XCTAssertEqual(mappedObject?.enumDouble, value)
+        XCTAssertEqual(mappedObject?.enumDoubleOptional, value)
+        XCTAssertEqual(mappedObject?.enumDoubleImplicitlyUnwrapped, value)
+    }
+    
+    func testMappingFloatEnumFromXML(){
+        let value: BasicTypes.EnumFloat = .another
+        let XMLString = "<root><enumFloat>\(value.rawValue)</enumFloat><enumFloatOpt>\(value.rawValue)</enumFloatOpt><enumFloatImp>\(value.rawValue)</enumFloatImp></root>"
+        
+        let mappedObject = mapper.map(XMLString: XMLString)
+        
+        XCTAssertNotNil(mappedObject)
+        XCTAssertEqual(mappedObject?.enumFloat, value)
+        XCTAssertEqual(mappedObject?.enumFloatOptional, value)
+        XCTAssertEqual(mappedObject?.enumFloatImplicitlyUnwrapped, value)
+    }
+    
     func testMappingStringEnumFromXML(){
         let value: BasicTypes.EnumString = .another
         let XMLString = "<root><enumString>\(value.rawValue)</enumString><enumStringOpt>\(value.rawValue)</enumStringOpt><enumStringImp>\(value.rawValue)</enumStringImp></root>"
@@ -499,60 +526,54 @@ class BasicTypesTestsFromXML: XCTestCase {
         XCTAssertNil(mappedObject?.enumStringImplicitlyUnwrapped)
     }
 
-    func testMappingEnumStringArrayFromXML(){
-        let value: BasicTypes.EnumString = .another
-        let XMLString = "<root><arrayEnumString>\(value.rawValue)</arrayEnumString><arrayEnumString>\(value.rawValue)</arrayEnumString><arrayEnumStringOpt>\(value.rawValue)</arrayEnumStringOpt><arrayEnumStringOpt>\(value.rawValue)</arrayEnumStringOpt><arrayEnumStringImp>\(value.rawValue)</arrayEnumStringImp><arrayEnumStringImp>\(value.rawValue)</arrayEnumStringImp></root>"
+    func testMappingEnumIntArrayFromXML(){
+        let value: BasicTypes.EnumInt = .another
+        let XMLString = "<root><arrayEnumInt>\(value.rawValue)</arrayEnumInt><arrayEnumIntOpt>\(value.rawValue)</arrayEnumIntOpt><arrayEnumIntImp>\(value.rawValue)</arrayEnumIntImp></root>"
 
         let mappedObject = mapper.map(XMLString: XMLString)
         
         XCTAssertNotNil(mappedObject)
-        XCTAssertEqual(mappedObject?.arrayEnumString.first, value)
-        XCTAssertEqual(mappedObject?.arrayEnumString.last, value)
-        XCTAssertEqual(mappedObject?.arrayEnumStringOptional?.first, value)
-        XCTAssertEqual(mappedObject?.arrayEnumStringOptional?.last, value)
-        XCTAssertEqual(mappedObject?.arrayEnumStringImplicitlyUnwrapped.first, value)
-        XCTAssertEqual(mappedObject?.arrayEnumStringImplicitlyUnwrapped.last, value)
+        XCTAssertEqual(mappedObject?.arrayEnumInt.first, value)
+        XCTAssertEqual(mappedObject?.arrayEnumIntOptional?.first, value)
+        XCTAssertEqual(mappedObject?.arrayEnumIntImplicitlyUnwrapped.first, value)
     }
 
-    func testMappingEnumStringArrayFromXMLShouldNotCrashWithNonDefinedValue() {
-        let value = "NonDefinedValue"
-        let XMLString = "<root><arrayEnumString>\(value)</arrayEnumString><arrayEnumString>\(value)</arrayEnumString><arrayEnumStringOpt>\(value)</arrayEnumStringOpt><arrayEnumStringOpt>\(value)</arrayEnumStringOpt><arrayEnumStringImp>\(value)</arrayEnumStringImp><arrayEnumStringImp>\(value)</arrayEnumStringImp></root>"
+    func testMappingEnumIntArrayFromXMLShouldNotCrashWithNonDefinedValue() {
+        let value = Int.min
+        let XMLString = "<root><arrayEnumInt>\(value)</arrayEnumInt><arrayEnumIntOpt>\(value)</arrayEnumIntOpt><arrayEnumIntImp>\(value)</arrayEnumIntImp></root>"
 
         let mappedObject = mapper.map(XMLString: XMLString)
         
         XCTAssertNotNil(mappedObject)
-        XCTAssertNil(mappedObject?.arrayEnumString.first)
-        XCTAssertNil(mappedObject?.arrayEnumString.last)
-        XCTAssertNil(mappedObject?.arrayEnumStringOptional?.first)
-        XCTAssertNil(mappedObject?.arrayEnumStringOptional?.last)
-        XCTAssertNil(mappedObject?.arrayEnumStringImplicitlyUnwrapped.first)
-        XCTAssertNil(mappedObject?.arrayEnumStringImplicitlyUnwrapped.last)
+        XCTAssertNil(mappedObject?.arrayEnumInt.first)
+        XCTAssertNil(mappedObject?.arrayEnumIntOptional?.first)
+        XCTAssertNil(mappedObject?.arrayEnumIntImplicitlyUnwrapped?.first)
     }
 
-    func testMappingEnumStringDictionaryFromXML(){
+    func testMappingEnumIntDictionaryFromXML(){
         let key = "key"
-        let value: BasicTypes.EnumString = .another
-        let XMLString = "<root><dictEnumString><\(key)>\(value.rawValue)</\(key)></dictEnumString><dictEnumStringOpt><\(key)>\(value.rawValue)</\(key)></dictEnumStringOpt><dictEnumStringImp><\(key)>\(value.rawValue)</\(key)></dictEnumStringImp></root>"
+        let value: BasicTypes.EnumInt = .another
+        let XMLString = "<root><dictEnumInt><\(key)>\(value.rawValue)</\(key)></dictEnumInt><dictEnumIntOpt><\(key)>\(value.rawValue)</\(key)></dictEnumIntOpt><dictEnumIntImp><\(key)>\(value.rawValue)</\(key)></dictEnumIntImp></root>"
 
         let mappedObject = mapper.map(XMLString: XMLString)
         
         XCTAssertNotNil(mappedObject)
-        XCTAssertEqual(mappedObject?.dictEnumString[key], value)
-        XCTAssertEqual(mappedObject?.dictEnumStringOptional?[key], value)
-        XCTAssertEqual(mappedObject?.dictEnumStringImplicitlyUnwrapped[key], value)
+        XCTAssertEqual(mappedObject?.dictEnumInt[key], value)
+        XCTAssertEqual(mappedObject?.dictEnumIntOptional?[key], value)
+        XCTAssertEqual(mappedObject?.dictEnumIntImplicitlyUnwrapped[key], value)
     }
 
-    func testMappingEnumStringDictionaryFromXMLShouldNotCrashWithNonDefinedValue() {
+    func testMappingEnumIntDictionaryFromXMLShouldNotCrashWithNonDefinedValue() {
         let key = "key"
-        let value = "NonDefinedValue"
-        let XMLString = "<root><dictEnumString><\(key)>\(value)</\(key)></dictEnumString><dictEnumStringOpt><\(key)>\(value)</\(key)></dictEnumStringOpt><dictEnumStringImp><\(key)>\(value)</\(key)></dictEnumStringImp></root>"
+        let value = Int.min
+        let XMLString = "<root><dictEnumInt><\(key)>\(value)</\(key)></dictEnumInt><dictEnumIntOpt><\(key)>\(value)</\(key)></dictEnumIntOpt><dictEnumIntImp><\(key)>\(value)</\(key)></dictEnumIntImp></root>"
 
         let mappedObject = mapper.map(XMLString: XMLString)
         
         XCTAssertNotNil(mappedObject)
-        XCTAssertNil(mappedObject?.dictEnumString[key])
-        XCTAssertNil(mappedObject?.dictEnumStringOptional?[key])
-        XCTAssertNil(mappedObject?.dictEnumStringImplicitlyUnwrapped[key])
+        XCTAssertNil(mappedObject?.dictEnumInt[key])
+        XCTAssertNil(mappedObject?.dictEnumIntOptional?[key])
+        XCTAssertNil(mappedObject?.dictEnumIntImplicitlyUnwrapped[key])
     }
 
     func testObjectModelOptionalDictionnaryOfPrimitives() {
