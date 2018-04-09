@@ -36,6 +36,7 @@ class XMLObjectParser: NSObject {
     private var root: NSMutableDictionary?
     private var stack: [NSMutableDictionary]?
     private var text: String?
+    private var error: Error?
     
     // MARK: - Initialazer
     
@@ -50,13 +51,16 @@ class XMLObjectParser: NSObject {
     
     // MARK: - Basic interface function
     
-    class func dictionary(with parser: XMLParser, options: XMLSerialization.ReadingOptions) -> [String: Any]? {
+    class func dictionary(with data: Data, options: XMLSerialization.ReadingOptions) throws -> [String: Any]? {
         let xmlObjectParser = XMLObjectParser()
-        parser.delegate = xmlObjectParser
         xmlObjectParser.applyOptions(options)
+        let parser = XMLParser(data: data)
+        parser.delegate = xmlObjectParser
         parser.parse()
+        if let parseError = xmlObjectParser.error {
+            throw parseError
+        }
         let result = xmlObjectParser.root
-        xmlObjectParser.clearProperties()
         return result as? [String: Any]
     }
     
@@ -87,13 +91,6 @@ class XMLObjectParser: NSObject {
         } else if options.contains(.neverNodeName) {
             nodeNameMode = .never
         }
-    }
-    
-    func clearProperties() {
-        root = nil
-        stack = nil
-        text = nil
-        applyOptions()
     }
     
     func endText() {
@@ -232,5 +229,11 @@ extension XMLObjectParser: XMLParserDelegate {
                 comments?.add(comment)
             }
         }
+    }
+    
+    func parser(_ parser: XMLParser, parseErrorOccurred parseError: Error) {
+        print(parseError)
+        error = parseError
+        parser.abortParsing()
     }
 }

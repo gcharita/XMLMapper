@@ -31,28 +31,9 @@ public class XMLSerialization {
         }
     }
     
-    /// Returns a Foundation object from given XMLParser.
-    ///
-    /// Create a Foundation object from XMLParser. If an error occurs during the parse, then an exception will be thrown.
-    /// The data must be in one of the 5 supported encodings listed in the XML specification: UTF-8, UTF-16LE, UTF-16BE, UTF-32LE, UTF-32BE. The data may or may not have a BOM. The most efficient encoding to use for parsing is UTF-8, so if you have a choice in encoding the data passed to this method, use UTF-8.
-    ///
-    /// - parameter parser: A XMLParser object.
-    /// - parameter options: Options for reading the XML and creating the Foundation objects.
-    ///
-    /// - throws: An `Error` if the parsing process encounters an error.
-    ///
-    /// - returns: A Foundation object from the XMLParser.
-    open class func xmlObject(with parser: XMLParser, options: ReadingOptions = .default) throws -> Any {
-        guard let xmlObject = XMLObjectParser.dictionary(with: parser, options: options) else {
-            throw XMLSerializationError.invalidData
-        }
-        return xmlObject
-    }
-    
     /// Returns a Foundation object from given XML string.
     ///
     /// Create a Foundation object from XML string. If an error occurs during the parse, then an exception will be thrown.
-    /// The data must be in one of the 5 supported encodings listed in the XML specification: UTF-8, UTF-16LE, UTF-16BE, UTF-32LE, UTF-32BE. The data may or may not have a BOM. The most efficient encoding to use for parsing is UTF-8, so if you have a choice in encoding the data passed to this method, use UTF-8.
     ///
     /// - parameter xmlString: A string containing the XML.
     /// - parameter encoding: The string Encoding. Default value is UTF-8
@@ -62,25 +43,37 @@ public class XMLSerialization {
     ///
     /// - returns: A Foundation object from the XML string.
     open class func xmlObject(withString xmlString: String, using encoding: String.Encoding = .utf8, options: ReadingOptions = .default) throws -> Any {
-        guard let xmlData = xmlString.data(using: encoding) else {
+        
+        // Wrapping the XML string with a node to cover cases that the return value sould be [[String: Any]].
+        // XMLParser does not parse XML data that have more than one root nodes.
+        let wrapedElement = "root"
+        let wrapedXMLString = "<\(wrapedElement)>\(xmlString)</\(wrapedElement)>"
+        
+        guard let xmlData = wrapedXMLString.data(using: encoding) else {
             throw XMLSerializationError.invalidXMLDocument
         }
-        return try xmlObject(with: xmlData, options: options)
+        guard let xmlObject = try XMLObjectParser.dictionary(with: xmlData, options: options)?.childNodes?.first?.value else {
+            throw XMLSerializationError.invalidData
+        }
+        return xmlObject
     }
     
     /// Returns a Foundation object from given XML data.
     ///
     /// Create a Foundation object from XML data. If an error occurs during the parse, then an exception will be thrown.
-    /// The data must be in one of the 5 supported encodings listed in the XML specification: UTF-8, UTF-16LE, UTF-16BE, UTF-32LE, UTF-32BE. The data may or may not have a BOM. The most efficient encoding to use for parsing is UTF-8, so if you have a choice in encoding the data passed to this method, use UTF-8.
     ///
     /// - parameter data: A data object containing XML data.
+    /// - parameter encoding: The data Encoding. Default value is UTF-8
     /// - parameter options: Options for reading the XML data and creating the Foundation objects.
     ///
     /// - throws: An `Error` if the parsing process encounters an error.
     ///
     /// - returns: A Foundation object from the XML data in data.
-    open class func xmlObject(with data: Data, options: ReadingOptions = .default) throws -> Any {
-        return try xmlObject(with: XMLParser(data: data), options: options)
+    open class func xmlObject(with data: Data, encoding: String.Encoding = .utf8, options: ReadingOptions = .default) throws -> Any {
+        guard let xmlString = String(data: data, encoding: encoding) else {
+            throw XMLSerializationError.invalidData
+        }
+        return try xmlObject(withString: xmlString, options: options)
     }
     
     /// Returns XML data from a Foundation object.
