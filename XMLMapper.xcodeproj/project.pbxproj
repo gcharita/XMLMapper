@@ -166,6 +166,9 @@
 		9FEF652D207BEC5D003410C9 /* GenericObjectsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FEF652C207BEC5C003410C9 /* GenericObjectsTests.swift */; };
 		9FEF652E207BEC5D003410C9 /* GenericObjectsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FEF652C207BEC5C003410C9 /* GenericObjectsTests.swift */; };
 		9FEF652F207BEC5D003410C9 /* GenericObjectsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FEF652C207BEC5C003410C9 /* GenericObjectsTests.swift */; };
+		9FEF6531207BF3FC003410C9 /* XMLMappableExtensionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FEF6530207BF3FC003410C9 /* XMLMappableExtensionsTests.swift */; };
+		9FEF6532207BF3FC003410C9 /* XMLMappableExtensionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FEF6530207BF3FC003410C9 /* XMLMappableExtensionsTests.swift */; };
+		9FEF6533207BF3FC003410C9 /* XMLMappableExtensionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FEF6530207BF3FC003410C9 /* XMLMappableExtensionsTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -248,6 +251,7 @@
 		9F914584203A0E9C006FC76B /* XMLDataTransformTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XMLDataTransformTests.swift; sourceTree = "<group>"; };
 		9F914588203A10B3006FC76B /* XMLDictionaryTransformTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XMLDictionaryTransformTests.swift; sourceTree = "<group>"; };
 		9FEF652C207BEC5C003410C9 /* GenericObjectsTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GenericObjectsTests.swift; sourceTree = "<group>"; };
+		9FEF6530207BF3FC003410C9 /* XMLMappableExtensionsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XMLMappableExtensionsTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -403,6 +407,7 @@
 				9F914584203A0E9C006FC76B /* XMLDataTransformTests.swift */,
 				9F914588203A10B3006FC76B /* XMLDictionaryTransformTests.swift */,
 				9FEF652C207BEC5C003410C9 /* GenericObjectsTests.swift */,
+				9FEF6530207BF3FC003410C9 /* XMLMappableExtensionsTests.swift */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -859,6 +864,7 @@
 				9F6DE1BF203A097A007557E8 /* XMLCustomTransformTests.swift in Sources */,
 				9F34A93920377EED00BB2EBA /* XMLMapperTests.swift in Sources */,
 				9FEF652D207BEC5D003410C9 /* GenericObjectsTests.swift in Sources */,
+				9FEF6531207BF3FC003410C9 /* XMLMappableExtensionsTests.swift in Sources */,
 				9F34A99F2037812300BB2EBA /* BasicTypesTestsFromXML.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -874,6 +880,7 @@
 				9F6DE1C0203A097A007557E8 /* XMLCustomTransformTests.swift in Sources */,
 				9F34A9A02037812300BB2EBA /* BasicTypesTestsFromXML.swift in Sources */,
 				9FEF652E207BEC5D003410C9 /* GenericObjectsTests.swift in Sources */,
+				9FEF6532207BF3FC003410C9 /* XMLMappableExtensionsTests.swift in Sources */,
 				9F6DE1B72039FC61007557E8 /* BasicTypes.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -889,6 +896,7 @@
 				9F6DE1C1203A097A007557E8 /* XMLCustomTransformTests.swift in Sources */,
 				9F34A9A12037812300BB2EBA /* BasicTypesTestsFromXML.swift in Sources */,
 				9FEF652F207BEC5D003410C9 /* GenericObjectsTests.swift in Sources */,
+				9FEF6533207BF3FC003410C9 /* XMLMappableExtensionsTests.swift in Sources */,
 				9F6DE1B92039FC62007557E8 /* BasicTypes.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

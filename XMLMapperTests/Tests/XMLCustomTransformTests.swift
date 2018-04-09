@@ -130,7 +130,7 @@ class XMLCustomTransformTests: XCTestCase {
         XCTAssertNil(transform?.colorErrorInScanHex)
         XCTAssertNil(transform?.colorNotAString)
         
-        transform?.colorGrayscale = UIColor(white: 0, alpha: 1)
+        transform?.colorGrayscale = TestHexColor(white: 0, alpha: 1)
 		
 		let XMLOutput = mapper.toXML(transform!)
 		
