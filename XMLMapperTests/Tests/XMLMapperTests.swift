@@ -195,7 +195,7 @@ class XMLMapperTests: XCTestCase {
         let users = [user, user, user]
         
         let XMLString = XMLMapper().toXMLString(users)
-        print(XMLString ?? "")
+        
         let parsedUsers = userMapper.mapArray(XMLString: XMLString!)
         
         XCTAssertNotNil(parsedUsers)
@@ -281,7 +281,7 @@ class XMLMapperTests: XCTestCase {
         XCTAssertEqual(dictionaryOfTasks?["mondayTasks"]?[1].percentage, percentage2)
         
         let planToXML = XMLMapper().toXMLString(plan!)
-        print(planToXML!)
+        
         let planFromXML = XMLMapper<Plan>().map(XMLString: planToXML!)
         
         let dictionaryOfTasks2 = planFromXML?.dictionaryOfTasks
