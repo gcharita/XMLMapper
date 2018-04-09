@@ -117,7 +117,7 @@ public final class XMLMapper<N: XMLBaseMappable> {
     
     /// Maps a XML object to a dictionary of XMLMappable objects if it is a XML dictionary of dictionaries, or returns nil.
     public func mapDictionary(XMLObject: Any?) -> [String: N]? {
-        if let XML = XMLObject as? [String: [String: Any]] {
+        if let XML = (XMLObject as? [String: Any])?.childNodes as? [String: [String: Any]] {
             return mapDictionary(XML: XML)
         }
         
@@ -160,7 +160,7 @@ public final class XMLMapper<N: XMLBaseMappable> {
     
     /// Maps a XML object to a dictionary of arrays of XMLMappable objects
     public func mapDictionaryOfArrays(XMLObject: Any?) -> [String: [N]]? {
-        if let XML = XMLObject as? [String: [[String: Any]]] {
+        if let XML = (XMLObject as? [String: Any])?.childNodes as? [String: [[String: Any]]] {
             return mapDictionaryOfArrays(XML: XML)
         }
         
