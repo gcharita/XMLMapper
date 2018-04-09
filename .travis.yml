@@ -6,10 +6,58 @@ osx_image: xcode9.2
 language: objective-c
 # cache: cocoapods
 # podfile: Example/Podfile
-# before_install:
-# - gem install cocoapods # Since Travis is not always on latest version
-# - pod install --project-directory=Example
+
+env:
+  global:
+    - LANG=en_US.UTF-8
+    - LC_ALL=en_US.UTF-8
+    - PROJECT="XMLMapper.xcodeproj"
+    - IOS_FRAMEWORK_SCHEME="XMLMapper iOS"
+    - TVOS_FRAMEWORK_SCHEME="XMLMapper tvOS"
+    - OSX_FRAMEWORK_SCHEME="XMLMapper macOS"
+    - WATCHOS_FRAMEWORK_SCHEME="XMLMapper watchOS"
+    - IOS_SDK=iphonesimulator11.0
+    - TVOS_SDK=appletvsimulator11.0
+    - OSX_SDK=macosx10.13
+    - WATCHOS_SDK=watchsimulator4.0
+  matrix:
+    - DESTINATION="OS=11.0,name=iPhone 5s"           SCHEME="$IOS_FRAMEWORK_SCHEME"     SDK="$IOS_SDK"     RUN_TESTS="YES" POD_LINT="NO"
+    - DESTINATION="OS=11.0,name=iPhone 6"            SCHEME="$IOS_FRAMEWORK_SCHEME"     SDK="$IOS_SDK"     RUN_TESTS="YES" POD_LINT="NO"
+    - DESTINATION="OS=11.0,name=iPhone 6s"           SCHEME="$IOS_FRAMEWORK_SCHEME"     SDK="$IOS_SDK"     RUN_TESTS="YES" POD_LINT="NO"
+    - DESTINATION="OS=11.0,name=iPhone 7"            SCHEME="$IOS_FRAMEWORK_SCHEME"     SDK="$IOS_SDK"     RUN_TESTS="YES" POD_LINT="YES"
+    - DESTINATION="OS=11.0,name=Apple TV 1080p"      SCHEME="$TVOS_FRAMEWORK_SCHEME"    SDK="$TVOS_SDK"    RUN_TESTS="YES" POD_LINT="NO"
+    - DESTINATION="arch=x86_64"                      SCHEME="$OSX_FRAMEWORK_SCHEME"     SDK="$OSX_SDK"     RUN_TESTS="YES" POD_LINT="NO"
+    - DESTINATION="OS=4.0,name=Apple Watch - 38mm"   SCHEME="$WATCHOS_FRAMEWORK_SCHEME" SDK="$WATCHOS_SDK" RUN_TESTS="NO"  POD_LINT="NO"
+
+before_install:
+  - gem install xcpretty --no-rdoc --no-ri --no-document --quiet
+  # - gem install cocoapods # Since Travis is not always on latest version
+  # - pod install --project-directory=Example
+
 script:
-# - set -o pipefail && xcodebuild test -enableCodeCoverage YES -workspace Example/XMLMapper.xcworkspace -scheme XMLMapper-Example -sdk iphonesimulator9.3 ONLY_ACTIVE_ARCH=NO | xcpretty
-- set -o pipefail && xcodebuild test -enableCodeCoverage YES -workspace Example/XMLMapper.xcworkspace -scheme XMLMapper-Example -destination 'platform=iOS Simulator,name=iPhone 6,OS=11.2' ONLY_ACTIVE_ARCH=NO | xcpretty
-- pod lib lint
+  - set -o pipefail
+  - xcodebuild -version
+  - xcodebuild -showsdks
+
+  # Build Framework in Debug and Run Tests if specified
+  - if [ $RUN_TESTS == "YES" ]; then
+      travis_retry xcodebuild -project "$PROJECT" -scheme "$SCHEME" -sdk "$SDK" -destination "$DESTINATION" -configuration Debug ONLY_ACTIVE_ARCH=NO test | xcpretty -c;
+    else
+      travis_retry xcodebuild -project "$PROJECT" -scheme "$SCHEME" -sdk "$SDK" -destination "$DESTINATION" -configuration Debug ONLY_ACTIVE_ARCH=NO build | xcpretty -c;
+    fi
+
+  # Build Framework in Release and Run Tests if specified
+  - if [ $RUN_TESTS == "YES" ]; then
+      travis_retry xcodebuild -project "$PROJECT" -scheme "$SCHEME" -sdk "$SDK" -destination "$DESTINATION" -configuration Release ONLY_ACTIVE_ARCH=NO test | xcpretty -c;
+    else
+      travis_retry xcodebuild -project "$PROJECT" -scheme "$SCHEME" -sdk "$SDK" -destination "$DESTINATION" -configuration Release ONLY_ACTIVE_ARCH=NO build | xcpretty -c;
+    fi
+
+  - if [ $POD_LINT == "YES" ]; then
+      pod lib lint;
+    fi
+  # - set -o pipefail && xcodebuild test -enableCodeCoverage YES -workspace Example/XMLMapper.xcworkspace -scheme XMLMapper-Example -sdk iphonesimulator9.3 ONLY_ACTIVE_ARCH=NO | xcpretty
+  # - set -o pipefail && xcodebuild test -enableCodeCoverage YES -workspace Example/XMLMapper.xcworkspace -scheme XMLMapper-Example -destination 'platform=iOS Simulator,name=iPhone 6,OS=11.2' ONLY_ACTIVE_ARCH=NO | xcpretty
+
+# notifications:
+#   email: false
