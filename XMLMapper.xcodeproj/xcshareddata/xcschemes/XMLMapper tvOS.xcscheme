@@ -29,7 +29,26 @@
       language = ""
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "9F34A94420377F1C00BB2EBA"
+               BuildableName = "XMLMapperTests tvOS.xctest"
+               BlueprintName = "XMLMapperTests tvOS"
+               ReferencedContainer = "container:XMLMapper.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "9F2E94E7200153730000149B"
+            BuildableName = "XMLMapper.framework"
+            BlueprintName = "XMLMapper tvOS"
+            ReferencedContainer = "container:XMLMapper.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
       <AdditionalOptions>
       </AdditionalOptions>
    </TestAction>
