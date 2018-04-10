@@ -120,12 +120,12 @@ class XMLCustomTransformTests: XCTestCase {
 		
 		let transform = mapper.map(XML: XML)
 		
-        XCTAssertEqual(transform?.colorRed?.cgColor.components, TestHexColor.red.cgColor.components)
-        XCTAssertEqual(transform?.colorGreenLowercase?.cgColor.components, TestHexColor.green.cgColor.components)
-        XCTAssertEqual(transform?.colorBlueWithoutHash?.cgColor.components, TestHexColor.blue.cgColor.components)
-        XCTAssertEqual(transform?.color3lenght?.cgColor.components, TestHexColor.red.cgColor.components)
-        XCTAssertEqual(transform?.color4lenght?.cgColor.components, TestHexColor.red.cgColor.components)
-        XCTAssertEqual(transform?.color8lenght?.cgColor.components, TestHexColor.red.cgColor.components)
+        XCTAssertTrue(isEqualColors(transform?.colorRed, TestHexColor.red))
+        XCTAssertTrue(isEqualColors(transform?.colorGreenLowercase, TestHexColor.green))
+        XCTAssertTrue(isEqualColors(transform?.colorBlueWithoutHash, TestHexColor.blue))
+        XCTAssertTrue(isEqualColors(transform?.color3lenght, TestHexColor.red))
+        XCTAssertTrue(isEqualColors(transform?.color4lenght, TestHexColor.red))
+        XCTAssertTrue(isEqualColors(transform?.color8lenght, TestHexColor.red))
         XCTAssertNil(transform?.colorInvalidRGBString)
         XCTAssertNil(transform?.colorErrorInScanHex)
         XCTAssertNil(transform?.colorNotAString)
@@ -145,6 +145,15 @@ class XMLCustomTransformTests: XCTestCase {
         XCTAssertEqual(XMLOutput["colorGrayscale"] as? String, "000000FF")
         XCTAssertNil(XMLOutput["colorNotAString"])
 	}
+    
+    func isEqualColors(_ lhs: TestHexColor?,_ rhs: TestHexColor?) -> Bool {
+        switch (lhs?.cgColor.components, rhs?.cgColor.components) {
+        case let (components?, colorComponents?):
+            return components == colorComponents
+        default:
+            return false
+        }
+    }
 }
 
 class Transforms: XMLMappable {
@@ -222,4 +231,3 @@ class Transforms: XMLMappable {
         colorNotAString          <- (map["colorNotAString"], XMLHexColorTransform())
 	}
 }
-
