@@ -163,6 +163,9 @@
 		9F914589203A10B3006FC76B /* XMLDictionaryTransformTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F914588203A10B3006FC76B /* XMLDictionaryTransformTests.swift */; };
 		9F91458A203A10B3006FC76B /* XMLDictionaryTransformTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F914588203A10B3006FC76B /* XMLDictionaryTransformTests.swift */; };
 		9F91458B203A10B3006FC76B /* XMLDictionaryTransformTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F914588203A10B3006FC76B /* XMLDictionaryTransformTests.swift */; };
+		9FEAB85C207CF63F004BCA7B /* XMLMappableTypesWithTransformsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FEAB85B207CF63F004BCA7B /* XMLMappableTypesWithTransformsTests.swift */; };
+		9FEAB85D207CF63F004BCA7B /* XMLMappableTypesWithTransformsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FEAB85B207CF63F004BCA7B /* XMLMappableTypesWithTransformsTests.swift */; };
+		9FEAB85E207CF63F004BCA7B /* XMLMappableTypesWithTransformsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FEAB85B207CF63F004BCA7B /* XMLMappableTypesWithTransformsTests.swift */; };
 		9FEF652D207BEC5D003410C9 /* GenericObjectsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FEF652C207BEC5C003410C9 /* GenericObjectsTests.swift */; };
 		9FEF652E207BEC5D003410C9 /* GenericObjectsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FEF652C207BEC5C003410C9 /* GenericObjectsTests.swift */; };
 		9FEF652F207BEC5D003410C9 /* GenericObjectsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FEF652C207BEC5C003410C9 /* GenericObjectsTests.swift */; };
@@ -250,6 +253,7 @@
 		9F6DE1BE203A097A007557E8 /* XMLCustomTransformTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XMLCustomTransformTests.swift; sourceTree = "<group>"; };
 		9F914584203A0E9C006FC76B /* XMLDataTransformTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XMLDataTransformTests.swift; sourceTree = "<group>"; };
 		9F914588203A10B3006FC76B /* XMLDictionaryTransformTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XMLDictionaryTransformTests.swift; sourceTree = "<group>"; };
+		9FEAB85B207CF63F004BCA7B /* XMLMappableTypesWithTransformsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XMLMappableTypesWithTransformsTests.swift; sourceTree = "<group>"; };
 		9FEF652C207BEC5C003410C9 /* GenericObjectsTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GenericObjectsTests.swift; sourceTree = "<group>"; };
 		9FEF6530207BF3FC003410C9 /* XMLMappableExtensionsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XMLMappableExtensionsTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -408,6 +412,7 @@
 				9F914588203A10B3006FC76B /* XMLDictionaryTransformTests.swift */,
 				9FEF652C207BEC5C003410C9 /* GenericObjectsTests.swift */,
 				9FEF6530207BF3FC003410C9 /* XMLMappableExtensionsTests.swift */,
+				9FEAB85B207CF63F004BCA7B /* XMLMappableTypesWithTransformsTests.swift */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -857,6 +862,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9FEAB85C207CF63F004BCA7B /* XMLMappableTypesWithTransformsTests.swift in Sources */,
 				9F914585203A0E9C006FC76B /* XMLDataTransformTests.swift in Sources */,
 				9F34A960203780FF00BB2EBA /* BasicTypes.swift in Sources */,
 				9F6DE1BB2039FDE9007557E8 /* BasicTypesTestsToXML.swift in Sources */,
@@ -873,6 +879,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9FEAB85D207CF63F004BCA7B /* XMLMappableTypesWithTransformsTests.swift in Sources */,
 				9F914586203A0E9C006FC76B /* XMLDataTransformTests.swift in Sources */,
 				9F6DE1B62039FC61007557E8 /* XMLMapperTests.swift in Sources */,
 				9F6DE1BC2039FDE9007557E8 /* BasicTypesTestsToXML.swift in Sources */,
@@ -889,6 +896,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9FEAB85E207CF63F004BCA7B /* XMLMappableTypesWithTransformsTests.swift in Sources */,
 				9F914587203A0E9C006FC76B /* XMLDataTransformTests.swift in Sources */,
 				9F6DE1B82039FC62007557E8 /* XMLMapperTests.swift in Sources */,
 				9F6DE1BD2039FDE9007557E8 /* BasicTypesTestsToXML.swift in Sources */,
