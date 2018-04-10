@@ -120,12 +120,12 @@ class XMLCustomTransformTests: XCTestCase {
 		
 		let transform = mapper.map(XML: XML)
 		
-        XCTAssertEqual(transform?.colorRed, TestHexColor.red)
-        XCTAssertEqual(transform?.colorGreenLowercase, TestHexColor.green)
-        XCTAssertEqual(transform?.colorBlueWithoutHash, TestHexColor.blue)
-        XCTAssertEqual(transform?.color3lenght, TestHexColor.red)
-        XCTAssertEqual(transform?.color4lenght, TestHexColor.red)
-        XCTAssertEqual(transform?.color8lenght, TestHexColor.red)
+        XCTAssertEqual(transform?.colorRed?.cgColor.components, TestHexColor.red.cgColor.components)
+        XCTAssertEqual(transform?.colorGreenLowercase?.cgColor.components, TestHexColor.green.cgColor.components)
+        XCTAssertEqual(transform?.colorBlueWithoutHash?.cgColor.components, TestHexColor.blue.cgColor.components)
+        XCTAssertEqual(transform?.color3lenght?.cgColor.components, TestHexColor.red.cgColor.components)
+        XCTAssertEqual(transform?.color4lenght?.cgColor.components, TestHexColor.red.cgColor.components)
+        XCTAssertEqual(transform?.color8lenght?.cgColor.components, TestHexColor.red.cgColor.components)
         XCTAssertNil(transform?.colorInvalidRGBString)
         XCTAssertNil(transform?.colorErrorInScanHex)
         XCTAssertNil(transform?.colorNotAString)
