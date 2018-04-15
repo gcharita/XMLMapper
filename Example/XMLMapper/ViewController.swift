@@ -13,18 +13,9 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        if let basicTestPath = Bundle.main.path(forResource: "basic_test", ofType: "xml") {
-            do {
-                let xml = try String(contentsOfFile: basicTestPath)
-                let object = XMLMapper<TestXMLMappable>().map(XMLString: xml)
-                print(object?.testElement.testAttribute ?? "nil")
-                print(object?.toXMLString() ?? "nil")
-            } catch {
-                print("An error occurred reading resource basic_test.xml: \(error.localizedDescription)")
-            }
-        } else {
-            print("Path for basic_test.xml not found")
-        }
+        let object = XMLMapper<TestXMLMappable>().map(XMLfile: "basic_test.xml")
+        print(object?.testElement.testAttribute ?? "nil")
+        print(object?.toXMLString() ?? "nil")
     }
 
     override func didReceiveMemoryWarning() {
