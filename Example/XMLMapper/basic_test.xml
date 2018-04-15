@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <root>
     <TestElementXMLMappable testAttribute="enumValue">
         <testString>Test string</testString>

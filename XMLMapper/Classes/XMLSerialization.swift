@@ -44,14 +44,28 @@ public class XMLSerialization {
     /// - returns: A Foundation object from the XML string.
     open class func xmlObject(withString xmlString: String, using encoding: String.Encoding = .utf8, options: ReadingOptions = .default) throws -> Any {
         
-        // Wrapping the XML string with a node to cover cases that the return value sould be [[String: Any]].
+        func data(fromString xmlString: String, using encoding: String.Encoding) throws -> Data {
+            guard let xmlData = xmlString.data(using: encoding) else {
+                throw XMLSerializationError.invalidXMLDocument
+            }
+            return xmlData
+        }
+        
+        // Parsing xmlString as a Dictionary if XML declaration exists
+        if xmlString.contains("<?xml") {
+            let xmlData = try data(fromString: xmlString, using: encoding)
+            guard let xmlObject = try XMLObjectParser.dictionary(with: xmlData, options: options) else {
+                throw XMLSerializationError.invalidData
+            }
+            return xmlObject
+        }
+        
+        // Wrapping the XML string with a node to cover cases that the return value should be [[String: Any]].
         // XMLParser does not parse XML data that have more than one root nodes.
-        let wrapedElement = "root"
+        let wrapedElement = "wrapper"
         let wrapedXMLString = "<\(wrapedElement)>\(xmlString)</\(wrapedElement)>"
         
-        guard let xmlData = wrapedXMLString.data(using: encoding) else {
-            throw XMLSerializationError.invalidXMLDocument
-        }
+        let xmlData = try data(fromString: wrapedXMLString, using: encoding)
         guard let xmlObject = try XMLObjectParser.dictionary(with: xmlData, options: options)?.childNodes?.first?.value else {
             throw XMLSerializationError.invalidData
         }
