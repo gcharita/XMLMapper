@@ -24,19 +24,19 @@ class XMLObjectParser: NSObject {
     
     // MARK: - Properties
     
-    private var collapseTextNodes: Bool
-    private var stripEmptyNodes: Bool
+    fileprivate var collapseTextNodes: Bool
+    fileprivate var stripEmptyNodes: Bool
     private var trimWhiteSpace: Bool
-    private var alwaysUseArrays: Bool
-    private var preserveComments: Bool
-    private var wrapRootNode: Bool
-    private var attributesMode: XMLObjectParserAttributesMode = .prefixed
-    private var nodeNameMode: XMLObjectParserNodeNameMode = .always
+    fileprivate var alwaysUseArrays: Bool
+    fileprivate var preserveComments: Bool
+    fileprivate var wrapRootNode: Bool
+    fileprivate var attributesMode: XMLObjectParserAttributesMode = .prefixed
+    fileprivate var nodeNameMode: XMLObjectParserNodeNameMode = .always
     
-    private var root: NSMutableDictionary?
-    private var stack: [NSMutableDictionary]?
+    fileprivate var root: NSMutableDictionary?
+    fileprivate var stack: [NSMutableDictionary]?
     private var text: String?
-    private var error: Error?
+    fileprivate var error: Error?
     
     // MARK: - Initialazer
     
