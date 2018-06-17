@@ -105,7 +105,7 @@ public final class XMLMapper<N: XMLBaseMappable> {
     /// Maps an array of XML dictionary to an array of XMLMappable objects
     public func mapArray(XMLArray: [[String: Any]]) -> [N] {
         // map every element in XML array to type N
-        let result = XMLArray.flatMap(map)
+        let result = XMLArray.compactMap(map)
         return result
     }
     
@@ -355,7 +355,7 @@ extension XMLMapper where N: Hashable {
     /// Maps an Set of XML dictionary to an array of XMLMappable objects
     public func mapSet(XMLArray: [[String: Any]]) -> Set<N> {
         // map every element in XML array to type N
-        return Set(XMLArray.flatMap(map))
+        return Set(XMLArray.compactMap(map))
     }
     
     ///Maps a Set of Objects to a Set of XML dictionaries [[String : Any]]

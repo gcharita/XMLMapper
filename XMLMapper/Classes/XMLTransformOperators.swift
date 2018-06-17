@@ -457,7 +457,7 @@ public func <- <Transform: XMLTransformType>(left: inout [[Transform.Object]], r
         left >>> right
     case .fromXML where map.isKeyPresent:
         guard let original2DArray = map.currentValue as? [[Any]] else { break }
-        let transformed2DArray = original2DArray.flatMap { values in
+        let transformed2DArray = original2DArray.compactMap { values in
             fromXMLArrayWithTransform(values as Any?, transform: transform)
         }
         FromXML.basicType(&left, object: transformed2DArray)
@@ -469,7 +469,7 @@ public func <- <Transform: XMLTransformType>(left: inout [[Transform.Object]], r
 public func >>> <Transform: XMLTransformType>(left: [[Transform.Object]], right: (XMLMap, Transform)) {
     let (map, transform) = right
     if map.mappingType == .toXML{
-        let transformed2DArray = left.flatMap { values in
+        let transformed2DArray = left.compactMap { values in
             toXMLArrayWithTransform(values, transform: transform)
         }
         ToXML.basicType(transformed2DArray, map: map)
@@ -484,7 +484,7 @@ public func <- <Transform: XMLTransformType>(left: inout [[Transform.Object]]?, 
         left >>> right
     case .fromXML where map.isKeyPresent:
         guard let original2DArray = map.currentValue as? [[Any]] else { break }
-        let transformed2DArray = original2DArray.flatMap { values in
+        let transformed2DArray = original2DArray.compactMap { values in
             fromXMLArrayWithTransform(values as Any?, transform: transform)
         }
         FromXML.optionalBasicType(&left, object: transformed2DArray)
@@ -496,7 +496,7 @@ public func <- <Transform: XMLTransformType>(left: inout [[Transform.Object]]?, 
 public func >>> <Transform: XMLTransformType>(left: [[Transform.Object]]?, right: (XMLMap, Transform)) {
     let (map, transform) = right
     if map.mappingType == .toXML {
-        let transformed2DArray = left?.flatMap { values in
+        let transformed2DArray = left?.compactMap { values in
             toXMLArrayWithTransform(values, transform: transform)
         }
         ToXML.optionalBasicType(transformed2DArray, map: map)
@@ -512,7 +512,7 @@ public func <- <Transform: XMLTransformType>(left: inout [[Transform.Object]]!, 
         left >>> right
     case .fromXML where map.isKeyPresent:
         guard let original2DArray = map.currentValue as? [[Any]] else { break }
-        let transformed2DArray = original2DArray.flatMap { values in
+        let transformed2DArray = original2DArray.compactMap { values in
             fromXMLArrayWithTransform(values as Any?, transform: transform)
         }
         FromXML.optionalBasicType(&left, object: transformed2DArray)
@@ -588,7 +588,7 @@ public func <- <Transform: XMLTransformType>(left: inout Set<Transform.Object>!,
 
 private func fromXMLArrayWithTransform<Transform: XMLTransformType>(_ input: Any?, transform: Transform) -> [Transform.Object]? {
     if let values = input as? [Any] {
-        return values.flatMap { value in
+        return values.compactMap { value in
             return transform.transformFromXML(value)
         }
     } else if let value = transform.transformFromXML(input) {
@@ -609,7 +609,7 @@ private func fromXMLDictionaryWithTransform<Transform: XMLTransformType>(_ input
 }
 
 private func toXMLArrayWithTransform<Transform: XMLTransformType>(_ input: [Transform.Object]?, transform: Transform) -> [Transform.XML]? {
-    return input?.flatMap { value in
+    return input?.compactMap { value in
         return transform.transformToXML(value)
     }
 }
