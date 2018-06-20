@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'XMLMapper'
-  s.version          = '1.4.4'
+  s.version          = '1.5.0'
   s.summary          = 'A simple way to map XML to Objects written in Swift'
 
   s.homepage         = 'https://github.com/gcharita/XMLMapper'
@@ -20,6 +20,8 @@ Pod::Spec.new do |s|
   s.ios.deployment_target = '8.0'
   s.osx.deployment_target = '10.9'
   s.tvos.deployment_target = '9.0'
+
+  s.swift_version = '4.0'
 
   s.default_subspec = 'Core'
 
