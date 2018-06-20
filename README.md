@@ -424,6 +424,13 @@ Accept-Encoding: gzip;q=1.0, compress;q=0.5
 
 Unfortunately, there isn't an easy way to map SOAP response, other than creating your own XMLMappable objects (at least not for the moment)
 
+## Communication
+
+- If you **need help**, use [Stack Overflow](https://stackoverflow.com/questions/tagged/xmlmapper). (Tag 'xmlmapper')
+- If you'd like to **ask a general question**, use [Stack Overflow](https://stackoverflow.com/questions/tagged/xmlmapper).
+- If you **found a bug**, open an issue.
+- If you **have a feature request**, open an issue.
+
 ## Installation
 
 ### CocoaPods
