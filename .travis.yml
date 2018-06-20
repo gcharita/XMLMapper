@@ -31,7 +31,7 @@ env:
 
 before_install:
   - gem install xcpretty --no-rdoc --no-ri --no-document --quiet
-  # - gem install cocoapods # Since Travis is not always on latest version
+  - gem install cocoapods # Since Travis is not always on latest version
   # - pod install --project-directory=Example
 
 script:
