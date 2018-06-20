@@ -34,39 +34,41 @@ public final class XMLMap {
     /// The Key paramater can be a period separated string (ex. "distance.value") to access sub objects.
     public subscript(key: String) -> XMLMap {
         // save key and value associated to it
-        return self[key, delimiter: ".", ignoreNil: false]
+        return self.subscript(key: key)
     }
     
     public subscript(key: String, delimiter delimiter: String) -> XMLMap {
-        let nested = key.contains(delimiter)
-        return self[key, nested: nested, delimiter: delimiter, ignoreNil: false]
+        return self.subscript(key: key, delimiter: delimiter)
     }
     
     public subscript(key: String, nested nested: Bool) -> XMLMap {
-        return self[key, nested: nested, delimiter: ".", ignoreNil: false]
+        return self.subscript(key: key, nested: nested)
     }
     
     public subscript(key: String, nested nested: Bool, delimiter delimiter: String) -> XMLMap {
-        return self[key, nested: nested, delimiter: delimiter, ignoreNil: false]
+        return self.subscript(key: key, nested: nested, delimiter: delimiter)
     }
     
     public subscript(key: String, ignoreNil ignoreNil: Bool) -> XMLMap {
-        return self[key, delimiter: ".", ignoreNil: ignoreNil]
+        return self.subscript(key: key, ignoreNil: ignoreNil)
     }
     
     public subscript(key: String, delimiter delimiter: String, ignoreNil ignoreNil: Bool) -> XMLMap {
-        let nested = key.contains(delimiter)
-        return self[key, nested: nested, delimiter: delimiter, ignoreNil: ignoreNil]
+        return self.subscript(key: key, delimiter: delimiter, ignoreNil: ignoreNil)
     }
     
     public subscript(key: String, nested nested: Bool, ignoreNil ignoreNil: Bool) -> XMLMap {
-        return self[key, nested: nested, delimiter: ".", ignoreNil: ignoreNil]
+        return self.subscript(key: key, nested: nested, ignoreNil: ignoreNil)
     }
     
-    public subscript(key: String, nested nested: Bool, delimiter delimiter: String, ignoreNil ignoreNil: Bool) -> XMLMap {
+    public subscript(key: String, nested nested: Bool?, delimiter delimiter: String, ignoreNil ignoreNil: Bool) -> XMLMap {
+        return self.subscript(key: key, nested: nested, delimiter: delimiter, ignoreNil: ignoreNil)
+    }
+    
+    private func `subscript`(key: String, nested: Bool? = nil, delimiter: String = ".", ignoreNil: Bool = false) -> XMLMap {
         // save key and value associated to it
         currentKey = key
-        keyIsNested = nested
+        keyIsNested = nested ?? key.contains(delimiter)
         nestedKeyDelimiter = delimiter
         
         if isAttribute {
@@ -78,14 +80,14 @@ public final class XMLMap {
         if mappingType == .fromXML {
             // check if a value exists for the current key
             // do this pre-check for performance reasons
-            if let currentKey = currentKey, !keyIsNested {
+            if keyIsNested {
+                // break down the components of the key that are separated by .
+                (isKeyPresent, currentValue) = valueFor(ArraySlice(key.components(separatedBy: delimiter)), dictionary: XML)
+            } else if let currentKey = currentKey {
                 let object = XML[currentKey]
                 let isNSNull = object is NSNull
                 isKeyPresent = isNSNull ? true : object != nil
                 currentValue = isNSNull ? nil : object
-            } else {
-                // break down the components of the key that are separated by .
-                (isKeyPresent, currentValue) = valueFor(ArraySlice(key.components(separatedBy: delimiter)), dictionary: XML)
             }
             
             // update isKeyPresent if ignoreNil is true
