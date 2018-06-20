@@ -50,6 +50,8 @@ public func >>> <T>(left: T?, right: XMLMap) {
 }
 
 
+// Code targeting the Swift 4.1 compiler and below.
+#if !(swift(>=4.1.50) || (swift(>=3.4) && !swift(>=4.0)))
 /// Implicitly unwrapped optional object of basic type
 public func <- <T>(left: inout T!, right: XMLMap) {
     switch right.mappingType {
@@ -60,6 +62,7 @@ public func <- <T>(left: inout T!, right: XMLMap) {
     default: ()
     }
 }
+#endif
 
 // MARK:- Mappable Objects - <T: XMLBaseMappable>
 
@@ -98,6 +101,8 @@ public func >>> <T: XMLBaseMappable>(left: T?, right: XMLMap) {
 }
 
 
+// Code targeting the Swift 4.1 compiler and below.
+#if !(swift(>=4.1.50) || (swift(>=3.4) && !swift(>=4.0)))
 /// Implicitly unwrapped optional Mappable objects
 public func <- <T: XMLBaseMappable>(left: inout T!, right: XMLMap) {
     switch right.mappingType {
@@ -108,6 +113,7 @@ public func <- <T: XMLBaseMappable>(left: inout T!, right: XMLMap) {
     default: ()
     }
 }
+#endif
 
 // MARK:- Dictionary of Mappable objects - Dictionary<String, T: XMLBaseMappable>
 
@@ -147,6 +153,8 @@ public func >>> <T: XMLBaseMappable>(left: Dictionary<String, T>?, right: XMLMap
 }
 
 
+// Code targeting the Swift 4.1 compiler and below.
+#if !(swift(>=4.1.50) || (swift(>=3.4) && !swift(>=4.0)))
 /// Implicitly unwrapped Optional Dictionary of Mappable object <String, T: Mappable>
 public func <- <T: XMLBaseMappable>(left: inout Dictionary<String, T>!, right: XMLMap) {
     switch right.mappingType {
@@ -157,6 +165,7 @@ public func <- <T: XMLBaseMappable>(left: inout Dictionary<String, T>!, right: X
     default: ()
     }
 }
+#endif
 
 /// Dictionary of Mappable objects <String, T: Mappable>
 public func <- <T: XMLBaseMappable>(left: inout Dictionary<String, [T]>, right: XMLMap) {
@@ -193,6 +202,8 @@ public func >>> <T: XMLBaseMappable>(left: Dictionary<String, [T]>?, right: XMLM
 }
 
 
+// Code targeting the Swift 4.1 compiler and below.
+#if !(swift(>=4.1.50) || (swift(>=3.4) && !swift(>=4.0)))
 /// Implicitly unwrapped Optional Dictionary of Mappable object <String, T: Mappable>
 public func <- <T: XMLBaseMappable>(left: inout Dictionary<String, [T]>!, right: XMLMap) {
     switch right.mappingType {
@@ -203,6 +214,7 @@ public func <- <T: XMLBaseMappable>(left: inout Dictionary<String, [T]>!, right:
     default: ()
     }
 }
+#endif
 
 // MARK:- Array of Mappable objects - Array<T: XMLBaseMappable>
 
@@ -241,6 +253,8 @@ public func >>> <T: XMLBaseMappable>(left: Array<T>?, right: XMLMap) {
 }
 
 
+// Code targeting the Swift 4.1 compiler and below.
+#if !(swift(>=4.1.50) || (swift(>=3.4) && !swift(>=4.0)))
 /// Implicitly unwrapped Optional array of Mappable objects
 public func <- <T: XMLBaseMappable>(left: inout Array<T>!, right: XMLMap) {
     switch right.mappingType {
@@ -251,6 +265,7 @@ public func <- <T: XMLBaseMappable>(left: inout Array<T>!, right: XMLMap) {
     default: ()
     }
 }
+#endif
 
 // MARK:- Array of Array of Mappable objects - Array<Array<T: XMLBaseMappable>>
 
@@ -290,6 +305,8 @@ public func >>> <T: XMLBaseMappable>(left: Array<Array<T>>?, right: XMLMap) {
 }
 
 
+// Code targeting the Swift 4.1 compiler and below.
+#if !(swift(>=4.1.50) || (swift(>=3.4) && !swift(>=4.0)))
 /// Implicitly unwrapped Optional array of Mappable objects
 public func <- <T: XMLBaseMappable>(left: inout Array<Array<T>>!, right: XMLMap) {
     switch right.mappingType {
@@ -300,6 +317,7 @@ public func <- <T: XMLBaseMappable>(left: inout Array<Array<T>>!, right: XMLMap)
     default: ()
     }
 }
+#endif
 
 // MARK:- Set of Mappable objects - Set<T: XMLBaseMappable>
 
@@ -339,6 +357,8 @@ public func >>> <T: XMLBaseMappable>(left: Set<T>?, right: XMLMap) {
 }
 
 
+// Code targeting the Swift 4.1 compiler and below.
+#if !(swift(>=4.1.50) || (swift(>=3.4) && !swift(>=4.0)))
 /// Implicitly unwrapped Optional Set of Mappable objects
 public func <- <T: XMLBaseMappable>(left: inout Set<T>!, right: XMLMap) {
     switch right.mappingType {
@@ -349,3 +369,4 @@ public func <- <T: XMLBaseMappable>(left: inout Set<T>!, right: XMLMap) {
     default: ()
     }
 }
+#endif
