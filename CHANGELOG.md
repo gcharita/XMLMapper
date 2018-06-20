@@ -1,5 +1,17 @@
 # Change Log
 
+## [1.5.0](https://github.com/gcharita/XMLMapper/releases/tag/1.5.0) (2018-06-20)
+
+- Added support for Swift 4.2 and Xcode 10. Fixed invalid redeclaration errors. (warnings will remain in Swift 4.1 compiler, due to the fact that IUO do not behave the same way as in Swift 4.2 compiler)
+- Fixed `flatMap` deprecation warnings.
+- Fixed support for Swift 3.0 and Xcode 8.3.
+- Fixed `XMLSerialization` to support XMLs with XML declaration
+- Improved `XMLMapper` to support mapping of dictionary of `XMLMappable` and dictionary of arrays of `XMLMappable` objects.
+- `XMLSerialization` can now return array of dictionaries
+- Added support to map enums with rawValue of `LosslessStringConvertible`.
+- Added support to map array of `Any` with single element.
+- Added tests that cover more than half of the project.
+
 ## [1.4.4](https://github.com/gcharita/XMLMapper/releases/tag/1.4.4) (2018-04-01)
 
 - Fixed [#5](https://github.com/gcharita/XMLMapper/issues/5). Mapping Array of single object.
