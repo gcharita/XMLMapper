@@ -23,4 +23,8 @@ extension NSMutableDictionary {
     var innerText: String? {
         return (self as Dictionary).innerText
     }
+    
+    var innerCDATA: [Data]? {
+        return (self as Dictionary).innerCDATA
+    }
 }

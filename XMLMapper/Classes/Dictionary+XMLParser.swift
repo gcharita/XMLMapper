@@ -14,7 +14,7 @@ extension Dictionary {
             return attributes as? [String: String]
         } else {
             var filteredDict = dictionary
-            let filteredKeys = [XMLParserConstant.Key.comments, XMLParserConstant.Key.text, XMLParserConstant.Key.nodeName]
+            let filteredKeys = [XMLParserConstant.Key.comments, XMLParserConstant.Key.text, XMLParserConstant.Key.cdata, XMLParserConstant.Key.nodeName]
             filteredKeys.forEach({ filteredDict?.removeValue(forKey: $0) })
             filteredDict?.keys.forEach({ (key: String) in
                 filteredDict?.removeValue(forKey: key)
@@ -32,7 +32,7 @@ extension Dictionary {
     
     var childNodes: [String: Any]? {
         var filteredDict = self as? [String: Any]
-        let filteredKeys = [XMLParserConstant.Key.attributes, XMLParserConstant.Key.comments, XMLParserConstant.Key.text, XMLParserConstant.Key.nodeName]
+        let filteredKeys = [XMLParserConstant.Key.attributes, XMLParserConstant.Key.comments, XMLParserConstant.Key.text, XMLParserConstant.Key.cdata, XMLParserConstant.Key.nodeName]
         filteredKeys.forEach({ filteredDict?.removeValue(forKey: $0) })
         filteredDict?.keys.forEach({ (key: String) in
             if key.hasPrefix(XMLParserConstant.attributePrefix) {
@@ -58,6 +58,14 @@ extension Dictionary {
         return text as? String
     }
     
+    var innerCDATA: [Data]? {
+        let cdata = (self as [AnyHashable: Any])[XMLParserConstant.Key.cdata]
+        if let data = cdata as? Data {
+            return [data]
+        }
+        return cdata as? [Data]
+    }
+    
     var innerXML: String {
         var nodes: [String] = []
         
@@ -73,6 +81,10 @@ extension Dictionary {
         
         if let text = innerText {
             nodes.append(text)
+        }
+        
+        if let cdataString = innerCDATA?.cdataString {
+            nodes.append(cdataString)
         }
         
         return nodes.joined(separator: "\n")

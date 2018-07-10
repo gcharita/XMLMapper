@@ -31,6 +31,8 @@ extension XMLSerialization {
         public static let alwaysNodeName = ReadingOptions(rawValue: 1 << 11)
         public static let neverNodeName = ReadingOptions(rawValue: 1 << 12)
         
+        public static let cdataAsString = ReadingOptions(rawValue: 1 << 13)
+        
         public static let `default`: ReadingOptions = [
             .collapseTextNodes,
             .stripEmptyNodes,

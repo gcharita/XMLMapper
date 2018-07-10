@@ -34,6 +34,7 @@ class TestElementXMLMappable: XMLMappable {
     var testBoolAndAttribute: TestBoolAndAttribute?
     var testAttribute: EnumTest?
     var testList: [Element]?
+    var testCDATA: [Data]?
     
     required init(map: XMLMap) {
         
@@ -44,6 +45,7 @@ class TestElementXMLMappable: XMLMappable {
         testBoolAndAttribute <- map["testBoolAndAttribute"]
         testAttribute <- map.attributes["testAttribute"]
         testList <- map["testList.element"]
+        testCDATA <- map["testCDATA"]
     }
 }
 
