@@ -6,8 +6,11 @@
 //
 //
 
+/// BaseMappable should not be implemented directly. Mappable or StaticMappable should be used instead
 public protocol XMLBaseMappable {
+    /// Variable in which the name of the XML node is mapped
     var nodeName: String! { get set }
+    /// This function is where all variable mappings should occur. It is executed by XMLMapper during the mapping (serialization and deserialization) process.
     mutating func mapping(map: XMLMap)
 }
 
@@ -21,7 +24,15 @@ extension XMLBaseMappable {
 }
 
 public protocol XMLMappable: XMLBaseMappable {
-    init(map: XMLMap)
+    /// This function can be used to validate XML prior to mapping. Return nil to cancel mapping at this point
+    init?(map: XMLMap)
+}
+
+public protocol XMLStaticMappable: XMLBaseMappable {
+    /// This is function that can be used to:
+    ///        1) provide an existing cached object to be used for mapping
+    ///        2) return an object of another class (which conforms to XMLBaseMappable) to be used for mapping. For instance, you may inspect the XML to infer the type of object that should be used for any given mapping
+    static func objectForMapping(map: XMLMap) -> XMLBaseMappable?
 }
 
 public extension XMLBaseMappable {
