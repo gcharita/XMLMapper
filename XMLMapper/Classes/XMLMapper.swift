@@ -66,7 +66,12 @@ public final class XMLMapper<N: XMLBaseMappable> {
     public func map(XML: [String: Any]) -> N? {
         let map = XMLMap(mappingType: .fromXML, XML: XML)
         
-        if let klass = N.self as? XMLMappable.Type { // Check if object is XMLMappable
+        if let klass = N.self as? XMLStaticMappable.Type { // Check if object is XMLStaticMappable
+            if var object = klass.objectForMapping(map: map) as? N {
+                object.mapping(with: map)
+                return object
+            }
+        } else if let klass = N.self as? XMLMappable.Type { // Check if object is XMLMappable
             if var object = klass.init(map: map) as? N {
                 object.mapping(with: map)
                 return object

@@ -1,5 +1,11 @@
 # Change Log
 
+## [1.5.1](https://github.com/gcharita/XMLMapper/releases/tag/1.5.1) (2018-07-24)
+
+- Added missing `XMLStaticMappable` protocol
+- Improved required initializer in `XMLMappable` protocol
+- Added some helpful comments
+
 ## [1.5.0](https://github.com/gcharita/XMLMapper/releases/tag/1.5.0) (2018-06-20)
 
 - Added support for Swift 4.2 and Xcode 10. Fixed invalid redeclaration errors. (warnings will remain in Swift 4.1 compiler, due to the fact that IUO do not behave the same way as in Swift 4.2 compiler)
