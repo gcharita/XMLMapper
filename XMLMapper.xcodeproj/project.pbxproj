@@ -175,6 +175,10 @@
 		9F914589203A10B3006FC76B /* XMLDictionaryTransformTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F914588203A10B3006FC76B /* XMLDictionaryTransformTests.swift */; };
 		9F91458A203A10B3006FC76B /* XMLDictionaryTransformTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F914588203A10B3006FC76B /* XMLDictionaryTransformTests.swift */; };
 		9F91458B203A10B3006FC76B /* XMLDictionaryTransformTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F914588203A10B3006FC76B /* XMLDictionaryTransformTests.swift */; };
+		9F93CA6020F4C9BF00E59D88 /* XMLCDATATransform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F93CA5F20F4C9BF00E59D88 /* XMLCDATATransform.swift */; };
+		9F93CA6120F4C9BF00E59D88 /* XMLCDATATransform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F93CA5F20F4C9BF00E59D88 /* XMLCDATATransform.swift */; };
+		9F93CA6220F4C9BF00E59D88 /* XMLCDATATransform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F93CA5F20F4C9BF00E59D88 /* XMLCDATATransform.swift */; };
+		9F93CA6320F4C9BF00E59D88 /* XMLCDATATransform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F93CA5F20F4C9BF00E59D88 /* XMLCDATATransform.swift */; };
 		9FEAB85C207CF63F004BCA7B /* XMLMappableTypesWithTransformsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FEAB85B207CF63F004BCA7B /* XMLMappableTypesWithTransformsTests.swift */; };
 		9FEAB85D207CF63F004BCA7B /* XMLMappableTypesWithTransformsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FEAB85B207CF63F004BCA7B /* XMLMappableTypesWithTransformsTests.swift */; };
 		9FEAB85E207CF63F004BCA7B /* XMLMappableTypesWithTransformsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FEAB85B207CF63F004BCA7B /* XMLMappableTypesWithTransformsTests.swift */; };
@@ -268,6 +272,7 @@
 		9F6DE1BE203A097A007557E8 /* XMLCustomTransformTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XMLCustomTransformTests.swift; sourceTree = "<group>"; };
 		9F914584203A0E9C006FC76B /* XMLDataTransformTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XMLDataTransformTests.swift; sourceTree = "<group>"; };
 		9F914588203A10B3006FC76B /* XMLDictionaryTransformTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XMLDictionaryTransformTests.swift; sourceTree = "<group>"; };
+		9F93CA5F20F4C9BF00E59D88 /* XMLCDATATransform.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XMLCDATATransform.swift; sourceTree = "<group>"; };
 		9FEAB85B207CF63F004BCA7B /* XMLMappableTypesWithTransformsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XMLMappableTypesWithTransformsTests.swift; sourceTree = "<group>"; };
 		9FEF652C207BEC5C003410C9 /* GenericObjectsTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GenericObjectsTests.swift; sourceTree = "<group>"; };
 		9FEF6530207BF3FC003410C9 /* XMLMappableExtensionsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XMLMappableExtensionsTests.swift; sourceTree = "<group>"; };
@@ -367,6 +372,7 @@
 				9F24104F20015BEE0089DED0 /* XMLTransformOperators.swift */,
 				9F24105B20015BEF0089DED0 /* XMLTransformType.swift */,
 				9F24105C20015BEF0089DED0 /* XMLURLTransform.swift */,
+				9F93CA5F20F4C9BF00E59D88 /* XMLCDATATransform.swift */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -748,6 +754,7 @@
 				9F2410B720015BF00089DED0 /* XMLEnumOperators.swift in Sources */,
 				9F3CF05920F5F17C00EB0ABA /* Array+cdataString.swift in Sources */,
 				9F24109B20015BF00089DED0 /* XMLNSDecimalNumberTransform.swift in Sources */,
+				9F93CA6020F4C9BF00E59D88 /* XMLCDATATransform.swift in Sources */,
 				9F2410A320015BF00089DED0 /* Operators.swift in Sources */,
 				9F2410DF20015BF00089DED0 /* XMLDataTransform.swift in Sources */,
 				9F2410A720015BF00089DED0 /* XMLDateFormatterTransform.swift in Sources */,
@@ -790,6 +797,7 @@
 				9F2410B820015BF00089DED0 /* XMLEnumOperators.swift in Sources */,
 				9F3CF05A20F5F17C00EB0ABA /* Array+cdataString.swift in Sources */,
 				9F24109C20015BF00089DED0 /* XMLNSDecimalNumberTransform.swift in Sources */,
+				9F93CA6120F4C9BF00E59D88 /* XMLCDATATransform.swift in Sources */,
 				9F2410A420015BF00089DED0 /* Operators.swift in Sources */,
 				9F2410E020015BF00089DED0 /* XMLDataTransform.swift in Sources */,
 				9F2410A820015BF00089DED0 /* XMLDateFormatterTransform.swift in Sources */,
@@ -832,6 +840,7 @@
 				9F2410B920015BF00089DED0 /* XMLEnumOperators.swift in Sources */,
 				9F3CF05B20F5F17C00EB0ABA /* Array+cdataString.swift in Sources */,
 				9F24109D20015BF00089DED0 /* XMLNSDecimalNumberTransform.swift in Sources */,
+				9F93CA6220F4C9BF00E59D88 /* XMLCDATATransform.swift in Sources */,
 				9F2410A520015BF00089DED0 /* Operators.swift in Sources */,
 				9F2410E120015BF00089DED0 /* XMLDataTransform.swift in Sources */,
 				9F2410A920015BF00089DED0 /* XMLDateFormatterTransform.swift in Sources */,
@@ -874,6 +883,7 @@
 				9F2410BA20015BF00089DED0 /* XMLEnumOperators.swift in Sources */,
 				9F3CF05C20F5F17C00EB0ABA /* Array+cdataString.swift in Sources */,
 				9F24109E20015BF00089DED0 /* XMLNSDecimalNumberTransform.swift in Sources */,
+				9F93CA6320F4C9BF00E59D88 /* XMLCDATATransform.swift in Sources */,
 				9F2410A620015BF00089DED0 /* Operators.swift in Sources */,
 				9F2410E220015BF00089DED0 /* XMLDataTransform.swift in Sources */,
 				9F2410AA20015BF00089DED0 /* XMLDateFormatterTransform.swift in Sources */,
