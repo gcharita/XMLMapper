@@ -23,7 +23,7 @@ To map XML to a class (or the reverse) the class must implement the ```XMLMappab
 
 ```swift
 var nodeName: String! { get set }
-init(map: XMLMap)
+init?(map: XMLMap)
 mutating func mapping(map: XMLMap)
 ```
 
@@ -38,9 +38,7 @@ class Food: XMLMappable {
     var description: String?
     var calories: Int?
 
-    required init(map: XMLMap) {
-
-    }
+    required init?(map: XMLMap) {}
 
     func mapping(map: XMLMap) {
         name <- map["name"]
@@ -105,7 +103,7 @@ func mapping(map: XMLMap) {
 }
 ```
 
-Map arrays of elements:
+Map array of elements:
 
 ```xml
 <breakfast_menu>
@@ -183,25 +181,31 @@ map XML:
  <?xml version="1.0" encoding="UTF-8"?>
  <root>
     <TestElementXMLMappable testAttribute="enumValue">
-       <testString>Test string</testString>
-       <testList>
-          <element>
-             <testInt>1</testInt>
-             <testDouble>1.0</testDouble>
-          </element>
-          <element>
-             <testInt>2</testInt>
-             <testDouble>2.0</testDouble>
-          </element>
-          <element>
-             <testInt>3</testInt>
-             <testDouble>3.0</testDouble>
-          </element>
-          <element>
-             <testInt>4</testInt>
-             <testDouble>4.0</testDouble>
-          </element>
-       </testList>
+        <testString>Test string</testString>
+        <testList>
+            <element>
+                <testInt>1</testInt>
+                <testDouble>1.0</testDouble>
+            </element>
+            <element>
+                <testInt>2</testInt>
+                <testDouble>2.0</testDouble>
+            </element>
+            <element>
+                <testInt>3</testInt>
+                <testDouble>3.0</testDouble>
+            </element>
+            <element>
+                <testInt>4</testInt>
+                <testDouble>4.0</testDouble>
+            </element>
+        </testList>
+        <someTag>
+            <someOtherTag>
+                <nestedTag testNestedAttribute="nested attribute">
+                </nestedTag>
+            </someOtherTag>
+        </someTag>
     </TestElementXMLMappable>
  </root>
 ```
@@ -213,13 +217,13 @@ class TestXMLMappable: XMLMappable {
     var nodeName: String!
 
     var testElement: TestElementXMLMappable!
+    var testNestedAttribute: String?
 
-    required init(map: XMLMap) {
-
-    }
+    required init?(map: XMLMap) {}
 
     func mapping(map: XMLMap) {
         testElement <- map["TestElementXMLMappable"]
+        testNestedAttribute <- map.attributes["TestElementXMLMappable.someTag.someOtherTag.nestedTag.testNestedAttribute"]
     }
 }
 
@@ -233,15 +237,15 @@ class TestElementXMLMappable: XMLMappable {
     var testString: String?
     var testAttribute: EnumTest?
     var testList: [Element]?
+    var nodesOrder: [String]?
 
-    required init(map: XMLMap) {
-
-    }
+    required init?(map: XMLMap) {}
 
     func mapping(map: XMLMap) {
         testString <- map["testString"]
         testAttribute <- map.attributes["testAttribute"]
         testList <- map["testList.element"]
+        nodesOrder <- map.nodesOrder
     }
 }
 
@@ -251,9 +255,7 @@ class Element: XMLMappable {
     var testInt: Int?
     var testDouble: Float?
 
-    required init(map: XMLMap) {
-
-    }
+    required init?(map: XMLMap) {}
 
     func mapping(map: XMLMap) {
         testInt <- map["testInt"]
@@ -310,14 +312,11 @@ class CDCatalog: XMLMappable {
 
     var cds: [CD]?
 
-    required init(map: XMLMap) {
-
-    }
+    required init?(map: XMLMap) {}
 
     func mapping(map: XMLMap) {
         cds <- map["CD"]
     }
-
 }
 
 class CD: XMLMappable {
@@ -330,9 +329,7 @@ class CD: XMLMappable {
     var price: Double?
     var year: Int?
 
-    required init(map: XMLMap) {
-
-    }
+    required init?(map: XMLMap) {}
 
     func mapping(map: XMLMap) {
         title <- map["TITLE"]
@@ -342,7 +339,6 @@ class CD: XMLMappable {
         price <- map["PRICE"]
         year <- map["YEAR"]
     }
-
 }
 ```
 
@@ -453,7 +449,7 @@ pod 'XMLMapper/Requests'
 To integrate XMLMapper into your Xcode project using [Carthage](https://github.com/Carthage/Carthage), add the following line to your  `Cartfile`:
 
 ```ogdl
-github "gcharita/XMLMapper" ~> 1.4
+github "gcharita/XMLMapper" ~> 1.5
 ```
 
 ### Swift Package Manager
@@ -461,15 +457,16 @@ github "gcharita/XMLMapper" ~> 1.4
 To add XMLMapper to a [Swift Package Manager](https://swift.org/package-manager/) based project, add the following:
 
 ```swift
-.package(url: "https://github.com/gcharita/XMLMapper.git", from: "1.4.0")
+.package(url: "https://github.com/gcharita/XMLMapper.git", from: "1.5.1")
 ```
 
 to the `dependencies` value of your `Package.swift`.
 
 ## Special thanks
 
-- Special thanks to [Hearst-DD](https://github.com/Hearst-DD). This project is based in  [ObjectMapper](https://github.com/Hearst-DD/ObjectMapper) for the most part, which is a great solution for JSON mapping
-- Special thanks to [Tristan Himmelman](https://github.com/tristanhimmelman) and [AlamofireObjectMapper](https://github.com/tristanhimmelman/AlamofireObjectMapper). The Requests subspec is based on his idea.
+- Special thanks to [Tristan Himmelman](https://github.com/tristanhimmelman).
+    - This project is based in  [ObjectMapper](https://github.com/tristanhimmelman/ObjectMapper) for the most part, which is a great solution for JSON mapping
+    - The Requests subspec is based on [AlamofireObjectMapper](https://github.com/tristanhimmelman/AlamofireObjectMapper).
 - A special thanks to [Nick Lockwood](https://github.com/nicklockwood) and his idea behind [XMLDictionary](https://github.com/nicklockwood/XMLDictionary)
 - A special thanks to [Alamofire](https://github.com/Alamofire/Alamofire) for the subspec dependency
 
