@@ -19,7 +19,7 @@ struct TestXMLMappable: XMLMappable, Equatable, Hashable {
     var value: String?
     
     init() {}
-    init(map: XMLMap) {    }
+    init?(map: XMLMap) {    }
     
     mutating func mapping(map: XMLMap) {
         value <- map["value"]

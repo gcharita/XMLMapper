@@ -150,7 +150,7 @@ class BasicTypes: XMLMappable {
 		
 	}
 	
-    required init(map: XMLMap){
+    required init?(map: XMLMap){
 
 	}
 	
@@ -292,7 +292,7 @@ class TestCollectionOfPrimitives: XMLMappable {
 		
 	}
 	
-    required init(map: XMLMap){
+    required init?(map: XMLMap){
 		if map["value"].value() == nil {
 			
 		}

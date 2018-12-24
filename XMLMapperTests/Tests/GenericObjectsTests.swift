@@ -93,7 +93,7 @@ class Base: XMLMappable {
         
     }
     
-    required init(map: XMLMap){
+    required init?(map: XMLMap){
         
     }
     
@@ -110,7 +110,7 @@ class Subclass: Base {
         super.init()
     }
 
-    required init(map: XMLMap){
+    required init?(map: XMLMap){
         super.init(map: map)
     }
 
@@ -130,7 +130,7 @@ class GenericSubclass<T>: Base {
         super.init()
     }
 
-    required init(map: XMLMap){
+    required init?(map: XMLMap){
         super.init(map: map)
     }
 
@@ -146,7 +146,7 @@ class WithGenericArray<T: XMLMappable>: XMLMappable {
 
     var genericItems: [T]?
 
-    required init(map: XMLMap){
+    required init?(map: XMLMap){
 
     }
 
@@ -160,7 +160,7 @@ class ConcreteItem: XMLMappable {
 
     var value: String?
 
-    required init(map: XMLMap){
+    required init?(map: XMLMap){
 
     }
 
@@ -170,7 +170,7 @@ class ConcreteItem: XMLMappable {
 }
 
 class SubclassWithGenericArrayInSuperclass<Unused>: WithGenericArray<ConcreteItem> {
-    required init(map: XMLMap){
+    required init?(map: XMLMap){
         super.init(map: map)
     }
 }
@@ -180,7 +180,7 @@ class Response<T: XMLMappable>: XMLMappable {
 
     var result: T?
 
-    required init(map: XMLMap){
+    required init?(map: XMLMap){
 
     }
 
