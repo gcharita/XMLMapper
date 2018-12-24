@@ -15,6 +15,11 @@ public class SOAPEnvelope: XMLMappable {
     var soapBody: SOAPBody!
     var soapHeader: SOAPHeader?
     
+    var nodesOrder: [String] = [
+        "soap:Header",
+        "soap:Body",
+    ]
+    
     public init(soapMessage: SOAPMessage, soapInformation: SOAPInformation? = nil, soapVersion: SOAPVersion = .version1point1) {
         xmlnsSOAP = soapVersion.namespace
         soapEncodingStyle = soapVersion.encodingStyle
@@ -24,14 +29,13 @@ public class SOAPEnvelope: XMLMappable {
         }
     }
     
-    required public init(map: XMLMap) {
-        
-    }
+    required public init?(map: XMLMap) {}
     
     public func mapping(map: XMLMap) {
         soapEncodingStyle <- map.attributes["soap:encodingStyle"]
         xmlnsSOAP <- map.attributes["xmlns:soap"]
         soapHeader <- map["soap:Header"]
         soapBody <- map["soap:Body"]
+        nodesOrder <- map.nodesOrder
     }
 }

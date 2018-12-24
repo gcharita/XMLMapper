@@ -18,9 +18,7 @@ open class SOAPMessage: XMLMappable {
         self.xmlnsMessage = nameSpace
     }
     
-    required public init(map: XMLMap) {
-        
-    }
+    required public init?(map: XMLMap) {}
     
     open func mapping(map: XMLMap) {
         xmlnsMessage <- map.attributes["xmlns:m"]
