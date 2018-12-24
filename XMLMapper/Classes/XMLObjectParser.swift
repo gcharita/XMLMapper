@@ -42,7 +42,7 @@ class XMLObjectParser: NSObject {
     
     internal required override init() {
         collapseTextNodes = true
-        stripEmptyNodes = true
+        stripEmptyNodes = false
         trimWhiteSpace = true
         alwaysUseArrays = false
         preserveComments = false

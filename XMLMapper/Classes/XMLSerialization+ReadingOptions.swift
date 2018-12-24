@@ -33,7 +33,6 @@ extension XMLSerialization {
         
         public static let `default`: ReadingOptions = [
             .collapseTextNodes,
-            .stripEmptyNodes,
             .trimWhiteSpace,
             .prefixedAttributes,
             .alwaysNodeName
