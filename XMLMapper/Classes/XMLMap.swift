@@ -71,18 +71,25 @@ public final class XMLMap {
         nestedKeyDelimiter = delimiter
         
         if isAttribute {
-            currentKey = "_\(key)"
-            keyIsNested = false
             isAttribute = false
+            currentKey = "\(XMLParserConstant.attributePrefix)\(key)"
+            if keyIsNested {
+                var keyPathComponents = key.components(separatedBy: delimiter)
+                if !keyPathComponents.isEmpty {
+                    let tail = keyPathComponents.removeLast()
+                    keyPathComponents.append("\(XMLParserConstant.attributePrefix)\(tail)")
+                    currentKey = keyPathComponents.joined(separator: delimiter)
+                }
+            }
         }
         
-        if mappingType == .fromXML {
+        if mappingType == .fromXML, let currentKey = currentKey {
             // check if a value exists for the current key
             // do this pre-check for performance reasons
             if keyIsNested {
                 // break down the components of the key that are separated by .
-                (isKeyPresent, currentValue) = valueFor(ArraySlice(key.components(separatedBy: delimiter)), dictionary: XML)
-            } else if let currentKey = currentKey {
+                (isKeyPresent, currentValue) = valueFor(ArraySlice(currentKey.components(separatedBy: delimiter)), dictionary: XML)
+            } else {
                 let object = XML[currentKey]
                 let isNSNull = object is NSNull
                 isKeyPresent = isNSNull ? true : object != nil

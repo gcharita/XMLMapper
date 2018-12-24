@@ -21,5 +21,11 @@
                 <testDouble>4.0</testDouble>
             </element>
         </testList>
+        <someTag>
+            <someOtherTag>
+                <nestedTag testNestedAttribute="nested attribute">
+                </nestedTag>
+            </someOtherTag>
+        </someTag>
     </TestElementXMLMappable>
 </root>

@@ -13,11 +13,13 @@ class TestXMLMappable: XMLMappable {
     var nodeName: String!
     
     var testElement: TestElementXMLMappable!
+    var testNestedAttribute: String?
     
     required init?(map: XMLMap) {}
     
     func mapping(map: XMLMap) {
         testElement <- map["TestElementXMLMappable"]
+        testNestedAttribute <- map.attributes["TestElementXMLMappable.someTag.someOtherTag.nestedTag.testNestedAttribute"]
     }
 }
 
