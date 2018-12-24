@@ -30,6 +30,7 @@ class XMLObjectParser: NSObject {
     fileprivate var alwaysUseArrays: Bool
     fileprivate var preserveComments: Bool
     fileprivate var wrapRootNode: Bool
+    fileprivate var keepNodesOrder: Bool
     fileprivate var attributesMode: XMLObjectParserAttributesMode = .prefixed
     fileprivate var nodeNameMode: XMLObjectParserNodeNameMode = .always
     
@@ -47,6 +48,7 @@ class XMLObjectParser: NSObject {
         alwaysUseArrays = false
         preserveComments = false
         wrapRootNode = false
+        keepNodesOrder = true
     }
     
     // MARK: - Basic interface function
@@ -73,6 +75,7 @@ class XMLObjectParser: NSObject {
         alwaysUseArrays = options.contains(.alwaysUseArrays)
         preserveComments = options.contains(.preserveComments)
         wrapRootNode = options.contains(.wrapRootNode)
+        keepNodesOrder = options.contains(.keepNodesOrder)
 
         if options.contains(.prefixedAttributes) {
             attributesMode = .prefixed
@@ -167,10 +170,19 @@ extension XMLObjectParser: XMLParserDelegate {
                 existingArray.add(node)
             } else if let existing = existing {
                 top?[elementName] = NSMutableArray(array: [existing, node])
-            } else if alwaysUseArrays {
-                top?[elementName] = NSMutableArray(object: node)
             } else {
-                top?[elementName] = node
+                if alwaysUseArrays {
+                    top?[elementName] = NSMutableArray(object: node)
+                } else {
+                    top?[elementName] = node
+                }
+                if keepNodesOrder {
+                    if let nodesOrder = top?[XMLParserConstant.Key.nodesOrder] as? NSMutableArray {
+                        nodesOrder.add(elementName)
+                    } else {
+                        top?[XMLParserConstant.Key.nodesOrder] = NSMutableArray(object: elementName)
+                    }
+                }
             }
             stack?.append(node)
         }

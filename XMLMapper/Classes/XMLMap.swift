@@ -33,7 +33,6 @@ public final class XMLMap {
     /// Sets the current mapper value and key.
     /// The Key paramater can be a period separated string (ex. "distance.value") to access sub objects.
     public subscript(key: String) -> XMLMap {
-        // save key and value associated to it
         return self.subscript(key: key)
     }
     
@@ -115,6 +114,10 @@ public final class XMLMap {
     
     public var innerText: XMLMap {
         return self[XMLParserConstant.Key.text]
+    }
+    
+    public var nodesOrder: XMLMap {
+        return self[XMLParserConstant.Key.nodesOrder]
     }
 }
 

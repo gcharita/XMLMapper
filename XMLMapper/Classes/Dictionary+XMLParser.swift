@@ -14,7 +14,12 @@ extension Dictionary {
             return attributes as? [String: String]
         } else {
             var filteredDict = dictionary
-            let filteredKeys = [XMLParserConstant.Key.comments, XMLParserConstant.Key.text, XMLParserConstant.Key.nodeName]
+            let filteredKeys = [
+                XMLParserConstant.Key.comments,
+                XMLParserConstant.Key.text,
+                XMLParserConstant.Key.nodeName,
+                XMLParserConstant.Key.nodesOrder,
+            ]
             filteredKeys.forEach({ filteredDict?.removeValue(forKey: $0) })
             filteredDict?.keys.forEach({ (key: String) in
                 filteredDict?.removeValue(forKey: key)
@@ -30,9 +35,19 @@ extension Dictionary {
         }
     }
     
+    var nodesOrder: [String]? {
+        return (self as [AnyHashable: Any])[XMLParserConstant.Key.nodesOrder] as? [String]
+    }
+    
     var childNodes: [String: Any]? {
         var filteredDict = self as? [String: Any]
-        let filteredKeys = [XMLParserConstant.Key.attributes, XMLParserConstant.Key.comments, XMLParserConstant.Key.text, XMLParserConstant.Key.nodeName]
+        let filteredKeys = [
+            XMLParserConstant.Key.attributes,
+            XMLParserConstant.Key.comments,
+            XMLParserConstant.Key.text,
+            XMLParserConstant.Key.nodeName,
+            XMLParserConstant.Key.nodesOrder,
+        ]
         filteredKeys.forEach({ filteredDict?.removeValue(forKey: $0) })
         filteredDict?.keys.forEach({ (key: String) in
             if key.hasPrefix(XMLParserConstant.attributePrefix) {
@@ -65,11 +80,19 @@ extension Dictionary {
             nodes.append(String(format: "<!--%@-->", comment.xmlEncodedString))
         })
         
-        childNodes?.forEach({ (childNode:(key: String, value: Any)) in
-            if let xmlStringNode = XMLParserHelper.xmlString(forNode: childNode.value, withNodeName: childNode.key) {
-                nodes.append(xmlStringNode)
-            }
-        })
+        if nodesOrder?.isEmpty == false {
+            nodesOrder?.forEach({ (nodeName: String) in
+                if let childNode = childNodes?[nodeName], let xmlStringNode = XMLParserHelper.xmlString(forNode: childNode, withNodeName: nodeName) {
+                    nodes.append(xmlStringNode)
+                }
+            })
+        } else {
+            childNodes?.forEach({ (childNode: (key: String, value: Any)) in
+                if let xmlStringNode = XMLParserHelper.xmlString(forNode: childNode.value, withNodeName: childNode.key) {
+                    nodes.append(xmlStringNode)
+                }
+            })
+        }
         
         if let text = innerText {
             nodes.append(text)
