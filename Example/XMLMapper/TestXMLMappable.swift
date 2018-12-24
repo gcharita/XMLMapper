@@ -14,9 +14,7 @@ class TestXMLMappable: XMLMappable {
     
     var testElement: TestElementXMLMappable!
     
-    required init(map: XMLMap) {
-        
-    }
+    required init?(map: XMLMap) {}
     
     func mapping(map: XMLMap) {
         testElement <- map["TestElementXMLMappable"]
@@ -36,9 +34,7 @@ class TestElementXMLMappable: XMLMappable {
     var testList: [Element]?
     var nodesOrder: [String]?
     
-    required init(map: XMLMap) {
-        
-    }
+    required init?(map: XMLMap) {}
     
     func mapping(map: XMLMap) {
         testString <- map["testString"]
@@ -55,9 +51,7 @@ class Element: XMLMappable {
     var testInt: Int?
     var testDouble: Float?
     
-    required init(map: XMLMap) {
-        
-    }
+    required init?(map: XMLMap) {}
     
     func mapping(map: XMLMap) {
         testInt <- map["testInt"]
@@ -71,9 +65,7 @@ class TestBoolAndAttribute: XMLMappable {
     var boolValue: Bool?
     var testAttribute: String?
     
-    required init(map: XMLMap) {
-        
-    }
+    required init?(map: XMLMap) {}
     
     func mapping(map: XMLMap) {
         boolValue <- map.innerText
