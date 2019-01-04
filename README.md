@@ -7,6 +7,22 @@
 [![Swift Package Manager compatible](https://img.shields.io/badge/Swift%20Package%20Manager-compatible-brightgreen.svg)](https://github.com/apple/swift-package-manager)
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 
+XMLMapper is a framework written in Swift that makes it easy for you to convert your model objects (classes and structs) to and from XML.
+
+- [Example](#example)
+- [Requirements](#requirements)
+- [Definition of the protocols](#definition-of-the-protocols)
+- [How to use](#how-to-use)
+  - [Basic XML mapping](#basic-xml-mapping)
+  - [Advanced mapping](#advanced-mapping)
+  - [Swift 4.2 and unordered XML elements](#swift-4.2-and-unordered-xml-elements)
+  - [XML Mapping example](#xml-Mapping-example)
+- [Requests subspec](#requests-subspec)
+- [Communication](#communication)
+- [Installation](#installation)
+- [Special thanks](#special-thanks)
+- [License](#license)
+
 ## Example
 
 To run the example project, clone the repo, and run `pod install` from the Example directory first.
@@ -637,4 +653,4 @@ to the `dependencies` value of your `Package.swift`.
 
 ## License
 
-XMLMapper is available under the MIT license. See the LICENSE file for more info.
+XMLMapper is available under the MIT license. See the [LICENSE](LICENSE) file for more info.
