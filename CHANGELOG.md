@@ -1,5 +1,11 @@
 # Change Log
 
+## [1.5.2](https://github.com/gcharita/XMLMapper/releases/tag/1.5.2) (2019-01-04)
+
+- Closed [#15](https://github.com/gcharita/XMLMapper/issues/15). Removed `stripEmptyNodes` from default `ReadingOptions` of `XMLSerialization`
+- Fixed [#18](https://github.com/gcharita/XMLMapper/issues/18). Added `nodesOrder` property in `XMLMap` to preserve or change the nodes ordering
+- Fixed nested mapping for attributes in `XMLMap`
+
 ## [1.5.1](https://github.com/gcharita/XMLMapper/releases/tag/1.5.1) (2018-07-24)
 
 - Added missing `XMLStaticMappable` protocol
