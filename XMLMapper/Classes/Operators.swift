@@ -117,7 +117,7 @@ public func <- <T: XMLBaseMappable>(left: inout T!, right: XMLMap) {
 
 // MARK:- Dictionary of Mappable objects - Dictionary<String, T: XMLBaseMappable>
 
-/// Dictionary of Mappable objects <String, T: Mappable>
+/// Dictionary of Mappable objects <String, T: XMLBaseMappable>
 public func <- <T: XMLBaseMappable>(left: inout Dictionary<String, T>, right: XMLMap) {
     switch right.mappingType {
     case .fromXML where right.isKeyPresent:
@@ -135,7 +135,7 @@ public func >>> <T: XMLBaseMappable>(left: Dictionary<String, T>, right: XMLMap)
 }
 
 
-/// Optional Dictionary of Mappable object <String, T: Mappable>
+/// Optional Dictionary of Mappable object <String, T: XMLBaseMappable>
 public func <- <T: XMLBaseMappable>(left: inout Dictionary<String, T>?, right: XMLMap) {
     switch right.mappingType {
     case .fromXML where right.isKeyPresent:
@@ -155,7 +155,7 @@ public func >>> <T: XMLBaseMappable>(left: Dictionary<String, T>?, right: XMLMap
 
 // Code targeting the Swift 4.1 compiler and below.
 #if !(swift(>=4.1.50) || (swift(>=3.4) && !swift(>=4.0)))
-/// Implicitly unwrapped Optional Dictionary of Mappable object <String, T: Mappable>
+/// Implicitly unwrapped Optional Dictionary of Mappable object <String, T: XMLBaseMappable>
 public func <- <T: XMLBaseMappable>(left: inout Dictionary<String, T>!, right: XMLMap) {
     switch right.mappingType {
     case .fromXML where right.isKeyPresent:
@@ -167,7 +167,7 @@ public func <- <T: XMLBaseMappable>(left: inout Dictionary<String, T>!, right: X
 }
 #endif
 
-/// Dictionary of Mappable objects <String, T: Mappable>
+/// Dictionary of Array of Mappable objects <String, [T: XMLBaseMappable]>
 public func <- <T: XMLBaseMappable>(left: inout Dictionary<String, [T]>, right: XMLMap) {
     switch right.mappingType {
     case .fromXML where right.isKeyPresent:
@@ -184,7 +184,7 @@ public func >>> <T: XMLBaseMappable>(left: Dictionary<String, [T]>, right: XMLMa
     }
 }
 
-/// Optional Dictionary of Mappable object <String, T: Mappable>
+/// Optional Dictionary of Array of Mappable object <String, [T: XMLBaseMappable]>
 public func <- <T: XMLBaseMappable>(left: inout Dictionary<String, [T]>?, right: XMLMap) {
     switch right.mappingType {
     case .fromXML where right.isKeyPresent:
@@ -204,7 +204,7 @@ public func >>> <T: XMLBaseMappable>(left: Dictionary<String, [T]>?, right: XMLM
 
 // Code targeting the Swift 4.1 compiler and below.
 #if !(swift(>=4.1.50) || (swift(>=3.4) && !swift(>=4.0)))
-/// Implicitly unwrapped Optional Dictionary of Mappable object <String, T: Mappable>
+/// Implicitly unwrapped Optional Dictionary of Array of Mappable object <String, [T: XMLBaseMappable]>
 public func <- <T: XMLBaseMappable>(left: inout Dictionary<String, [T]>!, right: XMLMap) {
     switch right.mappingType {
     case .fromXML where right.isKeyPresent:

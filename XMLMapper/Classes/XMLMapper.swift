@@ -78,7 +78,7 @@ public final class XMLMapper<N: XMLBaseMappable> {
             }
         } else {
             // Ensure XMLBaseMappable is not implemented directly
-            assert(false, "XMLBaseMappable should not be implemented directly. Please implement XMLMappable")
+            assert(false, "XMLBaseMappable should not be implemented directly. Please implement XMLMappable or XMLStaticMappable")
         }
         
         return nil

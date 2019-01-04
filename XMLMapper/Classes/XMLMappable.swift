@@ -6,16 +6,15 @@
 //
 //
 
-/// BaseMappable should not be implemented directly. Mappable or StaticMappable should be used instead
+/// XMLBaseMappable should not be implemented directly. XMLMappable or XMLStaticMappable should be used instead
 public protocol XMLBaseMappable {
-    /// Variable in which the name of the XML node is mapped
+    /// This property is where the name of the XML node is being mapped
     var nodeName: String! { get set }
     /// This function is where all variable mappings should occur. It is executed by XMLMapper during the mapping (serialization and deserialization) process.
     mutating func mapping(map: XMLMap)
 }
 
 extension XMLBaseMappable {
-    
     /// Start mapping by map the XML nodeName first
     mutating func mapping(with map: XMLMap) {
         nodeName <- map[XMLParserConstant.Key.nodeName]
