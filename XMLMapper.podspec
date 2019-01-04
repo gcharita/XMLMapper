@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'XMLMapper'
-  s.version          = '1.5.1'
+  s.version          = '1.5.2'
   s.summary          = 'A simple way to map XML to Objects written in Swift'
 
   s.homepage         = 'https://github.com/gcharita/XMLMapper'
