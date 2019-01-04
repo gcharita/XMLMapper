@@ -17,9 +17,52 @@ To run the example project, clone the repo, and run `pod install` from the Examp
 - Xcode 8.3+
 - Swift 3.1+
 
+## Definition of the protocols
+
+### `XMLBaseMappable` Protocol
+
+#### `var nodeName: String! { get set }`
+
+This property is where the name of the XML node is being mapped
+
+#### `mutating func mapping(map: XMLMap)`
+
+This function is where all mapping definitions should go. When parsing XML, this function is executed after successful object creation. When generating XML, it is the only function that is called on the object.
+
+Note: This protocol should not be implemented directly. `XMLMappable` or `XMLStaticMappable` should be used instead
+
+### `XMLMappable` Protocol (sub protocol of `XMLBaseMappable`)
+
+#### `init?(map: XMLMap)`
+
+This failable initializer is used by XMLMapper for object creation. It can be used by developers to validate XML prior to object serialization. Returning nil within the function will prevent the mapping from occuring. You can inspect the `XML` stored within the `XMLMap` object to do your validation:
+
+```swift
+required init?(map: XMLMap) {
+    // check if a required "id" element exists within the XML.
+    if map.XML["id"] == nil {
+        return nil
+    }
+}
+```
+
+### `XMLStaticMappable` Protocol (sub protocol of `XMLBaseMappable`)
+
+`XMLStaticMappable` is an alternative to `XMLMappable`. It provides developers with a static function that is used by XMLMapper for object initialization instead of `init?(map: XMLMap)`.
+
+#### `static func objectForMapping(map: XMLMap) -> XMLBaseMappable?`
+
+XMLMapper uses this function to get objects to use for mapping. Developers should return an instance of an object that conforms to `XMLBaseMappable` in this function. This function can also be used to:
+
+- validate XML prior to object serialization
+- provide an existing cached object to be used for mapping
+- return an object of another type (which also conforms to `XMLBaseMappable`) to be used for mapping. For instance, you may inspect the XML to infer the type of object that should be used for mapping
+
+If you need to implement XMLMapper in an extension, you will need to adopt this protocol instead of `XMLMappable`.
+
 ## How to use
 
-To map XML to a class (or the reverse) the class must implement the ```XMLMappable``` protocol:
+To support mapping, a class or struct just needs to implement the `XMLMappable` protocol:
 
 ```swift
 var nodeName: String! { get set }
@@ -27,7 +70,18 @@ init?(map: XMLMap)
 mutating func mapping(map: XMLMap)
 ```
 
-XMLMapper uses the ```<-``` operator to map properties to and from XML elements:
+XMLMapper uses the `<-` operator to define how each property maps to and from XML:
+
+```xml
+<food>
+  <name>Belgian Waffles</name>
+  <price>5.95</price>
+  <description>
+    Two of our famous Belgian Waffles with plenty of real maple syrup
+  </description>
+  <calories>650</calories>
+</food>
+```
 
 ```swift
 class Food: XMLMappable {
@@ -49,31 +103,48 @@ class Food: XMLMappable {
 }
 ```
 
+XMLMapper can map classes or structs composed of the following types:
+
+- `Int`
+- `Bool`
+- `Double`
+- `Float`
+- `String`
+- `RawRepresentable` (Enums)
+- `Array<Any>`
+- `Dictionary<String, Any>`
+- `Object<T: XMLBaseMappable>`
+- `Array<T: XMLBaseMappable>`
+- `Set<T: XMLBaseMappable>`
+- `Dictionary<String, T: XMLBaseMappable>`
+- `Dictionary<String, Array<T: XMLBaseMappable>>`
+- Optionals and Implicitly Unwrapped Optionals of all the above
+
 ### Basic XML mapping
 
-Convert easily an XML string to ```XMLMappable```:
+Convert easily an XML string to `XMLMappable`:
 
 ```swift
 let food = Food(XMLString: xmlString)
 ```
 
-Or an ```XMLMappable``` object to XML string:
+Or an `XMLMappable` object to XML string:
 
 ```swift
 let xmlString = food.toXMLString()
 ```
 
-```XMLMapper.swift``` can also provide the same functionality:
+`XMLMapper` class can also provide the same functionality:
 
 ```swift
 let food = XMLMapper<Food>().map(XMLString: xmlString)
 
 let xmlString = XMLMapper().toXMLString(food)
- ```
+```
 
 ### Advanced mapping
 
-Set ```nodeName``` property of your class to change the element's name:
+Set `nodeName` property of your class to change the element's name:
 
 ```swift
 food.nodeName = "myFood"
@@ -90,7 +161,7 @@ food.nodeName = "myFood"
 </myFood>
 ```
 
-Map easily XML attributes using the ```attributes``` property of the ```XMLMap```:
+Map easily XML attributes using the `attributes` property of the `XMLMap`:
 
 ```xml
 <food name="Belgian Waffles">
@@ -132,28 +203,7 @@ func mapping(map: XMLMap) {
 }
 ```
 
-Map nested XML elements by separating names with a dot:
-
-```xml
-<food>
-  <name>Belgian Waffles</name>
-  <details>
-    <price>5.95</price>
-    <description>
-      Two of our famous Belgian Waffles with plenty of real maple syrup
-    </description>
-    <calories>650</calories>
-  </details>
-</food>
-```
-
-```swift
-func mapping(map: XMLMap) {
-    price <- map["details.price"]
-}
-```
-
-Or create your own custom transform type by implementing the ```XMLTransformType``` protocol:
+Create your own custom transform type by implementing the `XMLTransformType` protocol:
 
 ```swift
 public protocol XMLTransformType {
@@ -172,6 +222,123 @@ func mapping(map: XMLMap) {
     startTime <- (map["starttime"], XMLDateTransform())
 }
 ```
+
+Map nested XML elements by separating names with a dot:
+
+```xml
+<food>
+  <details>
+    <price>5.95</price>
+  </details>
+</food>
+```
+
+```swift
+func mapping(map: XMLMap) {
+    price <- map["details.price"]
+}
+```
+
+---
+**Note:** Nested mapping is currently supported only:
+
+- for elements that are composed of only innerText (like the above example) and
+- for attributes
+
+This means that in order to map the actual price of the food in the following XML:
+
+```xml
+<food>
+  <details>
+    <price currency="euro">5.95</price>
+  </details>
+</food>
+```
+
+You need to use an XMLMappable object instead of a `Float`:
+
+```swift
+class Price: XMLMappable {
+    var nodeName: String!
+
+    var currency: String!
+    var actualPrice: Float!
+
+    required init?(map: XMLMap) {}
+
+    func mapping(map: XMLMap) {
+        currency <- map.attributes["currency"]
+        actualPrice <- map.innerText
+    }
+}
+```
+
+Because of `currency` attribute existence. The same applies to the following XML:
+
+```xml
+<food>
+  <details>
+    <price>
+      5.95
+      <currency>euro</currency>
+  </details>
+</food>
+```
+
+You need to use an XMLMappable object like:
+
+```swift
+class Price: XMLMappable {
+    var nodeName: String!
+
+    var currency: String!
+    var actualPrice: Float!
+
+    required init?(map: XMLMap) {}
+
+    func mapping(map: XMLMap) {
+        currency <- map["currency"]
+        actualPrice <- map.innerText
+    }
+}
+```
+
+Because of `currency` element existence.
+
+---
+
+### Swift 4.2 and unordered XML elements
+
+Starting from Swift 4.2,  XML elements are highly likely to have different order each time you run your app. (This happens because they are represented by a `Dictionary`)
+
+For this, since version 1.5.2 of the XMLMapper you can map and change the order of the nodes that appear inside another node using `nodesOrder` property of `XMLMap`:
+
+```swift
+class TestOrderedNodes: XMLMappable {
+    var nodeName: String!
+
+    var id: String?
+    var name: String?
+    var nodesOrder: [String]?
+
+    init() {}
+    required init?(map: XMLMap) {}
+
+    func mapping(map: XMLMap) {
+        id <- map["id"]
+        name <- map["name"]
+        nodesOrder <- map.nodesOrder
+    }
+}
+
+let testOrderedNodes = TestOrderedNodes()
+testOrderedNodes.id = "1"
+testOrderedNodes.name = "the name"
+testOrderedNodes.nodesOrder = ["id", "name"]
+print(testOrderedNodes.toXMLString() ?? "nil")
+```
+
+**Note:** If you want to change the ordering of the nodes, make sure that you include, in the `nodesOrder` array, all the node names that you want to appear in the XML string
 
 ### XML Mapping example
 
@@ -266,13 +433,13 @@ class Element: XMLMappable {
 
 ## Requests subspec
 
-Create and send easily request with XML body using ```Alamofire``` (added missing ```XMLEncoding``` struct)
+Create and send easily request with XML body using `Alamofire` (added missing `XMLEncoding` struct)
 
 ```swift
 Alamofire.request(url, method: .post, parameters: xmlMappableObject.toXML(), encoding: XMLEncoding.default)
 ```
 
-Also map XML responses to ```XMLMappable``` objects using the ```Alamofire``` extension. For example a URL returns the following CD catalog:
+Also map XML responses to `XMLMappable` objects using the `Alamofire` extension. For example a URL returns the following CD catalog:
 
 ```xml
 <CATALOG>
@@ -304,7 +471,7 @@ Alamofire.request(url).responseXMLObject { (response: DataResponse<CDCatalog>) i
 }
 ```
 
-The ```CDCatalog``` object will look something like this:
+The `CDCatalog` object will look something like this:
 
 ```swift
 class CDCatalog: XMLMappable {
@@ -342,7 +509,7 @@ class CD: XMLMappable {
 }
 ```
 
-Last but not least, create easily and send SOAP requests, again using ```Alamofire```:
+Last but not least, create easily and send SOAP requests, again using `Alamofire`:
 
 ```swift
 let soapMessage = SOAPMessage(soapAction: "ActionName", nameSpace: "ActionNameSpace")
@@ -353,7 +520,7 @@ Alamofire.request(url, method: .post, parameters: soapEnvelope.toXML(), encoding
 
 The request will look something like this:
 
-```rest
+```http
 POST / HTTP/1.1
 Host: <The url>
 Content-Type: text/xml; charset="utf-8"
@@ -373,7 +540,7 @@ Accept-Encoding: gzip;q=1.0, compress;q=0.5
 </soap:Envelope>
 ```
 
-Adding action parameters is as easy as subclassing the ```SOAPMessage``` class. 
+Adding action parameters is as easy as subclassing the `SOAPMessage` class.
 
 ```swift
 class MySOAPMessage: SOAPMessage {
@@ -399,7 +566,7 @@ Alamofire.request(url, method: .post, parameters: soapEnvelope.toXML(), encoding
 
 and the request will change to this:
 
-```rest
+```http
 POST / HTTP/1.1
 Host: <The url>
 Content-Type: application/soap+xml;charset=UTF-8;action="ActionNameSpace#ActionName"
@@ -464,9 +631,7 @@ to the `dependencies` value of your `Package.swift`.
 
 ## Special thanks
 
-- Special thanks to [Tristan Himmelman](https://github.com/tristanhimmelman).
-    - This project is based in  [ObjectMapper](https://github.com/tristanhimmelman/ObjectMapper) for the most part, which is a great solution for JSON mapping
-    - The Requests subspec is based on [AlamofireObjectMapper](https://github.com/tristanhimmelman/AlamofireObjectMapper).
+- Special thanks to [Tristan Himmelman](https://github.com/tristanhimmelman). This project is based in  [ObjectMapper](https://github.com/tristanhimmelman/ObjectMapper) for the most part, which is a great solution for JSON mapping. Also the Requests subspec is based on [AlamofireObjectMapper](https://github.com/tristanhimmelman/AlamofireObjectMapper).
 - A special thanks to [Nick Lockwood](https://github.com/nicklockwood) and his idea behind [XMLDictionary](https://github.com/nicklockwood/XMLDictionary)
 - A special thanks to [Alamofire](https://github.com/Alamofire/Alamofire) for the subspec dependency
 
