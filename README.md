@@ -15,7 +15,7 @@ XMLMapper is a framework written in Swift that makes it easy for you to convert 
 - [How to use](#how-to-use)
   - [Basic XML mapping](#basic-xml-mapping)
   - [Advanced mapping](#advanced-mapping)
-  - [Swift 4.2 and unordered XML elements](#swift-4.2-and-unordered-xml-elements)
+  - [Swift 4.2 and unordered XML elements](#swift-42-and-unordered-xml-elements)
   - [XML Mapping example](#xml-Mapping-example)
 - [Requests subspec](#requests-subspec)
 - [Communication](#communication)
