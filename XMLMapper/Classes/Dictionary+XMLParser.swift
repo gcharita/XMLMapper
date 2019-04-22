@@ -95,7 +95,7 @@ extension Dictionary {
         }
         
         if let text = innerText {
-            nodes.append(text)
+            nodes.append(text.xmlEncodedString)
         }
         
         return nodes.joined(separator: "\n")
