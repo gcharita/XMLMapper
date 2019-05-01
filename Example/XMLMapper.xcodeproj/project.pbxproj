@@ -275,7 +275,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-XMLMapper_Tests/Pods-XMLMapper_Tests-frameworks.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-XMLMapper_Tests/Pods-XMLMapper_Tests-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Nimble/Nimble.framework",
 				"${BUILT_PRODUCTS_DIR}/Quick/Quick.framework",
 			);
@@ -286,7 +286,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-XMLMapper_Tests/Pods-XMLMapper_Tests-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-XMLMapper_Tests/Pods-XMLMapper_Tests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		6C0495DC95044CE1BF4A1F33 /* [CP] Embed Pods Frameworks */ = {
@@ -295,7 +295,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-XMLMapper_Example/Pods-XMLMapper_Example-frameworks.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-XMLMapper_Example/Pods-XMLMapper_Example-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/XMLMapper/XMLMapper.framework",
 			);
@@ -306,7 +306,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-XMLMapper_Example/Pods-XMLMapper_Example-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-XMLMapper_Example/Pods-XMLMapper_Example-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		DA0389C871F93CB5E5E4F766 /* [CP] Check Pods Manifest.lock */ = {
