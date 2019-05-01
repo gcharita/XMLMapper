@@ -11,7 +11,7 @@ open class SOAPMessage: XMLMappable {
     public var nodeName: String!
     
     private var xmlnsMessage: String?
-    internal(set) var soapAction: String?
+    var soapAction: String?
     
     public init(soapAction: String, nameSpace: String) {
         self.soapAction = soapAction

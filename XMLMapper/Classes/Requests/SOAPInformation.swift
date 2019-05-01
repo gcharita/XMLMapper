@@ -11,7 +11,7 @@ open class SOAPInformation: XMLMappable {
     public var nodeName: String!
     
     private var xmlnsInformation: String?
-    internal(set) var informationName: String?
+    var informationName: String?
     
     public init(informationName: String, nameSpace: String) {
         self.informationName = informationName
