@@ -1,6 +1,6 @@
 # Change Log
 
-## [1.5.3](https://github.com/gcharita/XMLMapper/releases/tag/1.5.3) (2019-05-23)
+## [1.5.3](https://github.com/gcharita/XMLMapper/releases/tag/1.5.3) (2019-05-24)
 
 - Fixed [#23](https://github.com/gcharita/XMLMapper/issues/23). Invalid XML string for tags with XML encoded values
 - Closed [#24](https://github.com/gcharita/XMLMapper/issues/24). Fixed redundant modifier warnings
