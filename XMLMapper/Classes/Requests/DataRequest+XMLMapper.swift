@@ -38,8 +38,8 @@ extension DataRequest {
     }
 
     /// Utility function for extracting XML from response
-    internal static func processResponse(request: URLRequest?, response: HTTPURLResponse?, data: Data?, keyPath: String?) -> Any? {
-        let stringResponseSerializer = DataRequest.stringResponseSerializer()
+    internal static func processResponse(request: URLRequest?, response: HTTPURLResponse?, data: Data?, keyPath: String?, encoding: String.Encoding?) -> Any? {
+        let stringResponseSerializer = DataRequest.stringResponseSerializer(encoding: encoding)
         let result = stringResponseSerializer.serializeResponse(request, response, data, nil)
         
         var XML: Any?
@@ -57,13 +57,13 @@ extension DataRequest {
     }
 
     /// XMLBaseMappable Object Serializer
-    public static func XMLMapperSerializer<T: XMLBaseMappable>(_ keyPath: String?, mapToObject object: T? = nil) -> DataResponseSerializer<T> {
+    public static func XMLMapperSerializer<T: XMLBaseMappable>(_ keyPath: String?, mapToObject object: T? = nil, encoding: String.Encoding? = nil) -> DataResponseSerializer<T> {
         return DataResponseSerializer { request, response, data, error in
             if let error = checkResponseForError(request: request, response: response, data: data, error: error){
                 return .failure(error)
             }
 
-            let XMLObject = processResponse(request: request, response: response, data: data, keyPath: keyPath)
+            let XMLObject = processResponse(request: request, response: response, data: data, keyPath: keyPath, encoding: encoding)
 
             if let object = object {
                 _ = XMLMapper<T>().map(XMLObject: XMLObject, toObject: object)
@@ -89,18 +89,18 @@ extension DataRequest {
      - returns: The request.
      */
     @discardableResult
-    public func responseXMLObject<T: XMLBaseMappable>(queue: DispatchQueue? = nil, keyPath: String? = nil, mapToObject object: T? = nil, completionHandler: @escaping (DataResponse<T>) -> Void) -> Self {
-        return response(queue: queue, responseSerializer: DataRequest.XMLMapperSerializer(keyPath, mapToObject: object), completionHandler: completionHandler)
+    public func responseXMLObject<T: XMLBaseMappable>(queue: DispatchQueue? = nil, keyPath: String? = nil, mapToObject object: T? = nil, encoding: String.Encoding? = nil,  completionHandler: @escaping (DataResponse<T>) -> Void) -> Self {
+        return response(queue: queue, responseSerializer: DataRequest.XMLMapperSerializer(keyPath, mapToObject: object, encoding: encoding), completionHandler: completionHandler)
     }
 
     /// XMLBaseMappable Array Serializer
-    public static func XMLMapperArraySerializer<T: XMLBaseMappable>(_ keyPath: String?) -> DataResponseSerializer<[T]> {
+    public static func XMLMapperArraySerializer<T: XMLBaseMappable>(_ keyPath: String?, encoding: String.Encoding? = nil) -> DataResponseSerializer<[T]> {
         return DataResponseSerializer { request, response, data, error in
             if let error = checkResponseForError(request: request, response: response, data: data, error: error){
                 return .failure(error)
             }
 
-            let XMLObject = processResponse(request: request, response: response, data: data, keyPath: keyPath)
+            let XMLObject = processResponse(request: request, response: response, data: data, keyPath: keyPath, encoding: encoding)
 
             if let parsedObject = XMLMapper<T>().mapArray(XMLObject: XMLObject){
                 return .success(parsedObject)
