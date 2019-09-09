@@ -44,7 +44,7 @@ extension DataRequest {
         
         var XML: Any?
         do {
-            XML = try XMLSerialization.xmlObject(withString: result.value ?? "")
+            XML = try XMLSerialization.xmlObject(withString: result.value ?? "", using: encoding ?? .utf8)
             if let keyPath = keyPath, keyPath.isEmpty == false {
                 XML = (XML as AnyObject?)?.value(forKeyPath: keyPath)
             }
