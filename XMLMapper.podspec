@@ -21,7 +21,7 @@ Pod::Spec.new do |s|
   s.osx.deployment_target = '10.9'
   s.tvos.deployment_target = '9.0'
 
-  s.swift_version = '4.2'
+  s.swift_version = '5.0'
 
   s.default_subspec = 'Core'
 
@@ -37,6 +37,6 @@ Pod::Spec.new do |s|
     requests.tvos.deployment_target = '9.0'
     requests.source_files = 'XMLMapper/Classes/Requests/'
     requests.dependency 'XMLMapper/Core'
-    requests.dependency 'Alamofire', '~> 4.1'
+    requests.dependency 'Alamofire', '~> 4.9'
   end
 end
