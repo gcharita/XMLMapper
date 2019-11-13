@@ -34,3 +34,4 @@ DerivedData
 
 # Swift Package Manager
 .build/
+.swiftpm/xcode
