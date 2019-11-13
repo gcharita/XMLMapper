@@ -30,7 +30,7 @@ To run the example project, clone the repo, and run `pod install` from the Examp
 ## Requirements
 
 - iOS 8.0+ / macOS 10.9+ / tvOS 9.0+ / watchOS 2.0+
-- Xcode 8.3+
+- Xcode 9.1+
 - Swift 3.1+
 
 ## Definition of the protocols
@@ -640,7 +640,7 @@ github "gcharita/XMLMapper" ~> 1.5
 To add XMLMapper to a [Swift Package Manager](https://swift.org/package-manager/) based project, add the following:
 
 ```swift
-.package(url: "https://github.com/gcharita/XMLMapper.git", from: "1.5.1")
+.package(url: "https://github.com/gcharita/XMLMapper.git", from: "1.5.3")
 ```
 
 to the `dependencies` value of your `Package.swift`.
