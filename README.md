@@ -632,7 +632,7 @@ pod 'XMLMapper/Requests'
 To integrate XMLMapper into your Xcode project using [Carthage](https://github.com/Carthage/Carthage), add the following line to your  `Cartfile`:
 
 ```ogdl
-github "gcharita/XMLMapper" ~> 1.5
+github "gcharita/XMLMapper" ~> 1.6
 ```
 
 ### Swift Package Manager
@@ -640,7 +640,7 @@ github "gcharita/XMLMapper" ~> 1.5
 To add XMLMapper to a [Swift Package Manager](https://swift.org/package-manager/) based project, add the following:
 
 ```swift
-.package(url: "https://github.com/gcharita/XMLMapper.git", from: "1.5.3")
+.package(url: "https://github.com/gcharita/XMLMapper.git", from: "1.6.0")
 ```
 
 to the `dependencies` value of your `Package.swift`.
