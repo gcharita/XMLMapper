@@ -1,5 +1,11 @@
 # Change Log
 
+## [1.6.0](https://github.com/gcharita/XMLMapper/releases/tag/1.6.0) (2019-12-24)
+
+- Merged [#25](https://github.com/gcharita/XMLMapper/pull/25). Specify response encoding in Requests subspec
+- Converted to swift 5
+- Improved SPM support
+
 ## [1.5.3](https://github.com/gcharita/XMLMapper/releases/tag/1.5.3) (2019-05-24)
 
 - Fixed [#23](https://github.com/gcharita/XMLMapper/issues/23). Invalid XML string for tags with XML encoded values
