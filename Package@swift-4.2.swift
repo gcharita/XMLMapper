@@ -1,4 +1,4 @@
-// swift-tools-version:4.0
+// swift-tools-version:4.2
 
 import PackageDescription
 
@@ -11,5 +11,5 @@ let package = Package(
         .target(name: "XMLMapper", path: "./XMLMapper/Classes", exclude: ["Requests"]),
         .testTarget(name: "XMLMapperTests", dependencies: ["XMLMapper"], path: "./XMLMapperTests/Tests"),
     ],
-    swiftLanguageVersions: [3, 4]
+    swiftLanguageVersions: [.v3, .v4, .v4_2]
 )

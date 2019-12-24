@@ -7,7 +7,7 @@ target 'XMLMapper_Example' do
   target 'XMLMapper_Tests' do
     inherit! :search_paths
 
-    pod 'Quick', '~> 2.1'
+    pod 'Quick', '~> 2.2'
     pod 'Nimble', '~> 8.0'
   end
 end

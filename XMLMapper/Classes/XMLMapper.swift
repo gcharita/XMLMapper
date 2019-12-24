@@ -133,7 +133,7 @@ public final class XMLMapper<N: XMLBaseMappable> {
     public func mapDictionary(XML: [String: [String: Any]]) -> [String: N]? {
         // map every value in dictionary to type N
         let result = XML.filterMap(map)
-        if result.isEmpty == false {
+        if !result.isEmpty {
             return result
         }
         
@@ -185,7 +185,7 @@ public final class XMLMapper<N: XMLBaseMappable> {
             mapArray(XMLArray: $0)
         }
         
-        if result.isEmpty == false {
+        if !result.isEmpty {
             return result
         }
         
@@ -195,13 +195,11 @@ public final class XMLMapper<N: XMLBaseMappable> {
     /// Maps an 2 dimentional array of XML dictionaries to a 2 dimentional array of XMLMappable objects
     public func mapArrayOfArrays(XMLObject: Any?) -> [[N]]? {
         if let XMLArray = XMLObject as? [[[String: Any]]] {
-            var objectArray = [[N]]()
-            for innerXMLArray in XMLArray {
-                let array = mapArray(XMLArray: innerXMLArray)
-                objectArray.append(array)
+            let objectArray = XMLArray.map { innerXMLArray in
+                return mapArray(XMLArray: innerXMLArray)
             }
             
-            if objectArray.isEmpty == false {
+            if !objectArray.isEmpty {
                 return objectArray
             }
         }
