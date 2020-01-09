@@ -19,6 +19,7 @@ extension Dictionary {
                 XMLParserConstant.Key.text,
                 XMLParserConstant.Key.nodeName,
                 XMLParserConstant.Key.nodesOrder,
+                XMLParserConstant.Key.attributesOrder,
             ]
             filteredKeys.forEach({ filteredDict?.removeValue(forKey: $0) })
             filteredDict?.keys.forEach({ (key: String) in
@@ -39,6 +40,10 @@ extension Dictionary {
         return (self as [AnyHashable: Any])[XMLParserConstant.Key.nodesOrder] as? [String]
     }
     
+    var attributesOrder: [String]? {
+        return (self as [AnyHashable: Any])[XMLParserConstant.Key.attributesOrder] as? [String]
+    }
+    
     var childNodes: [String: Any]? {
         var filteredDict = self as? [String: Any]
         let filteredKeys = [
@@ -47,6 +52,7 @@ extension Dictionary {
             XMLParserConstant.Key.text,
             XMLParserConstant.Key.nodeName,
             XMLParserConstant.Key.nodesOrder,
+            XMLParserConstant.Key.attributesOrder,
         ]
         filteredKeys.forEach({ filteredDict?.removeValue(forKey: $0) })
         filteredDict?.keys.forEach({ (key: String) in

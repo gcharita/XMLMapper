@@ -126,6 +126,10 @@ public final class XMLMap {
     public var nodesOrder: XMLMap {
         return self[XMLParserConstant.Key.nodesOrder]
     }
+    
+    public var attributesOrder: XMLMap {
+        return self[XMLParserConstant.Key.attributesOrder]
+    }
 }
 
 /// Fetch value from XML dictionary, loop through keyPathComponents until we reach the desired object

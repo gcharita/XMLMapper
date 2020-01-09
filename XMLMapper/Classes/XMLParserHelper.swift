@@ -15,7 +15,14 @@ class XMLParserHelper {
         } else if let nodeDictionary = node as? [String: Any] {
             var attributeString = ""
             if let attributes = nodeDictionary.attributes {
-                attributeString = attributes.map({ String(format: " %@=\"%@\"", $0.key.xmlEncodedString, $0.value.xmlEncodedString) }).joined()
+                if let attributesOrder = nodeDictionary.attributesOrder {
+                    attributeString = attributesOrder.compactMap({
+                        guard let value = attributes[$0] else { return nil }
+                        return String(format: " %@=\"%@\"", $0.xmlEncodedString, value.xmlEncodedString)
+                    }).joined()
+                } else {
+                    attributeString = attributes.map({ String(format: " %@=\"%@\"", $0.key.xmlEncodedString, $0.value.xmlEncodedString) }).joined()
+                }
             }
             let innerXML = nodeDictionary.innerXML
             if !innerXML.isEmpty {
