@@ -22,6 +22,14 @@ public final class XMLMapper<N: XMLBaseMappable> {
         if let XML = XMLObject as? [String: Any] {
             return map(XML: XML, toObject: object)
         }
+        
+        // failed to parse XML into dictionary form
+        // try to parse it as a String and then wrap it in an dictionary
+        if let string = XMLObject as? String {
+            let XML = [XMLParserConstant.Key.text: string]
+            return map(XML: XML, toObject: object)
+        }
+        
         return object
     }
     
@@ -53,9 +61,16 @@ public final class XMLMapper<N: XMLBaseMappable> {
         return nil
     }
     
-    /// Maps a XML object to a XMLMappable object if it is a XML dictionary or NSString, or returns nil.
+    /// Maps a XML object to a XMLMappable object if it is a XML dictionary or String, or returns nil.
     public func map(XMLObject: Any?) -> N? {
         if let XML = XMLObject as? [String: Any] {
+            return map(XML: XML)
+        }
+        
+        // failed to parse XML into dictionary form
+        // try to parse it as a String and then wrap it in an dictionary
+        if let string = XMLObject as? String {
+            let XML = [XMLParserConstant.Key.text: string]
             return map(XML: XML)
         }
         
@@ -94,7 +109,7 @@ public final class XMLMapper<N: XMLBaseMappable> {
     
     /// Maps a XML object to an array of XMLMappable objects if it is an array of XML dictionary, or returns nil.
     public func mapArray(XMLObject: Any?) -> [N]? {
-        if let XMLArray = XMLObject as? [[String: Any]] {
+        if let XMLArray = XMLObject as? [Any] {
             return mapArray(XMLArray: XMLArray)
         }
         
@@ -108,7 +123,7 @@ public final class XMLMapper<N: XMLBaseMappable> {
     }
     
     /// Maps an array of XML dictionary to an array of XMLMappable objects
-    public func mapArray(XMLArray: [[String: Any]]) -> [N] {
+    public func mapArray(XMLArray: [Any]) -> [N] {
         // map every element in XML array to type N
         let result = XMLArray.compactMap(map)
         return result
@@ -122,7 +137,7 @@ public final class XMLMapper<N: XMLBaseMappable> {
     
     /// Maps a XML object to a dictionary of XMLMappable objects if it is a XML dictionary of dictionaries, or returns nil.
     public func mapDictionary(XMLObject: Any?) -> [String: N]? {
-        if let XML = (XMLObject as? [String: Any])?.childNodes as? [String: [String: Any]] {
+        if let XML = (XMLObject as? [String: Any])?.childNodes {
             return mapDictionary(XML: XML)
         }
         
@@ -130,7 +145,7 @@ public final class XMLMapper<N: XMLBaseMappable> {
     }
     
     /// Maps a XML dictionary of dictionaries to a dictionary of XMLMappable objects
-    public func mapDictionary(XML: [String: [String: Any]]) -> [String: N]? {
+    public func mapDictionary(XML: [String: Any]) -> [String: N]? {
         // map every value in dictionary to type N
         let result = XML.filterMap(map)
         if !result.isEmpty {
@@ -142,7 +157,7 @@ public final class XMLMapper<N: XMLBaseMappable> {
     
     /// Maps a XML object to a dictionary of XMLMappable objects if it is a XML dictionary of dictionaries, or returns nil.
     public func mapDictionary(XMLObject: Any?, toDictionary dictionary: [String: N]) -> [String: N] {
-        if let XML = XMLObject as? [String : [String : Any]] {
+        if let XML = (XMLObject as? [String: Any])?.childNodes {
             return mapDictionary(XML: XML, toDictionary: dictionary)
         }
         
@@ -150,13 +165,13 @@ public final class XMLMapper<N: XMLBaseMappable> {
     }
     
     /// Maps a XML dictionary of dictionaries to an existing dictionary of XMLMappable objects
-    public func mapDictionary(XML: [String: [String: Any]], toDictionary dictionary: [String: N]) -> [String: N] {
+    public func mapDictionary(XML: [String: Any], toDictionary dictionary: [String: N]) -> [String: N] {
         var mutableDictionary = dictionary
         for (key, value) in XML {
             if let object = dictionary[key] {
-                _ = map(XML: value, toObject: object)
+                _ = map(XMLObject: value, toObject: object)
             } else {
-                mutableDictionary[key] = map(XML: value)
+                mutableDictionary[key] = map(XMLObject: value)
             }
         }
         
@@ -165,7 +180,7 @@ public final class XMLMapper<N: XMLBaseMappable> {
     
     /// Maps a XML object to a dictionary of arrays of XMLMappable objects
     public func mapDictionaryOfArrays(XMLObject: Any?) -> [String: [N]]? {
-        if let XML = (XMLObject as? [String: Any])?.childNodes as? [String: [[String: Any]]] {
+        if let XML = (XMLObject as? [String: Any])?.childNodes as? [String: [Any]] {
             return mapDictionaryOfArrays(XML: XML)
         }
         
@@ -179,7 +194,7 @@ public final class XMLMapper<N: XMLBaseMappable> {
     }
     
     ///Maps a XML dictionary of arrays to a dictionary of arrays of XMLMappable objects
-    public func mapDictionaryOfArrays(XML: [String: [[String: Any]]]) -> [String: [N]]? {
+    public func mapDictionaryOfArrays(XML: [String: [Any]]) -> [String: [N]]? {
         // map every value in dictionary to type N
         let result = XML.filterMap {
             mapArray(XMLArray: $0)
@@ -342,7 +357,7 @@ extension XMLMapper where N: Hashable {
     
     /// Maps a XML object to an Set of XMLMappable objects if it is an array of XML dictionary, or returns nil.
     public func mapSet(XMLObject: Any?) -> Set<N>? {
-        if let XMLArray = XMLObject as? [[String: Any]] {
+        if let XMLArray = XMLObject as? [Any] {
             return mapSet(XMLArray: XMLArray)
         }
         
@@ -356,7 +371,7 @@ extension XMLMapper where N: Hashable {
     }
     
     /// Maps an Set of XML dictionary to an array of XMLMappable objects
-    public func mapSet(XMLArray: [[String: Any]]) -> Set<N> {
+    public func mapSet(XMLArray: [Any]) -> Set<N> {
         // map every element in XML array to type N
         return Set(XMLArray.compactMap(map))
     }
