@@ -1,5 +1,9 @@
 # Change Log
 
+## [1.6.1](https://github.com/gcharita/XMLMapper/releases/tag/1.6.1) (2020-04-13)
+
+- Fixed [#29](https://github.com/gcharita/XMLMapper/issues/29). Issue with optional attributes in simple tags
+
 ## [1.6.0](https://github.com/gcharita/XMLMapper/releases/tag/1.6.0) (2019-12-24)
 
 - Merged [#25](https://github.com/gcharita/XMLMapper/pull/25). Specify response encoding in Requests subspec
