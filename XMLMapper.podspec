@@ -31,12 +31,12 @@ Pod::Spec.new do |s|
   end
 
   s.subspec 'Requests' do |requests|
-    requests.watchos.deployment_target = '2.0'
-    requests.ios.deployment_target = '8.0'
-    requests.osx.deployment_target = '10.10'
-    requests.tvos.deployment_target = '9.0'
+    requests.watchos.deployment_target = '3.0'
+    requests.ios.deployment_target = '10.0'
+    requests.osx.deployment_target = '10.12'
+    requests.tvos.deployment_target = '10.0'
     requests.source_files = 'XMLMapper/Classes/Requests/'
     requests.dependency 'XMLMapper/Core'
-    requests.dependency 'Alamofire', '~> 4.9'
+    requests.dependency 'Alamofire', '~> 5.2'
   end
 end

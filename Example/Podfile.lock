@@ -1,10 +1,10 @@
 PODS:
-  - Alamofire (4.9.1)
+  - Alamofire (5.2.1)
   - Nimble (8.0.4)
   - Quick (2.2.0)
-  - XMLMapper/Core (1.5.3)
-  - XMLMapper/Requests (1.5.3):
-    - Alamofire (~> 4.9)
+  - XMLMapper/Core (1.6.1)
+  - XMLMapper/Requests (1.6.1):
+    - Alamofire (~> 5.2)
     - XMLMapper/Core
 
 DEPENDENCIES:
@@ -23,11 +23,11 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  Alamofire: 85e8a02c69d6020a0d734f6054870d7ecb75cf18
+  Alamofire: e911732990610fe89af59ac0077f923d72dc3dfd
   Nimble: 18d5360282923225d62b09d781f63abc1a0111fc
   Quick: 7fb19e13be07b5dfb3b90d4f9824c855a11af40e
-  XMLMapper: e3baea11cf84210ef6481081dba03364d848e469
+  XMLMapper: 8cb69633fd7d520641ddbf9b9bd03542e3d0dc53
 
-PODFILE CHECKSUM: 0988776aad83d59b5b2ae0b9864f1bbe8140345c
+PODFILE CHECKSUM: 4c6019c765aeeb24a26ead9d69de39c486363c3c
 
-COCOAPODS: 1.8.4
+COCOAPODS: 1.9.3
