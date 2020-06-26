@@ -449,6 +449,8 @@ class Element: XMLMappable {
 
 ## Requests subspec
 
+**Note:** `Requests` subspec has different minimum deployment targets due to `Alamofire` dependency. (currently **iOS 10.0+ / macOS 10.12+ / tvOS 10.0+ / watchOS 3.0+**)
+
 Create and send easily request with XML body using `Alamofire` (added missing `XMLEncoding` struct)
 
 ```swift
