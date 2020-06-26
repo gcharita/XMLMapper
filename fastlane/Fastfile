@@ -1,0 +1,24 @@
+# Uncomment the line if you want fastlane to automatically update itself
+# update_fastlane
+opt_out_usage
+
+fastlane_version "1.80.0"
+
+clear_derived_data
+
+default_platform(:ios)
+
+platform :ios do
+  desc "Release new version to Trunk"
+  lane :release do
+    version = version_get_podspec(path: "XMLMapper.podspec")
+
+    add_git_tag(
+      tag: version,
+      message: ""
+    )
+    push_git_tags
+
+    pod_push(path: "XMLMapper.podspec")
+  end
+end
