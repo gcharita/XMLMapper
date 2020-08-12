@@ -46,7 +46,7 @@ public final class XMLMappableArrayResponseSerializer<T: XMLBaseMappable>: Respo
                 throw AFError.responseSerializationFailed(reason: .inputDataNilOrZeroLength)
             }
             
-            // TODO: / FIX - Empty Response JSON Decodable Array Fix - "Cast from empty always fails..."
+            // TODO: FIX - Empty Response
             guard let emptyValue = Empty.value as? [T] else {
                 throw AFError.responseSerializationFailed(reason: .invalidEmptyResponse(type: "\(T.self)"))
             }
