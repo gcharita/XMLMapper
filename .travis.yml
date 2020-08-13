@@ -56,7 +56,7 @@ script:
     fi
 
   - if [ $POD_LINT == "YES" ]; then
-      pod lib lint;
+      pod lib lint --allow-warnings --fail-fast --verbose;
     fi
   # - set -o pipefail && xcodebuild test -enableCodeCoverage YES -workspace Example/XMLMapper.xcworkspace -scheme XMLMapper-Example -sdk iphonesimulator9.3 ONLY_ACTIVE_ARCH=NO | xcpretty
   # - set -o pipefail && xcodebuild test -enableCodeCoverage YES -workspace Example/XMLMapper.xcworkspace -scheme XMLMapper-Example -destination 'platform=iOS Simulator,name=iPhone 6,OS=11.2' ONLY_ACTIVE_ARCH=NO | xcpretty
