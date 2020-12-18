@@ -9,17 +9,15 @@ import Foundation
 import Alamofire
 
 public final class XMLMappableResponseSerializer<T: XMLBaseMappable>: ResponseSerializer {
+    public let dataPreprocessor: DataPreprocessor
     public let emptyResponseCodes: Set<Int>
     public let emptyRequestMethods: Set<HTTPMethod>
-    public let keyPath: String?
-    public let object: T?
     public let serializeCallback: (_ request: URLRequest?, _ response: HTTPURLResponse?, _ data: Data?, _ error: Error?) throws -> T
     
     /// Creates an instance using the values provided.
     ///
     /// - Parameters:
-    ///     - keyPath: The key path where object mapping should be performed
-    ///     - object: An object to perform the mapping on to
+    ///     - dataPreprocessor: `DataPreprocessor` used to prepare the received `Data` for serialization.
     ///     - emptyResponseCodes: The HTTP response codes for which empty responses are allowed. Defaults to `[204, 205]`.
     ///     - emptyRequestMethods: The HTTP request methods for which empty responses are allowed. Defaults to `[.head]`.
     ///     - serializeCallback: Block that performs the serialization of the response Data into the provided type.
@@ -28,17 +26,14 @@ public final class XMLMappableResponseSerializer<T: XMLBaseMappable>: ResponseSe
     ///     - data: Data returned from the server, if any.
     ///     - error: Error produced by Alamofire or the underlying URLSession during the request.
     public init(
-        _ keyPath: String?,
-        mapToObject object: T? = nil,
+        dataPreprocessor: DataPreprocessor = XMLMappableResponseSerializer.defaultDataPreprocessor,
         emptyResponseCodes: Set<Int> = XMLMappableResponseSerializer.defaultEmptyResponseCodes,
         emptyRequestMethods: Set<HTTPMethod> = XMLMappableResponseSerializer.defaultEmptyRequestMethods,
         serializeCallback: @escaping (_ request: URLRequest?, _ response: HTTPURLResponse?, _ data: Data?, _ error: Error?) throws -> T
     ) {
+        self.dataPreprocessor = dataPreprocessor
         self.emptyResponseCodes = emptyResponseCodes
         self.emptyRequestMethods = emptyRequestMethods
-        
-        self.keyPath = keyPath
-        self.object = object
         self.serializeCallback = serializeCallback
     }
     

@@ -15,16 +15,16 @@ extension Array: EmptyResponse where Element: XMLBaseMappable & EmptyResponse {
 }
 
 public final class XMLMappableArrayResponseSerializer<T: XMLBaseMappable>: ResponseSerializer {
+    public let dataPreprocessor: DataPreprocessor
     public let emptyResponseCodes: Set<Int>
     public let emptyRequestMethods: Set<HTTPMethod>
-    public let keyPath: String?
     public let serializeCallback: (_ request: URLRequest?, _ response: HTTPURLResponse?, _ data: Data?, _ error: Error?) throws -> [T]
     
     /// Creates an instance using the values provided.
     ///
     /// - Parameters:
-    ///     - keyPath: The key path where object mapping should be performed
-    ///     - emptyResponseCodes:  The HTTP response codes for which empty responses are allowed. Defaults to `[204, 205]`.
+    ///     - dataPreprocessor: `DataPreprocessor` used to prepare the received `Data` for serialization.
+    ///     - emptyResponseCodes: The HTTP response codes for which empty responses are allowed. Defaults to `[204, 205]`.
     ///     - emptyRequestMethods: The HTTP request methods for which empty responses are allowed. Defaults to `[.head]`.
     ///     - serializeCallback: Block that performs the serialization of the response Data into the provided type.
     ///     - request: URLRequest which was used to perform the request, if any.
@@ -32,15 +32,14 @@ public final class XMLMappableArrayResponseSerializer<T: XMLBaseMappable>: Respo
     ///     - data: Data returned from the server, if any.
     ///     - error: Error produced by Alamofire or the underlying URLSession during the request.
     public init(
-        _ keyPath: String?,
+        dataPreprocessor: DataPreprocessor = XMLMappableArrayResponseSerializer.defaultDataPreprocessor,
         emptyResponseCodes: Set<Int> = XMLMappableArrayResponseSerializer.defaultEmptyResponseCodes,
         emptyRequestMethods: Set<HTTPMethod> = XMLMappableArrayResponseSerializer.defaultEmptyRequestMethods,
         serializeCallback: @escaping (_ request: URLRequest?, _ response: HTTPURLResponse?, _ data: Data?, _ error: Error?) throws -> [T]
     ) {
+        self.dataPreprocessor = dataPreprocessor
         self.emptyResponseCodes = emptyResponseCodes
         self.emptyRequestMethods = emptyRequestMethods
-        
-        self.keyPath = keyPath
         self.serializeCallback = serializeCallback
     }
     
