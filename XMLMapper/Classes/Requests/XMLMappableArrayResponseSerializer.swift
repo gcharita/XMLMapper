@@ -8,6 +8,12 @@
 import Foundation
 import Alamofire
 
+extension Array: EmptyResponse where Element: XMLBaseMappable & EmptyResponse {
+    public static func emptyValue() -> Array {
+        return []
+    }
+}
+
 public final class XMLMappableArrayResponseSerializer<T: XMLBaseMappable>: ResponseSerializer {
     public let emptyResponseCodes: Set<Int>
     public let emptyRequestMethods: Set<HTTPMethod>
@@ -46,9 +52,8 @@ public final class XMLMappableArrayResponseSerializer<T: XMLBaseMappable>: Respo
                 throw AFError.responseSerializationFailed(reason: .inputDataNilOrZeroLength)
             }
             
-            // TODO: FIX - Empty Response
-            guard let emptyValue = Empty.value as? [T] else {
-                throw AFError.responseSerializationFailed(reason: .invalidEmptyResponse(type: "\(T.self)"))
+            guard let emptyResponseType = [T].self as? EmptyResponse.Type, let emptyValue = emptyResponseType.emptyValue() as? [T] else {
+                throw AFError.responseSerializationFailed(reason: .invalidEmptyResponse(type: "\([T].self)"))
             }
             
             return emptyValue

@@ -50,7 +50,7 @@ public final class XMLMappableResponseSerializer<T: XMLBaseMappable>: ResponseSe
                 throw AFError.responseSerializationFailed(reason: .inputDataNilOrZeroLength)
             }
             
-            guard let emptyValue = Empty.value as? T else {
+            guard let emptyResponseType = T.self as? EmptyResponse.Type, let emptyValue = emptyResponseType.emptyValue() as? T else {
                 throw AFError.responseSerializationFailed(reason: .invalidEmptyResponse(type: "\(T.self)"))
             }
             
