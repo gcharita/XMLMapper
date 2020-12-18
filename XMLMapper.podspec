@@ -37,6 +37,6 @@ Pod::Spec.new do |s|
     requests.tvos.deployment_target = '10.0'
     requests.source_files = 'XMLMapper/Classes/Requests/'
     requests.dependency 'XMLMapper/Core'
-    requests.dependency 'Alamofire', '~> 5.2'
+    requests.dependency 'Alamofire', '~> 5.4'
   end
 end
