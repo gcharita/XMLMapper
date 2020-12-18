@@ -1,7 +1,7 @@
 //
 //  Request.swift
 //
-//  Copyright (c) 2014-2018 Alamofire Software Foundation (http://alamofire.org/)
+//  Copyright (c) 2014-2020 Alamofire Software Foundation (http://alamofire.org/)
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -92,8 +92,12 @@ public class Request {
         var redirectHandler: RedirectHandler?
         /// `CachedResponseHandler` provided to handle response caching.
         var cachedResponseHandler: CachedResponseHandler?
-        /// Closure called when the `Request` is able to create a cURL description of itself.
-        var cURLHandler: ((String) -> Void)?
+        /// Queue and closure called when the `Request` is able to create a cURL description of itself.
+        var cURLHandler: (queue: DispatchQueue, handler: (String) -> Void)?
+        /// Queue and closure called when the `Request` creates a `URLRequest`.
+        var urlRequestHandler: (queue: DispatchQueue, handler: (URLRequest) -> Void)?
+        /// Queue and closure called when the `Request` creates a `URLSessionTask`.
+        var urlSessionTaskHandler: (queue: DispatchQueue, handler: (URLSessionTask) -> Void)?
         /// Response serialization closures that handle response parsing.
         var responseSerializers: [() -> Void] = []
         /// Response serialization completion closures executed once all response serializers are complete.
@@ -337,6 +341,10 @@ public class Request {
     func didCreateURLRequest(_ request: URLRequest) {
         dispatchPrecondition(condition: .onQueue(underlyingQueue))
 
+        $mutableState.read { state in
+            state.urlRequestHandler?.queue.async { state.urlRequestHandler?.handler(request) }
+        }
+
         eventMonitor?.request(self, didCreateURLRequest: request)
 
         callCURLHandlerIfNecessary()
@@ -347,7 +355,8 @@ public class Request {
         $mutableState.write { mutableState in
             guard let cURLHandler = mutableState.cURLHandler else { return }
 
-            self.underlyingQueue.async { cURLHandler(self.cURLDescription()) }
+            cURLHandler.queue.async { cURLHandler.handler(self.cURLDescription()) }
+
             mutableState.cURLHandler = nil
         }
     }
@@ -358,7 +367,13 @@ public class Request {
     func didCreateTask(_ task: URLSessionTask) {
         dispatchPrecondition(condition: .onQueue(underlyingQueue))
 
-        $mutableState.write { $0.tasks.append(task) }
+        $mutableState.write { state in
+            state.tasks.append(task)
+
+            guard let urlSessionTaskHandler = state.urlSessionTaskHandler else { return }
+
+            urlSessionTaskHandler.queue.async { urlSessionTaskHandler.handler(task) }
+        }
 
         eventMonitor?.request(self, didCreateTask: task)
     }
@@ -812,11 +827,36 @@ public class Request {
         return self
     }
 
+    // MARK: - Lifetime APIs
+
     /// Sets a handler to be called when the cURL description of the request is available.
     ///
     /// - Note: When waiting for a `Request`'s `URLRequest` to be created, only the last `handler` will be called.
     ///
-    /// - Parameter handler: Closure to be called when the cURL description is available.
+    /// - Parameters:
+    ///   - queue:   `DispatchQueue` on which `handler` will be called.
+    ///   - handler: Closure to be called when the cURL description is available.
+    ///
+    /// - Returns:           The instance.
+    @discardableResult
+    public func cURLDescription(on queue: DispatchQueue, calling handler: @escaping (String) -> Void) -> Self {
+        $mutableState.write { mutableState in
+            if mutableState.requests.last != nil {
+                queue.async { handler(self.cURLDescription()) }
+            } else {
+                mutableState.cURLHandler = (queue, handler)
+            }
+        }
+
+        return self
+    }
+
+    /// Sets a handler to be called when the cURL description of the request is available.
+    ///
+    /// - Note: When waiting for a `Request`'s `URLRequest` to be created, only the last `handler` will be called.
+    ///
+    /// - Parameter handler: Closure to be called when the cURL description is available. Called on the instance's
+    ///                      `underlyingQueue` by default.
     ///
     /// - Returns:           The instance.
     @discardableResult
@@ -825,8 +865,54 @@ public class Request {
             if mutableState.requests.last != nil {
                 underlyingQueue.async { handler(self.cURLDescription()) }
             } else {
-                mutableState.cURLHandler = handler
+                mutableState.cURLHandler = (underlyingQueue, handler)
             }
+        }
+
+        return self
+    }
+
+    /// Sets a closure to called whenever Alamofire creates a `URLRequest` for this instance.
+    ///
+    /// - Note: This closure will be called multiple times if the instance adapts incoming `URLRequest`s or is retried.
+    ///
+    /// - Parameters:
+    ///   - queue:   `DispatchQueue` on which `handler` will be called. `.main` by default.
+    ///   - handler: Closure to be called when a `URLRequest` is available.
+    ///
+    /// - Returns:   The instance.
+    @discardableResult
+    public func onURLRequestCreation(on queue: DispatchQueue = .main, perform handler: @escaping (URLRequest) -> Void) -> Self {
+        $mutableState.write { state in
+            if let request = state.requests.last {
+                queue.async { handler(request) }
+            }
+
+            state.urlRequestHandler = (queue, handler)
+        }
+
+        return self
+    }
+
+    /// Sets a closure to be called whenever the instance creates a `URLSessionTask`.
+    ///
+    /// - Note: This API should only be used to provide `URLSessionTask`s to existing API, like `NSFileProvider`. It
+    ///         **SHOULD NOT** be used to interact with tasks directly, as that may be break Alamofire features.
+    ///         Additionally, this closure may be called multiple times if the instance is retried.
+    ///
+    /// - Parameters:
+    ///   - queue:   `DispatchQueue` on which `handler` will be called. `.main` by default.
+    ///   - handler: Closure to be called when the `URLSessionTask` is available.
+    ///
+    /// - Returns:   The instance.
+    @discardableResult
+    public func onURLSessionTaskCreation(on queue: DispatchQueue = .main, perform handler: @escaping (URLSessionTask) -> Void) -> Self {
+        $mutableState.write { state in
+            if let task = state.tasks.last {
+                queue.async { handler(task) }
+            }
+
+            state.urlSessionTaskHandler = (queue, handler)
         }
 
         return self
@@ -860,8 +946,8 @@ extension Request: CustomStringConvertible {
     /// created, as well as the response status code, if a response has been received.
     public var description: String {
         guard let request = performedRequests.last ?? lastRequest,
-            let url = request.url,
-            let method = request.httpMethod else { return "No request created yet." }
+              let url = request.url,
+              let method = request.httpMethod else { return "No request created yet." }
 
         let requestDescription = "\(method) \(url.absoluteString)"
 
@@ -1128,7 +1214,7 @@ public final class DataStreamRequest: Request {
 
     /// Type used to cancel an ongoing stream.
     public struct CancellationToken {
-        let request: DataStreamRequest
+        weak var request: DataStreamRequest?
 
         init(_ request: DataStreamRequest) {
             self.request = request
@@ -1136,7 +1222,7 @@ public final class DataStreamRequest: Request {
 
         /// Cancel the ongoing stream by canceling the underlying `DataStreamRequest`.
         public func cancel() {
-            request.cancel()
+            request?.cancel()
         }
     }
 
@@ -1149,8 +1235,13 @@ public final class DataStreamRequest: Request {
     struct StreamMutableState {
         /// `OutputStream` bound to the `InputStream` produced by `asInputStream`, if it has been called.
         var outputStream: OutputStream?
-        /// `DispatchQueue`s and stream closures associated called as `Data` is received.
-        var streams: [(queue: DispatchQueue, stream: (_ data: Data) -> Void)] = []
+        /// Stream closures called as `Data` is received.
+        var streams: [(_ data: Data) -> Void] = []
+        /// Number of currently executing streams. Used to ensure completions are only fired after all streams are
+        /// enqueued.
+        var numberOfExecutingStreams = 0
+        /// Completion calls enqueued while streams are still executing.
+        var enqueuedCompletionEvents: [() -> Void] = []
     }
 
     @Protected
@@ -1206,15 +1297,16 @@ public final class DataStreamRequest: Request {
     }
 
     func didReceive(data: Data) {
-        $streamMutableState.read { state in
+        $streamMutableState.write { state in
             if let stream = state.outputStream {
                 underlyingQueue.async {
                     var bytes = Array(data)
                     stream.write(&bytes, maxLength: bytes.count)
                 }
             }
-
-            underlyingQueue.async { state.streams.forEach { stream in stream.queue.async { stream.stream(data) } } }
+            state.numberOfExecutingStreams += state.streams.count
+            let localState = state
+            underlyingQueue.async { localState.streams.forEach { $0(data) } }
         }
     }
 
@@ -1282,18 +1374,33 @@ public final class DataStreamRequest: Request {
         appendResponseSerializer {
             self.underlyingQueue.async {
                 self.responseSerializerDidComplete {
-                    queue.async {
-                        do {
-                            let completion = Completion(request: self.request,
-                                                        response: self.response,
-                                                        metrics: self.metrics,
-                                                        error: self.error)
-                            try stream(.init(event: .complete(completion), token: .init(self)))
-                        } catch {
-                            // Ignore error, as errors on Completion can't be handled anyway.
+                    self.$streamMutableState.write { state in
+                        guard state.numberOfExecutingStreams == 0 else {
+                            state.enqueuedCompletionEvents.append {
+                                self.enqueueCompletion(on: queue, stream: stream)
+                            }
+
+                            return
                         }
+
+                        self.enqueueCompletion(on: queue, stream: stream)
                     }
                 }
+            }
+        }
+    }
+
+    func enqueueCompletion<Success, Failure>(on queue: DispatchQueue,
+                                             stream: @escaping Handler<Success, Failure>) {
+        queue.async {
+            do {
+                let completion = Completion(request: self.request,
+                                            response: self.response,
+                                            metrics: self.metrics,
+                                            error: self.error)
+                try stream(.init(event: .complete(completion), token: .init(self)))
+            } catch {
+                // Ignore error, as errors on Completion can't be handled anyway.
             }
         }
     }
@@ -1352,8 +1459,11 @@ public class DownloadRequest: Request {
 
     /// A closure executed once a `DownloadRequest` has successfully completed in order to determine where to move the
     /// temporary file written to during the download process. The closure takes two arguments: the temporary file URL
-    /// and the URL response, and returns a two arguments: the file URL where the temporary file should be moved and
+    /// and the `HTTPURLResponse`, and returns two values: the file URL where the temporary file should be moved and
     /// the options defining how the file should be moved.
+    ///
+    /// - Note: Downloads from a local `file://` `URL`s do not use the `Destination` closure, as those downloads do not
+    ///         return an `HTTPURLResponse`. Instead the file is merely moved within the temporary directory.
     public typealias Destination = (_ temporaryURL: URL,
                                     _ response: HTTPURLResponse) -> (destinationURL: URL, options: Options)
 
@@ -1382,10 +1492,16 @@ public class DownloadRequest: Request {
     /// with this destination must be additionally moved if they should survive the system reclamation of temporary
     /// space.
     static let defaultDestination: Destination = { url, _ in
+        (defaultDestinationURL(url), [])
+    }
+
+    /// Default `URL` creation closure. Creates a `URL` in the temporary directory with `Alamofire_` prepended to the
+    /// provided file name.
+    static let defaultDestinationURL: (URL) -> URL = { url in
         let filename = "Alamofire_\(url.lastPathComponent)"
         let destination = url.deletingLastPathComponent().appendingPathComponent(filename)
 
-        return (destination, [])
+        return destination
     }
 
     // MARK: Downloadable
