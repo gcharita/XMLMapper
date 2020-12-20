@@ -3,7 +3,7 @@
 # * https://github.com/supermarin/xcpretty#usage
 
 os: osx
-osx_image: xcode10.2
+osx_image: xcode11.6
 cache: cocoapods
 # podfile: Example/Podfile
 
@@ -17,6 +17,7 @@ env:
     - OSX_FRAMEWORK_SCHEME="XMLMapper macOS"
     - WATCHOS_FRAMEWORK_SCHEME="XMLMapper watchOS"
   matrix:
+    - DESTINATION="OS=13.6,name=iPhone 11 Pro"               SCHEME="$IOS_FRAMEWORK_SCHEME"     RUN_TESTS="YES" POD_LINT="NO"
     - DESTINATION="OS=12.2,name=iPhone X"                    SCHEME="$IOS_FRAMEWORK_SCHEME"     RUN_TESTS="YES" POD_LINT="NO"
     - DESTINATION="OS=11.4,name=iPhone 7"                    SCHEME="$IOS_FRAMEWORK_SCHEME"     RUN_TESTS="YES" POD_LINT="NO"
     - DESTINATION="OS=10.3.1,name=iPhone 7 Plus"             SCHEME="$IOS_FRAMEWORK_SCHEME"     RUN_TESTS="YES" POD_LINT="NO"
@@ -27,7 +28,6 @@ env:
     - DESTINATION="OS=5.2,name=Apple Watch Series 4 - 44mm"  SCHEME="$WATCHOS_FRAMEWORK_SCHEME" RUN_TESTS="NO"  POD_LINT="NO"
     - DESTINATION="OS=4.2,name=Apple Watch - 42mm"           SCHEME="$WATCHOS_FRAMEWORK_SCHEME" RUN_TESTS="NO"  POD_LINT="NO"
     - DESTINATION="OS=3.2,name=Apple Watch - 42mm"           SCHEME="$WATCHOS_FRAMEWORK_SCHEME" RUN_TESTS="NO"  POD_LINT="NO"
-    - DESTINATION="OS=2.2,name=Apple Watch - 42mm"           SCHEME="$WATCHOS_FRAMEWORK_SCHEME" RUN_TESTS="NO"  POD_LINT="NO"
 
     - DESTINATION="arch=x86_64"                              SCHEME="$OSX_FRAMEWORK_SCHEME"     RUN_TESTS="YES" POD_LINT="YES"
 
@@ -56,7 +56,7 @@ script:
     fi
 
   - if [ $POD_LINT == "YES" ]; then
-      pod lib lint;
+      pod lib lint --allow-warnings --fail-fast --verbose;
     fi
   # - set -o pipefail && xcodebuild test -enableCodeCoverage YES -workspace Example/XMLMapper.xcworkspace -scheme XMLMapper-Example -sdk iphonesimulator9.3 ONLY_ACTIVE_ARCH=NO | xcpretty
   # - set -o pipefail && xcodebuild test -enableCodeCoverage YES -workspace Example/XMLMapper.xcworkspace -scheme XMLMapper-Example -destination 'platform=iOS Simulator,name=iPhone 6,OS=11.2' ONLY_ACTIVE_ARCH=NO | xcpretty
