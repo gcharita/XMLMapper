@@ -7,16 +7,26 @@
 
 import Foundation
 
-open class XMLCDATATransform: XMLTransformOf<String, [Data]> {
-    public init(toXML: @escaping (String?) -> [Data]? = { (value: String?) -> [Data]? in
-        guard let cdata = value?.data(using: .utf8) else {
+open class XMLCDATATransform: XMLTransformType {
+    public typealias Object = String
+    public typealias XML = [Data]
+    
+    private let encoding: String.Encoding
+    private let separator: String
+    
+    public init(encoding: String.Encoding = .utf8, separator: String = "\n") {
+        self.encoding = encoding
+        self.separator = separator
+    }
+    
+    public func transformFromXML(_ value: Any?) -> Object? {
+        return (value as? [Data])?.compactMap { String(data: $0, encoding: encoding) }.joined(separator: separator)
+    }
+    
+    public func transformToXML(_ value: String?) -> XML? {
+        guard let cdata = value?.data(using: encoding) else {
             return nil
         }
         return [cdata]
-    }) {
-        let fromXML: ([Data]?) -> String? = { (cdata: [Data]?) -> String? in
-            return cdata?.compactMap({ String(data: $0, encoding: .utf8) }).joined(separator: "\n")
-        }
-        super.init(fromXML: fromXML, toXML: toXML)
     }
 }
