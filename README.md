@@ -16,6 +16,7 @@ XMLMapper is a framework written in Swift that makes it easy for you to convert 
   - [Basic XML mapping](#basic-xml-mapping)
   - [Advanced mapping](#advanced-mapping)
   - [Swift 4.2 and unordered XML elements](#swift-42-and-unordered-xml-elements)
+  - [Map CDATA wrapped values](#map-cdata-wrapped-values)
   - [XML Mapping example](#xml-Mapping-example)
 - [Requests subspec](#requests-subspec)
 - [Communication](#communication)
@@ -325,7 +326,7 @@ Because of `currency` element existence.
 
 ### Swift 4.2 and unordered XML elements
 
-Starting from Swift 4.2,  XML elements are highly likely to have different order each time you run your app. (This happens because they are represented by a `Dictionary`)
+Starting from Swift 4.2, XML elements are highly likely to have different order each time you run your app. (This happens because they are represented by a `Dictionary`)
 
 For this, since version 1.5.2 of the XMLMapper you can map and change the order of the nodes that appear inside another node using `nodesOrder` property of `XMLMap`:
 
@@ -355,6 +356,134 @@ print(testOrderedNodes.toXMLString() ?? "nil")
 ```
 
 **Note:** If you want to change the ordering of the nodes, make sure that you include, in the `nodesOrder` array, all the node names that you want to appear in the XML string
+
+### Map CDATA wrapped values
+
+Since version 2.0.0 of XMLMapper, **CDATA** support has added. CDATA wrapped strings now are mapped as an `Array<Data>` by default, instead of `String` which was the case in the previous versions. That had as a side effect the disability to **serialize** CDATA wrapped values.
+
+For example using the following code:
+
+```swift
+class Food: XMLMappable {
+    var nodeName: String!
+    
+    var description: String?
+    
+    init() {}
+    
+    required init?(map: XMLMap) {}
+        
+    func mapping(map: XMLMap) {
+        description <- map["description"]
+    }
+}
+
+let food = Food()
+food.nodeName = "Food"
+food.description = "Light Belgian waffles covered with strawberries & whipped cream"
+print(food.toXMLString() ?? "nil")
+```
+
+Your result was always:
+
+```xml
+<Food>
+    <description>
+        Light Belgian waffles covered with strawberries &amp; whipped cream
+    </description>
+</Food>
+```
+
+In version *2.0.0* we introduce the build in `XMLCDATATransform` type, which can be used like this:
+
+```swift
+class Food: XMLMappable {
+    var nodeName: String!
+    
+    var description: String?
+    
+    init() {}
+    
+    required init?(map: XMLMap) {}
+        
+    func mapping(map: XMLMap) {
+        description <- (map["description"], XMLCDATATransform())
+    }
+}
+
+let food = Food()
+food.nodeName = "Food"
+food.description = "Light Belgian waffles covered with strawberries & whipped cream"
+print(food.toXMLString() ?? "nil")
+```
+
+and the result will be:
+
+```xml
+<Food>
+    <description>
+        <![CDATA[
+            Light Belgian waffles covered with strawberries & whipped cream
+        ]]>
+    </description>
+</Food>
+```
+
+The **breaking change** here is that the deserialization of CDATA wrapped values cannot achieved, unless you use `XMLCDATATransform` type. For example if you try to map the above XML to the following model class:
+
+```swift
+class Food: XMLMappable {
+    var nodeName: String!
+    
+    var description: String?
+    
+    required init?(map: XMLMap) {}
+        
+    func mapping(map: XMLMap) {
+        description <- map["description"]
+    }
+}
+```
+
+You will end up with `nil` as the value of `description` property.
+
+---
+**Note**: That default behaviour can be changed if you run `xmlObject(withString:encoding:options:)` function of `XMLSerialization` yourself and pass as `options` the `default` set, including `cdataAsString` option.
+
+For example, the following code will work:
+
+```swift
+class Food: XMLMappable {
+    var nodeName: String!
+    
+    var description: String?
+    
+    required init?(map: XMLMap) {}
+        
+    func mapping(map: XMLMap) {
+        description <- map["description"]
+    }
+}
+
+let xmlString = """
+<Food>
+    <description>
+        <![CDATA[
+            Light Belgian waffles covered with strawberries & whipped cream
+        ]]>
+    </description>
+</Food>
+"""
+let data = Data(xmlString.utf8) // Data for deserialization (from XML to object)
+do {
+    let xml = try XMLSerialization.xmlObject(with: data, options: [.default, .cdataAsString])
+    let food = XMLMapper<Food>().map(XMLObject: xml)
+} catch {
+    print(error)
+}
+```
+
+---
 
 ### XML Mapping example
 
