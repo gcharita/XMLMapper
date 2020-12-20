@@ -255,7 +255,7 @@ public func <- <Transform: XMLTransformType>(left: inout Transform.Object!, righ
 
 // MARK:- Dictionary of Mappable objects with a transform - Dictionary<String, T: XMLBaseMappable>
 
-/// Dictionary of Mappable objects <String, T: Mappable> with a transform
+/// Dictionary of Mappable objects <String, T: XMLBaseMappable> with a transform
 public func <- <Transform: XMLTransformType>(left: inout Dictionary<String, Transform.Object>, right: (XMLMap, Transform)) where Transform.Object: XMLBaseMappable {
     let (map, transform) = right
     if map.mappingType == .fromXML && map.isKeyPresent,
@@ -276,7 +276,7 @@ public func >>> <Transform: XMLTransformType>(left: Dictionary<String, Transform
 }
 
 
-/// Optional Dictionary of Mappable object <String, T: Mappable> with a transform
+/// Optional Dictionary of Mappable object <String, T: XMLBaseMappable> with a transform
 public func <- <Transform: XMLTransformType>(left: inout Dictionary<String, Transform.Object>?, right: (XMLMap, Transform)) where Transform.Object: XMLBaseMappable {
     let (map, transform) = right
     if map.mappingType == .fromXML && map.isKeyPresent, let object = map.currentValue as? [String : Any]{
@@ -298,7 +298,7 @@ public func >>> <Transform: XMLTransformType>(left: Dictionary<String, Transform
 
 // Code targeting the Swift 4.1 compiler and below.
 #if !(swift(>=4.1.50) || (swift(>=3.4) && !swift(>=4.0)))
-/// Implicitly unwrapped Optional Dictionary of Mappable object <String, T: Mappable> with a transform
+/// Implicitly unwrapped Optional Dictionary of Mappable object <String, T: XMLBaseMappable> with a transform
 public func <- <Transform: XMLTransformType>(left: inout Dictionary<String, Transform.Object>!, right: (XMLMap, Transform)) where Transform.Object: XMLBaseMappable {
     let (map, transform) = right
     if map.mappingType == .fromXML && map.isKeyPresent, let dictionary = map.currentValue as? [String : Any]{
@@ -310,7 +310,7 @@ public func <- <Transform: XMLTransformType>(left: inout Dictionary<String, Tran
 }
 #endif
 
-/// Dictionary of Mappable objects <String, T: Mappable> with a transform
+/// Dictionary of Array of Mappable objects <String, [T: XMLBaseMappable]> with a transform
 public func <- <Transform: XMLTransformType>(left: inout Dictionary<String, [Transform.Object]>, right: (XMLMap, Transform)) where Transform.Object: XMLBaseMappable {
     let (map, transform) = right
     
@@ -345,7 +345,7 @@ public func >>> <Transform: XMLTransformType>(left: Dictionary<String, [Transfor
 }
 
 
-/// Optional Dictionary of Mappable object <String, T: Mappable> with a transform
+/// Optional Dictionary of Array of Mappable object <String, [T: XMLBaseMappable]> with a transform
 public func <- <Transform: XMLTransformType>(left: inout Dictionary<String, [Transform.Object]>?, right: (XMLMap, Transform)) where Transform.Object: XMLBaseMappable {
     let (map, transform) = right
     
@@ -383,7 +383,7 @@ public func >>> <Transform: XMLTransformType>(left: Dictionary<String, [Transfor
 
 // Code targeting the Swift 4.1 compiler and below.
 #if !(swift(>=4.1.50) || (swift(>=3.4) && !swift(>=4.0)))
-/// Implicitly unwrapped Optional Dictionary of Mappable object <String, T: Mappable> with a transform
+/// Implicitly unwrapped Optional Dictionary of Array of Mappable object <String, [T: XMLBaseMappable]> with a transform
 public func <- <Transform: XMLTransformType>(left: inout Dictionary<String, [Transform.Object]>!, right: (XMLMap, Transform)) where Transform.Object: XMLBaseMappable {
     let (map, transform) = right
 

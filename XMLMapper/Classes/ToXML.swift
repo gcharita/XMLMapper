@@ -24,22 +24,17 @@ private func setValue(_ value: Any, key: String, checkForNestedKeys: Bool, delim
 }
 
 private func setValue(_ value: Any, forKeyPathComponents components: ArraySlice<String>, dictionary: inout [String : Any]) {
-    if components.isEmpty {
+    guard let head = components.first else {
         return
     }
-    
-    let head = components.first!
     
     if components.count == 1 {
         dictionary[head] = value
     } else {
-        var child = dictionary[head] as? [String : Any]
-        if child == nil {
-            child = [:]
-        }
+        var child = dictionary[head] as? [String : Any] ?? [:]
         
         let tail = components.dropFirst()
-        setValue(value, forKeyPathComponents: tail, dictionary: &child!)
+        setValue(value, forKeyPathComponents: tail, dictionary: &child)
         
         dictionary[head] = child
     }

@@ -6,16 +6,15 @@
 //
 //
 
-/// BaseMappable should not be implemented directly. Mappable or StaticMappable should be used instead
+/// XMLBaseMappable should not be implemented directly. XMLMappable or XMLStaticMappable should be used instead
 public protocol XMLBaseMappable {
-    /// Variable in which the name of the XML node is mapped
+    /// This property is where the name of the XML node is being mapped
     var nodeName: String! { get set }
     /// This function is where all variable mappings should occur. It is executed by XMLMapper during the mapping (serialization and deserialization) process.
     mutating func mapping(map: XMLMap)
 }
 
 extension XMLBaseMappable {
-    
     /// Start mapping by map the XML nodeName first
     mutating func mapping(with map: XMLMap) {
         nodeName <- map[XMLParserConstant.Key.nodeName]
@@ -38,7 +37,7 @@ public protocol XMLStaticMappable: XMLBaseMappable {
 public extension XMLBaseMappable {
     
     /// Initializes object from a XML String
-    public init?(XMLString: String) {
+    init?(XMLString: String) {
         if let obj: Self = XMLMapper().map(XMLString: XMLString) {
             self = obj
         } else {
@@ -47,7 +46,7 @@ public extension XMLBaseMappable {
     }
     
     /// Initializes object from a XML Dictionary
-    public init?(XML: [String: Any]) {
+    init?(XML: [String: Any]) {
         if let obj: Self = XMLMapper().map(XML: XML) {
             self = obj
         } else {
@@ -56,12 +55,12 @@ public extension XMLBaseMappable {
     }
     
     /// Returns the XML Dictionary for the object
-    public func toXML() -> [String: Any] {
+    func toXML() -> [String: Any] {
         return XMLMapper().toXML(self)
     }
     
     /// Returns the XML String for the object
-    public func toXMLString() -> String? {
+    func toXMLString() -> String? {
         return XMLMapper().toXMLString(self)
     }
 }
@@ -69,7 +68,7 @@ public extension XMLBaseMappable {
 public extension Array where Element: XMLBaseMappable {
     
     /// Initialize Array from a XML String
-    public init?(XMLString: String) {
+    init?(XMLString: String) {
         if let obj: [Element] = XMLMapper().mapArray(XMLString: XMLString) {
             self = obj
         } else {
@@ -78,18 +77,18 @@ public extension Array where Element: XMLBaseMappable {
     }
     
     /// Initialize Array from a XML Array
-    public init(XMLArray: [[String: Any]]) {
+    init(XMLArray: [[String: Any]]) {
         let obj: [Element] = XMLMapper().mapArray(XMLArray: XMLArray)
         self = obj
     }
     
     /// Returns the XML Array
-    public func toXML() -> [[String: Any]] {
+    func toXML() -> [[String: Any]] {
         return XMLMapper().toXMLArray(self)
     }
     
     /// Returns the XML String for the object
-    public func toXMLString() -> String? {
+    func toXMLString() -> String? {
         return XMLMapper().toXMLString(self)
     }
 }
@@ -97,7 +96,7 @@ public extension Array where Element: XMLBaseMappable {
 public extension Set where Element: XMLBaseMappable {
     
     /// Initializes a set from a XML String
-    public init?(XMLString: String) {
+    init?(XMLString: String) {
         if let obj: Set<Element> = XMLMapper().mapSet(XMLString: XMLString) {
             self = obj
         } else {
@@ -106,7 +105,7 @@ public extension Set where Element: XMLBaseMappable {
     }
     
     /// Initializes a set from XML
-    public init?(XMLArray: [[String: Any]]) {
+    init?(XMLArray: [[String: Any]]) {
         guard let obj = XMLMapper().mapSet(XMLArray: XMLArray) as Set<Element>? else {
             return nil
         }
@@ -114,12 +113,12 @@ public extension Set where Element: XMLBaseMappable {
     }
     
     /// Returns the XML Set
-    public func toXML() -> [[String: Any]] {
+    func toXML() -> [[String: Any]] {
         return XMLMapper().toXMLSet(self)
     }
     
     /// Returns the XML String for the object
-    public func toXMLString() -> String? {
+    func toXMLString() -> String? {
         return XMLMapper().toXMLString(self)
     }
 }

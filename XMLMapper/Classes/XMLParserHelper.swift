@@ -17,7 +17,7 @@ class XMLParserHelper {
         } else if let nodeDictionary = node as? [String: Any] {
             var attributeString = ""
             if let attributes = nodeDictionary.attributes {
-                attributeString = attributes.map({ String(format: " %@=\"%@\"", $0.key, $0.value) }).joined()
+                attributeString = attributes.map({ String(format: " %@=\"%@\"", $0.key.xmlEncodedString, $0.value.xmlEncodedString) }).joined()
             }
             let innerXML = nodeDictionary.innerXML
             if !innerXML.isEmpty {

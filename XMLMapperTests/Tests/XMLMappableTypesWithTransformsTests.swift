@@ -252,7 +252,7 @@ class XMLMappableTypesWithTransformsTests: XCTestCase {
         var I_winner: Team!
         
         required init(URI: String) { self.URI = URI }
-        required init(map: XMLMap) {}
+        required init?(map: XMLMap) {}
         
         func mapping(map: XMLMap) {
             players        <- (map["players"], RelationshipTransform<Player>())        // 2D Array with transform
@@ -289,7 +289,7 @@ class XMLMappableTypesWithTransformsTests: XCTestCase {
         var I_players: [Player]?
         
         required init(URI: String) { self.URI = URI }
-        required init(map: XMLMap) {}
+        required init?(map: XMLMap) {}
         
         func mapping(map: XMLMap) {
             players        <- (map["players"], RelationshipTransform<Player>())
@@ -302,7 +302,7 @@ class XMLMappableTypesWithTransformsTests: XCTestCase {
         var nodeName: String!
         
         required init(URI: String) {}
-        required init(map: XMLMap) {}
+        required init?(map: XMLMap) {}
         
         func mapping(map: XMLMap) {}
     }

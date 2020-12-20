@@ -14,6 +14,7 @@ struct XMLParserConstant {
         static let text = "__text"
         static let nodeName = "__name"
         static let cdata = "__cdata"
+        static let nodesOrder = "__nodes_order"
     }
     static let attributePrefix = "_"
 }

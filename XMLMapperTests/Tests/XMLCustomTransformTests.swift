@@ -197,7 +197,7 @@ class Transforms: XMLMappable {
 		
 	}
 	
-	required init(map: XMLMap){
+	required init?(map: XMLMap){
 		
 	}
 	

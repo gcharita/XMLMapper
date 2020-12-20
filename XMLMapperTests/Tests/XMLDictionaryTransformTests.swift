@@ -39,7 +39,7 @@ class DictionaryTransformTestsObject: XMLMappable {
 	
 	var dictionary: [MyKey: MyValue] = [:]
 	
-	required init(map: XMLMap) {
+	required init?(map: XMLMap) {
 
 		
 	}
@@ -67,7 +67,7 @@ extension DictionaryTransformTestsObject {
 		var foo: String
 		var bar: Int
 		
-		required init(map: XMLMap) {
+		required init?(map: XMLMap) {
 			
 			self.foo = "__foo"
 			self.bar = self.foo.hash

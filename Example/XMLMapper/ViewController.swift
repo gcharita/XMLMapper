@@ -10,18 +10,11 @@ import UIKit
 import XMLMapper
 
 class ViewController: UIViewController {
-
     override func viewDidLoad() {
         super.viewDidLoad()
         let object = XMLMapper<TestXMLMappable>().map(XMLfile: "basic_test.xml")
-        print(object?.testElement.testAttribute ?? "nil")
+        print(object?.testNestedAttribute ?? "nil")
         print(object?.toXMLString() ?? "nil")
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-
 }
 

@@ -406,7 +406,7 @@ class Status: XMLMappable {
     
     var status: Int?
     
-    required init(map: XMLMap){
+    required init?(map: XMLMap){
         
     }
     
@@ -421,7 +421,7 @@ class Plan: XMLMappable {
     var tasks: [Task]?
     var dictionaryOfTasks: [String: [Task]]?
     
-    required init(map: XMLMap){
+    required init?(map: XMLMap){
         
     }
     
@@ -441,7 +441,7 @@ class Task: XMLMappable {
         
     }
     
-    required init(map: XMLMap){
+    required init?(map: XMLMap){
         
     }
     
@@ -457,7 +457,7 @@ class TaskDictionary: XMLMappable {
     var test: String?
     var tasks: [String : Task]?
     
-    required init(map: XMLMap){
+    required init?(map: XMLMap){
         
     }
     
@@ -481,7 +481,7 @@ struct Student: XMLMappable {
         
     }
     
-    init(map: XMLMap){
+    init?(map: XMLMap){
         
     }
     
@@ -525,7 +525,7 @@ class User: XMLMappable {
         
     }
     
-    required init(map: XMLMap){
+    required init?(map: XMLMap){
         
     }
     
@@ -563,7 +563,7 @@ class ExampleEnumArray: XMLMappable {
     
     var enums: [ExampleEnum] = []
     
-    required init(map: XMLMap){
+    required init?(map: XMLMap){
         
     }
     
@@ -577,7 +577,7 @@ class ExampleEnumDictionary: XMLMappable {
     
     var enums: [String: ExampleEnum] = [:]
     
-    required init(map: XMLMap){
+    required init?(map: XMLMap){
         
     }
     
@@ -592,7 +592,7 @@ class ArrayTest: XMLMappable {
     
     var twoDimensionalArray: Array<Array<Base>>?
     
-    required init(map: XMLMap){}
+    required init?(map: XMLMap){}
     
     func mapping(map: XMLMap) {
         twoDimensionalArray <- map["twoDimensionalArray"]
@@ -607,7 +607,7 @@ class CachedModel: XMLMappable {
     
     init() {}
     
-    required init(map: XMLMap){}
+    required init?(map: XMLMap){}
     
     func mapping(map: XMLMap) {
         name <- map["name"]
@@ -620,7 +620,7 @@ struct CachedItem: XMLMappable {
     
     var name: String?
     
-    init(map: XMLMap){}
+    init?(map: XMLMap){}
     
     mutating func mapping(map: XMLMap) {
         name <- map["name"]

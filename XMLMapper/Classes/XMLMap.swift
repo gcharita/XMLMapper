@@ -33,7 +33,6 @@ public final class XMLMap {
     /// Sets the current mapper value and key.
     /// The Key paramater can be a period separated string (ex. "distance.value") to access sub objects.
     public subscript(key: String) -> XMLMap {
-        // save key and value associated to it
         return self.subscript(key: key)
     }
     
@@ -72,18 +71,25 @@ public final class XMLMap {
         nestedKeyDelimiter = delimiter
         
         if isAttribute {
-            currentKey = "_\(key)"
-            keyIsNested = false
             isAttribute = false
+            currentKey = "\(XMLParserConstant.attributePrefix)\(key)"
+            if keyIsNested {
+                var keyPathComponents = key.components(separatedBy: delimiter)
+                if !keyPathComponents.isEmpty {
+                    let tail = keyPathComponents.removeLast()
+                    keyPathComponents.append("\(XMLParserConstant.attributePrefix)\(tail)")
+                    currentKey = keyPathComponents.joined(separator: delimiter)
+                }
+            }
         }
         
-        if mappingType == .fromXML {
+        if mappingType == .fromXML, let currentKey = currentKey {
             // check if a value exists for the current key
             // do this pre-check for performance reasons
             if keyIsNested {
                 // break down the components of the key that are separated by .
-                (isKeyPresent, currentValue) = valueFor(ArraySlice(key.components(separatedBy: delimiter)), dictionary: XML)
-            } else if let currentKey = currentKey {
+                (isKeyPresent, currentValue) = valueFor(ArraySlice(currentKey.components(separatedBy: delimiter)), dictionary: XML)
+            } else {
                 let object = XML[currentKey]
                 let isNSNull = object is NSNull
                 isKeyPresent = isNSNull ? true : object != nil
@@ -119,6 +125,10 @@ public final class XMLMap {
     
     public var innerCDATA: XMLMap {
         return self[XMLParserConstant.Key.cdata]
+    }
+    
+    public var nodesOrder: XMLMap {
+        return self[XMLParserConstant.Key.nodesOrder]
     }
 }
 

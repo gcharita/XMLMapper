@@ -19,17 +19,14 @@ struct TestXMLMappable: XMLMappable, Equatable, Hashable {
     var value: String?
     
     init() {}
-    init(map: XMLMap) {    }
+    init?(map: XMLMap) {    }
     
     mutating func mapping(map: XMLMap) {
         value <- map["value"]
     }
     
-    var hashValue: Int {
-        if let value = value {
-            return value.hashValue
-        }
-        return NSIntegerMax
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(value)
     }
 }
 

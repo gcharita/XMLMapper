@@ -1,5 +1,27 @@
 # Change Log
 
+## [1.6.1](https://github.com/gcharita/XMLMapper/releases/tag/1.6.1) (2020-04-13)
+
+- Fixed [#29](https://github.com/gcharita/XMLMapper/issues/29). Issue with optional attributes in simple tags
+
+## [1.6.0](https://github.com/gcharita/XMLMapper/releases/tag/1.6.0) (2019-12-24)
+
+- Merged [#25](https://github.com/gcharita/XMLMapper/pull/25). Specify response encoding in Requests subspec
+- Converted to swift 5
+- Improved SPM support
+
+## [1.5.3](https://github.com/gcharita/XMLMapper/releases/tag/1.5.3) (2019-05-24)
+
+- Fixed [#23](https://github.com/gcharita/XMLMapper/issues/23). Invalid XML string for tags with XML encoded values
+- Closed [#24](https://github.com/gcharita/XMLMapper/issues/24). Fixed redundant modifier warnings
+- Converted to swift 4.2
+
+## [1.5.2](https://github.com/gcharita/XMLMapper/releases/tag/1.5.2) (2019-01-04)
+
+- Closed [#15](https://github.com/gcharita/XMLMapper/issues/15). Removed `stripEmptyNodes` from default `ReadingOptions` of `XMLSerialization`
+- Fixed [#18](https://github.com/gcharita/XMLMapper/issues/18). Added `nodesOrder` property in `XMLMap` to preserve or change the nodes ordering
+- Fixed nested mapping for attributes in `XMLMap`
+
 ## [1.5.1](https://github.com/gcharita/XMLMapper/releases/tag/1.5.1) (2018-07-24)
 
 - Added missing `XMLStaticMappable` protocol
