@@ -9,7 +9,9 @@ import Foundation
 
 class XMLParserHelper {
     class func xmlString(forNode node: Any, withNodeName nodeName: String) -> String? {
-        if let nodeArray = node as? [Any] {
+        if let nodeCDATA = (node as? [Data])?.cdataString {
+            return String(format: "<%1$@>%2$@</%1$@>", nodeName, nodeCDATA)
+        } else if let nodeArray = node as? [Any] {
             let nodes = nodeArray.compactMap({ xmlString(forNode: $0, withNodeName: nodeName) })
             return nodes.joined(separator: "\n")
         } else if let nodeDictionary = node as? [String: Any] {

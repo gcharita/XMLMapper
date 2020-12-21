@@ -123,6 +123,10 @@ public final class XMLMap {
         return self[XMLParserConstant.Key.text]
     }
     
+    public var innerCDATA: XMLMap {
+        return self[XMLParserConstant.Key.cdata]
+    }
+    
     public var nodesOrder: XMLMap {
         return self[XMLParserConstant.Key.nodesOrder]
     }

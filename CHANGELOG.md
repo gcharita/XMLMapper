@@ -1,5 +1,10 @@
 # Change Log
 
+## [2.0.0](https://github.com/gcharita/XMLMapper/releases/tag/2.0.0) (2020-12-22)
+
+- Closed [#31](https://github.com/gcharita/XMLMapper/issues/31). Added support for Alamofire 5 in Requests subspec
+- Closed [#14](https://github.com/gcharita/XMLMapper/issues/14). Added support for CDATA wrapped values (**breaking change** see [README](README.md#map-cdata-wrapped-values) section)
+
 ## [1.6.1](https://github.com/gcharita/XMLMapper/releases/tag/1.6.1) (2020-04-13)
 
 - Fixed [#29](https://github.com/gcharita/XMLMapper/issues/29). Issue with optional attributes in simple tags

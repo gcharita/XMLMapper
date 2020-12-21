@@ -30,6 +30,7 @@ class XMLObjectParser: NSObject {
     fileprivate var alwaysUseArrays: Bool
     fileprivate var preserveComments: Bool
     fileprivate var wrapRootNode: Bool
+    fileprivate var cdataAsString: Bool
     fileprivate var keepNodesOrder: Bool
     fileprivate var attributesMode: XMLObjectParserAttributesMode = .prefixed
     fileprivate var nodeNameMode: XMLObjectParserNodeNameMode = .always
@@ -37,6 +38,7 @@ class XMLObjectParser: NSObject {
     fileprivate var root: NSMutableDictionary?
     fileprivate var stack: [NSMutableDictionary]?
     private var text: String?
+    private var cdata: [Data]?
     fileprivate var error: Error?
     
     // MARK: - Initialazer
@@ -48,6 +50,7 @@ class XMLObjectParser: NSObject {
         alwaysUseArrays = false
         preserveComments = false
         wrapRootNode = false
+        cdataAsString = false
         keepNodesOrder = true
     }
     
@@ -75,6 +78,7 @@ class XMLObjectParser: NSObject {
         alwaysUseArrays = options.contains(.alwaysUseArrays)
         preserveComments = options.contains(.preserveComments)
         wrapRootNode = options.contains(.wrapRootNode)
+        cdataAsString = options.contains(.cdataAsString)
         keepNodesOrder = options.contains(.keepNodesOrder)
 
         if options.contains(.prefixedAttributes) {
@@ -119,6 +123,27 @@ class XMLObjectParser: NSObject {
             text = additionalText
         }
     }
+    
+    func endData() {
+        if let cdata = cdata, !cdata.isEmpty {
+            let top = stack?.last
+            let existing = top?[XMLParserConstant.Key.cdata]
+            if let existingArray = existing as? NSMutableArray {
+                existingArray.addObjects(from: cdata)
+            } else if let existing = existing {
+                top?[XMLParserConstant.Key.cdata] = NSMutableArray(array: [existing, cdata])
+            } else {
+                top?[XMLParserConstant.Key.cdata] = cdata
+            }
+        }
+        cdata = nil
+    }
+    
+    func addData(_ additionalData: Data) {
+        if case nil = cdata?.append(additionalData) {
+            cdata = [additionalData]
+        }
+    }
 }
 
 // MARK: - XMLParserDelegate
@@ -126,6 +151,7 @@ class XMLObjectParser: NSObject {
 extension XMLObjectParser: XMLParserDelegate {
     func parser(_ parser: XMLParser, didStartElement elementName: String, namespaceURI: String?, qualifiedName qName: String?, attributes attributeDict: [String : String] = [:]) {
         endText()
+        endData()
         
         let node: NSMutableDictionary = [:]
         switch nodeNameMode {
@@ -190,6 +216,7 @@ extension XMLObjectParser: XMLParserDelegate {
     
     func parser(_ parser: XMLParser, didEndElement elementName: String, namespaceURI: String?, qualifiedName qName: String?) {
         endText()
+        endData()
         
         let top = stack?.removeLast()
         
@@ -198,13 +225,23 @@ extension XMLObjectParser: XMLParserDelegate {
             if let nodeName = XMLParserHelper.name(forNode: top as? [String: Any], inDictionary: newTop as? [String: Any]) {
                 let parentNode = newTop?[nodeName]
                 let innerText = top?.innerText
+                let innerCDATA = top?.innerCDATA
+                
+                if let innerCDATA = innerCDATA {
+                    if let parentNodeArray = parentNode as? NSMutableArray {
+                        parentNodeArray[parentNodeArray.count - 1] = innerCDATA
+                    } else {
+                        newTop?[nodeName] = innerCDATA
+                    }
+                }
+                
                 if let innerText = innerText, collapseTextNodes {
                     if let parentNodeArray = parentNode as? NSMutableArray {
                         parentNodeArray[parentNodeArray.count - 1] = innerText
                     } else {
                         newTop?[nodeName] = innerText
                     }
-                } else if innerText == nil {
+                } else if innerText == nil && innerCDATA == nil {
                     if stripEmptyNodes {
                         if let parentNodeArray = parentNode as? NSMutableArray {
                             parentNodeArray.removeLastObject()
@@ -224,10 +261,14 @@ extension XMLObjectParser: XMLParserDelegate {
     }
     
     func parser(_ parser: XMLParser, foundCDATA CDATABlock: Data) {
-        guard let string = String(data: CDATABlock, encoding: .utf8) else {
-            return
+        if cdataAsString {
+            guard let string = String(data: CDATABlock, encoding: .utf8) else {
+                return
+            }
+            addText(string)
+        } else {
+            addData(CDATABlock)
         }
-        addText(string)
     }
     
     func parser(_ parser: XMLParser, foundComment comment: String) {
@@ -246,6 +287,12 @@ extension XMLObjectParser: XMLParserDelegate {
     func parser(_ parser: XMLParser, parseErrorOccurred parseError: Error) {
         print(parseError)
         error = parseError
+        parser.abortParsing()
+    }
+    
+    func parser(_ parser: XMLParser, validationErrorOccurred validationError: Error) {
+        print(validationError)
+        error = validationError
         parser.abortParsing()
     }
 }

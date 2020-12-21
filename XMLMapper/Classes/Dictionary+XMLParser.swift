@@ -17,6 +17,7 @@ extension Dictionary {
             let filteredKeys = [
                 XMLParserConstant.Key.comments,
                 XMLParserConstant.Key.text,
+                XMLParserConstant.Key.cdata,
                 XMLParserConstant.Key.nodeName,
                 XMLParserConstant.Key.nodesOrder,
             ]
@@ -45,6 +46,7 @@ extension Dictionary {
             XMLParserConstant.Key.attributes,
             XMLParserConstant.Key.comments,
             XMLParserConstant.Key.text,
+            XMLParserConstant.Key.cdata,
             XMLParserConstant.Key.nodeName,
             XMLParserConstant.Key.nodesOrder,
         ]
@@ -73,6 +75,14 @@ extension Dictionary {
         return text as? String
     }
     
+    var innerCDATA: [Data]? {
+        let cdata = (self as [AnyHashable: Any])[XMLParserConstant.Key.cdata]
+        if let data = cdata as? Data {
+            return [data]
+        }
+        return cdata as? [Data]
+    }
+    
     var innerXML: String {
         var nodes: [String] = []
         
@@ -96,6 +106,10 @@ extension Dictionary {
         
         if let text = innerText {
             nodes.append(text.xmlEncodedString)
+        }
+        
+        if let cdataString = innerCDATA?.cdataString {
+            nodes.append(cdataString)
         }
         
         return nodes.joined(separator: "\n")

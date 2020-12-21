@@ -3,6 +3,7 @@
     <TestElementXMLMappable testAttribute="enumValue">
         <testString>Test string</testString>
         <testBoolAndAttribute testAttribute="some string">false</testBoolAndAttribute>
+        <testCDATA><![CDATA[ This should be mapped like normal text but in <Data> object ]]></testCDATA>
         <testList>
             <element>
                 <testInt>1</testInt>
