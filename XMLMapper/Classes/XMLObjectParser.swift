@@ -202,12 +202,12 @@ extension XMLObjectParser: XMLParserDelegate {
                 } else {
                     top?[elementName] = node
                 }
-                if keepNodesOrder {
-                    if let nodesOrder = top?[XMLParserConstant.Key.nodesOrder] as? NSMutableArray {
-                        nodesOrder.add(elementName)
-                    } else {
-                        top?[XMLParserConstant.Key.nodesOrder] = NSMutableArray(object: elementName)
-                    }
+            }
+            if keepNodesOrder {
+                if let nodesOrder = top?[XMLParserConstant.Key.nodesOrder] as? NSMutableArray {
+                    nodesOrder.add(elementName)
+                } else {
+                    top?[XMLParserConstant.Key.nodesOrder] = NSMutableArray(object: elementName)
                 }
             }
             stack?.append(node)
